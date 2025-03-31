@@ -17,7 +17,17 @@ use App\Http\Controllers\UserController;
 */
 
 
-Route::get('/admin/users', [UserController::class, 'index'])->name('users.index');
+Route::middleware(['auth'])->group(function () {
+  Route::match(['get', 'post'], '/admin/profile', [AdminController::class, 'profile'])->name('admin.profile');
+
+});
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/admin/users', [UserController::class, 'index'])->name('admin.users.index');
+   
+
+});
+
 
 Route::get('/admin', function () {
     return view('admin.dashboard');

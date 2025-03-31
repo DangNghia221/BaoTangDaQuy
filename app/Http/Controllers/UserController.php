@@ -21,7 +21,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::select('id', 'name', 'email', 'usertype')->get(); // Lấy thêm usertype
+        $users = User::select('id', 'name', 'email', 'usertype')->get();
         return view('admin.users.index', compact('users'));
     }
 
@@ -48,19 +48,11 @@ class UserController extends Controller
         User::create([
             'name' => $request->name,
             'email' => $request->email,
-            'password' => bcrypt($request->password),
+            'password' => bcrypt($request->password), // Hash password
             'usertype' => $request->usertype,
         ]);
 
         return redirect()->route('users.index')->with('success', 'User created successfully!');
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        // Chưa cần xử lý gì
     }
 
     /**
@@ -78,7 +70,17 @@ class UserController extends Controller
     public function update(Request $request, string $id)
     {
         $user = User::findOrFail($id);
-        $user->update($request->all());
+
+        // Validate input
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'usertype' => 'required|in:admin,user',
+        ]);
+
+        // Cập nhật dữ liệu
+        $user->name = $request->name;
+        $user->usertype = $request->usertype;
+        $user->save();
 
         return redirect()->route('users.index')->with('success', 'User updated successfully!');
     }
