@@ -1,3 +1,7 @@
+<?php
+
+namespace App\Http\Controllers;
+
 use Illuminate\Http\Request;
 use App\Models\Product;
 
@@ -6,12 +10,12 @@ class ProductController extends Controller
     public function index()
     {
         $products = Product::all();
-        return view('admin.products.index', compact('products'));
+        return view('admin.product.index', compact('products'));
     }
 
     public function create()
     {
-        return view('admin.products.create');
+        return view('admin.product.create');
     }
 
     public function store(Request $request)
@@ -19,7 +23,6 @@ class ProductController extends Controller
         $request->validate([
             'name' => 'required',
             'price' => 'required|numeric',
-            'stock' => 'required|integer',
             'image' => 'nullable|image|mimes:jpg,png,jpeg|max:2048'
         ]);
 
@@ -27,21 +30,20 @@ class ProductController extends Controller
         $product->name = $request->name;
         $product->description = $request->description;
         $product->price = $request->price;
-        $product->stock = $request->stock;
 
         if ($request->hasFile('image')) {
-            $path = $request->file('image')->store('products', 'public');
+            $path = $request->file('image')->store('product', 'public');
             $product->image = $path;
         }
 
         $product->save();
 
-        return redirect()->route('products.index')->with('success', 'Product created successfully.');
+        return redirect()->route('product.index')->with('success', 'Product created successfully.');
     }
 
     public function edit(Product $product)
     {
-        return view('admin.products.edit', compact('product'));
+        return view('admin.product.edit', compact('product'));
     }
 
     public function update(Request $request, Product $product)
@@ -49,28 +51,26 @@ class ProductController extends Controller
         $request->validate([
             'name' => 'required',
             'price' => 'required|numeric',
-            'stock' => 'required|integer',
             'image' => 'nullable|image|mimes:jpg,png,jpeg|max:2048'
         ]);
 
         $product->name = $request->name;
         $product->description = $request->description;
         $product->price = $request->price;
-        $product->stock = $request->stock;
 
         if ($request->hasFile('image')) {
-            $path = $request->file('image')->store('products', 'public');
+            $path = $request->file('image')->store('product', 'public');
             $product->image = $path;
         }
 
         $product->save();
 
-        return redirect()->route('products.index')->with('success', 'Product updated successfully.');
+        return redirect()->route('product.index')->with('success', 'Product updated successfully.');
     }
 
     public function destroy(Product $product)
     {
         $product->delete();
-        return redirect()->route('products.index')->with('success', 'Product deleted successfully.');
+        return redirect()->route('product.index')->with('success', 'Product deleted successfully.');
     }
 }

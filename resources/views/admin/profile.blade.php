@@ -11,6 +11,9 @@
     <div class="card-body">
         @if(session('success'))
             <div class="alert alert-success">{{ session('success') }}</div>
+            @if($profile->image)
+            <img src="{{ asset('storage/avatars/' . Auth::user()->avatar) }}" class="rounded-circle" width="150" alt="Avatar">
+            @endif
         @endif
 
         <form action="{{ route('admin.profile') }}" method="POST" enctype="multipart/form-data">
@@ -18,7 +21,7 @@
 
             <!-- Ảnh đại diện -->
             <div class="text-center">
-                <img src="{{ asset('storage/' . Auth::user()->avatar) }}" class="rounded-circle" width="150" alt="Avatar">
+                <img src="{{ asset('storage/avatars/' . Auth::user()->avatar) }}" class="rounded-circle" width="150" alt="Avatar">
             </div>
 
             <div class="form-group">

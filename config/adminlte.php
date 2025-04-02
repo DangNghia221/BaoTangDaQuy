@@ -321,7 +321,7 @@ return [
             'can' => 'manage-blog',
         ],
         [
-            'text' => 'Users',
+            'text' => 'Quản lý người dùng',
             'url' => 'admin/users',
             'icon' => 'far fa-fw fa-user',
           
@@ -329,11 +329,31 @@ return [
         ],
         
         [
-            'text' => 'profile',
+            'text' => 'Thông tin admin',
             'url' => 'admin/profile',
             'icon' => 'fas fa-fw fa-user',
         ],
-      
+        [
+            'text' => 'Quản lý sản phẩm',
+            'url' => 'admin/product',
+            'icon' => 'fas fa-fw fa-box',
+        ],
+        [
+            'text' => 'Bài viết',
+            'icon' => 'fas fa-fw fa-newspaper',
+            'submenu' => [
+                [
+                    'text' => 'Tạo bài viết',
+                    'url' => 'admin/post/create',
+                    'icon' => 'fas fa-fw fa-plus',
+                ],
+                [
+                    'text' => 'Danh mục bài viết',
+                    'url' => 'admin/categories',
+                    'icon' => 'fas fa-fw fa-folder',
+                ],
+            ],
+        ],
       
         ['header' => 'labels'],
         [

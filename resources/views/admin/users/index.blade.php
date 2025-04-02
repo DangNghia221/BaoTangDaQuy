@@ -8,7 +8,7 @@
 
 @section('content') {{-- Bọc toàn bộ nội dung trong @section('content') --}}
 <div class="pagetitle">
-    <h1>Users Management</h1>
+    <h1>Quản lý người dùng</h1>
 </div>
 
 <section class="section">
