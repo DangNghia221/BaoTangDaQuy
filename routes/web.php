@@ -1,82 +1,54 @@
-<?php
+<?php 
 
 use Illuminate\Support\Facades\Route;
-
 use App\Http\Controllers\AdminController;
-
 use App\Http\Controllers\UserController;
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
-
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\CategoryController;
 
-Route::prefix('admin')->group(function () {
-    Route::resource('categories', CategoryController::class);
-});
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+*/
 
-Route::get('/admin/categories', function () {
-    return view('admin.categories.index');
-});
+// Middleware cho admin
+Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
 
-Route::prefix('admin/post')->group(function () {
-    Route::get('/', [PostController::class, 'index'])->name('post.index');
-    Route::get('/create', [PostController::class, 'create'])->name('post.create');
-    Route::post('/store', [PostController::class, 'store'])->name('post.store');
-    Route::post('/upload-image', [PostController::class, 'uploadImage'])->name('post.upload');
-    Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
-        Route::resource('post', PostController::class);
-    });
-    
-});
+    // Dashboard
+    Route::get('/', function () {
+        return view('admin.dashboard');
+    })->name('admin.dashboard');
 
-Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
-    // Route cho tất cả các hành động resource, bao gồm cả 'create'
+    // Quản lý danh mục 
+    Route::get('/categories', [CategoryController::class, 'index'])->name('admin.categories.index');
+    Route::get('/categories/create', [CategoryController::class, 'create'])->name('admin.categories.create');
+    Route::post('/categories', [CategoryController::class, 'store'])->name('admin.categories.store');
+
+    // Quản lý bài viết
     Route::resource('post', PostController::class);
-});
+    Route::get('/categories/{id}/edit', [CategoryController::class, 'edit'])->name('admin.categories.edit');
+    Route::delete('/categories/{category}', [CategoryController::class, 'destroy'])->name('admin.categories.destroy');
+    Route::put('/categories/{category}', [CategoryController::class, 'update'])->name('admin.categories.update');
 
-Route::prefix('admin')->group(function () {
+    // Quản lý sản phẩm (trừ show)
     Route::resource('product', ProductController::class)->except(['show']);
+
+    // Quản lý người dùng
+    Route::get('/users', [UserController::class, 'index'])->name('admin.users.index');
+    Route::resource('users', UserController::class);
 });
 
-
-
+// Middleware cho user đã đăng nhập
 Route::middleware(['auth'])->group(function () {
-  Route::match(['get', 'post'], '/admin/profile', [AdminController::class, 'profile'])->name('admin.profile');
-
+    Route::match(['get', 'post'], '/admin/profile', [AdminController::class, 'profile'])->name('admin.profile');
 });
 
-Route::middleware(['auth'])->group(function () {
-    Route::get('/admin/users', [UserController::class, 'index'])->name('admin.users.index');
-   
-
-});
-
-
-Route::get('/admin', function () {
-    return view('admin.dashboard');
-})->middleware('auth');
-
+// Trang chủ
 Route::get('/', function () {
     return view('welcome');
 });
 
-
-
-
-Route::middleware(['auth', 'admin'])->group(function () {
-    Route::get('/admin/users', [UserController::class, 'index'])->name('admin.users.index');
-    Route::resource('users', UserController::class);
-});
-
-
-Route::get('/home',[AdminController::class,'index'])->name('home')->middleware('auth');
+// Trang home
+Route::get('/home', [AdminController::class, 'index'])->name('home')->middleware('auth');

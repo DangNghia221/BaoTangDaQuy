@@ -1,5 +1,4 @@
 <?php
-
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -13,12 +12,17 @@ return new class extends Migration
     {
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
-        $table->string('title');
-        $table->text('content');
-        $table->string('image')->nullable();
-        $table->enum('status', ['draft', 'published'])->default('draft');
-        $table->foreignId('user_id')->constrained()->onDelete('cascade');
-        $table->timestamps();
+            $table->string('title');
+            $table->text('content');
+            $table->string('image')->nullable();
+            
+            // Trường user_id để liên kết với người dùng
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            
+            // Trường category_id có thể nullable, không bắt buộc
+            $table->foreignId('category_id')->nullable()->constrained()->onDelete('set null');
+
+            $table->timestamps();
         });
     }
 
@@ -30,3 +34,4 @@ return new class extends Migration
         Schema::dropIfExists('posts');
     }
 };
+  

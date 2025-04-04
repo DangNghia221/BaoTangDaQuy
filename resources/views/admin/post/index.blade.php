@@ -7,21 +7,35 @@
 @endsection
 
 @section('content')
-<a href="{{ route('post.create') }}" class="btn btn-success">Add New Post</a>
+<a href="{{ route('post.create') }}" class="btn btn-success">Thêm Bài Viết Mới</a>
 
 @if(session('success'))
-    <div class="alert alert-success">{{ session('success') }}</div>
+    <div id="success-alert" class="alert alert-success">
+        {{ session('success') }}
+    </div>
 @endif
+
+<script>
+    setTimeout(function() {
+        let alertBox = document.getElementById('success-alert');
+        if (alertBox) {
+            alertBox.style.transition = "opacity 0.5s";
+            alertBox.style.opacity = "0";
+            setTimeout(() => alertBox.remove(), 500);
+        }
+    }, 3000);
+</script>
+
 
 <table class="table table-bordered">
     <thead class="thead-dark">
         <tr>
             <th>ID</th>
-            <th>Title</th>
-            <th>Image</th>
-            <th>Status</th>
-            <th>Author</th>
-            <th>Actions</th>
+            <th>Tên Bài Viết</th>
+            <th>Danh Mục</th> <!-- Thêm cột danh mục -->
+            <th>Hình ảnh</th>
+            <th>Tác Giả</th>
+            <th>Hành động</th>
         </tr>
     </thead>
     <tbody>
@@ -29,6 +43,7 @@
         <tr>
             <td>{{ $post->id }}</td>
             <td>{{ $post->title }}</td>
+            <td>{{ $post->category->name ?? 'Chưa có danh mục' }}</td> <!-- Hiển thị tên danh mục -->
             <td>
                 @if($post->image)
                     <img src="{{ asset('storage/' . $post->image) }}" width="50" alt="Post Image">
@@ -36,14 +51,13 @@
                     No Image
                 @endif
             </td>
-            <td>{{ ucfirst($post->status) }}</td>
             <td>{{ $post->user->name ?? 'Unknown' }}</td>
             <td>
-                <a href="{{ route('post.edit', $post->id) }}" class="btn btn-warning">Edit</a>
+                <a href="{{ route('post.edit', $post->id) }}" class="btn btn-warning">Sửa</a>
                 <form action="{{ route('post.destroy', $post->id) }}" method="POST" style="display:inline;">
                     @csrf
                     @method('DELETE')
-                    <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure?')">Delete</button>
+                    <button type="submit" class="btn btn-danger" onclick="return confirm('Bạn có chắc muốn xóa?')">Xóa</button>
                 </form>
             </td>
         </tr>

@@ -8,8 +8,18 @@ class Post extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['title', 'content', 'image', 'status', 'user_id'];
+    protected $fillable = ['title', 'content', 'category_id', 'image', 'user_id'];
 
+    // Quan hệ với danh mục
+    public function category()
+    {
+        return $this->belongsTo(Category::class, 'category_id')->withDefault([
+            'name' => 'Không có danh mục'
+        ]);
+    }
+    
+
+    // Quan hệ với người dùng
     public function user()
     {
         return $this->belongsTo(User::class);
