@@ -12,14 +12,27 @@ use App\Http\Controllers\CategoryController;
 | Web Routes
 |--------------------------------------------------------------------------
 */
+use App\Http\Controllers\BookingController;
+
+
+
 
 // Middleware cho admin
 Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
-
+    Route::match(['get', 'put'], '/profile', [AdminController::class, 'profile'])->name('admin.profile');
     // Dashboard
     Route::get('/', function () {
         return view('admin.dashboard');
     })->name('admin.dashboard');
+    Route::get('/admin/profile', [AdminController::class, 'profile'])->name('admin.profile');
+    Route::put('/admin/profile', [AdminController::class, 'updateProfile'])->name('admin.profile.update');
+    
+
+    //Vé
+    Route::resource('bookings', BookingController::class);
+    Route::get('/bookings/{id}/edit', [BookingController::class, 'edit'])->name('bookings.edit');
+Route::put('/bookings/{id}', [BookingController::class, 'update'])->name('bookings.update');
+Route::post('/bookings/{id}/pay', [BookingController::class, 'pay'])->name('bookings.pay');
 
     // Quản lý danh mục 
     Route::get('/categories', [CategoryController::class, 'index'])->name('admin.categories.index');
@@ -34,7 +47,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
 
     // Quản lý sản phẩm (trừ show)
     Route::resource('product', ProductController::class)->except(['show']);
-
+    Route::resource('product', ProductController::class);
     // Quản lý người dùng
     Route::get('/users', [UserController::class, 'index'])->name('admin.users.index');
     Route::resource('users', UserController::class);

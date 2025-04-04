@@ -10,11 +10,26 @@
 <div class="pagetitle">
     <h1>Quản lý người dùng</h1>
 </div>
+@if(session('success'))
+    <div id="success-alert" class="alert alert-success">
+        {{ session('success') }}
+    </div>
+@endif
 
+<script>
+    setTimeout(function() {
+        let alertBox = document.getElementById('success-alert');
+        if (alertBox) {
+            alertBox.style.transition = "opacity 0.5s";
+            alertBox.style.opacity = "0";
+            setTimeout(() => alertBox.remove(), 500);
+        }
+    }, 3000);
+</script>
 <section class="section">
     <div class="row">
         <div class="col-lg-12">
-            @include('message') {{-- Nếu có thông báo thì hiển thị --}}
+           
             
             <div class="card">
                 <div class="card-body">

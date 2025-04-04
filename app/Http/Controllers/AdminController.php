@@ -11,19 +11,17 @@ class AdminController extends Controller
 {
     public function index()
     {
-        if (Auth::check()) { // Kiểm tra xem người dùng đã đăng nhập chưa
+        if (Auth::check()) {
             $usertype = Auth::user()->usertype;
 
             if ($usertype == 'user') {
                 return view('dashboard');
             } else if ($usertype == 'admin') {
-                // Truy vấn danh sách user từ database
-                $users = User::all();
                 return view('admin.dashboard');
             }
         }
 
-        return redirect()->route('login'); // Nếu chưa đăng nhập, chuyển hướng về login
+        return redirect()->route('login');
     }
 
     // Hiển thị trang profile admin
@@ -62,8 +60,6 @@ class AdminController extends Controller
     
         $admin->save();
     
-        return redirect()->route('admin.profile')->with('success', 'Profile updated successfully!');
+        return redirect()->route('admin.profile');
     }
-    
-    
 }

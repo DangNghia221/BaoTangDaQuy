@@ -354,7 +354,11 @@ return [
                 ],
             ],
         ],
-      
+        [
+            'text' => 'Đặt vé',
+            'url' => 'admin/bookings',
+            'icon' => 'fas fa-fw fa-ticket-alt',
+        ],
         ['header' => 'labels'],
         [
             'text' => 'important',

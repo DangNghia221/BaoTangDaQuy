@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Product;
-
+use Illuminate\Support\Facades\Storage; 
 class ProductController extends Controller
 {
     public function index()
@@ -46,27 +46,36 @@ class ProductController extends Controller
         return view('admin.product.edit', compact('product'));
     }
 
-    public function update(Request $request, Product $product)
+    public function update(Request $request, $id)
     {
+        $product = Product::findOrFail($id);
+    
         $request->validate([
-            'name' => 'required',
+            'name' => 'required|string|max:255',
             'price' => 'required|numeric',
-            'image' => 'nullable|image|mimes:jpg,png,jpeg|max:2048'
+            'image' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048',
         ]);
-
+    
         $product->name = $request->name;
-        $product->description = $request->description;
         $product->price = $request->price;
-
+    
+        // Kiểm tra và lưu ảnh mới (nếu có)
         if ($request->hasFile('image')) {
-            $path = $request->file('image')->store('product', 'public');
+            // Xóa ảnh cũ nếu có
+            if ($product->image) {
+                Storage::delete('public/' . $product->image);
+            }
+    
+            // Lưu ảnh mới
+            $path = $request->file('image')->store('products', 'public');
             $product->image = $path;
         }
-
+    
         $product->save();
-
-        return redirect()->route('product.index')->with('success', 'Product updated successfully.');
+    
+        return redirect()->route('product.index')->with('success', 'Product updated successfully!');
     }
+    
 
     public function destroy(Product $product)
     {
