@@ -21,16 +21,20 @@
         </select>
 
         <label>Sản Phẩm:</label>
-        <select name="product_id" class="form-control">
+        <select name="product_id" id="productSelect" class="form-control">
             @foreach($products as $product)
-                <option value="{{ $product->id }}" {{ $booking->product_id == $product->id ? 'selected' : '' }}>
-                    {{ $product->name }}
+                <option value="{{ $product->id }}" data-price="{{ $product->price }}" {{ $booking->product_id == $product->id ? 'selected' : '' }}>
+                    {{ $product->name }} ({{ number_format($product->price, 0, ',', '.') }} đ)
                 </option>
             @endforeach
         </select>
 
         <label>Số Lượng:</label>
-        <input type="number" name="quantity" class="form-control" value="{{ $booking->quantity }}" required>
+        <input type="number" name="quantity" id="quantityInput" class="form-control" value="{{ $booking->quantity }}" required>
+
+        <label>Giá Tiền:</label>
+        <input type="text" id="priceDisplay" class="form-control" disabled>
+        <input type="hidden" name="price" id="priceInput" value="{{ $booking->price }}">
 
         <label>Trạng Thái:</label>
         <select name="status" class="form-control">
@@ -39,6 +43,26 @@
             <option value="canceled" {{ $booking->status == 'canceled' ? 'selected' : '' }}>Đã hủy</option>
         </select>
 
-        <button type="submit" class="btn btn-primary">Cập Nhật</button>
+        <button type="submit" class="btn btn-primary mt-3">Cập Nhật</button>
     </form>
+@endsection
+
+@section('js')
+<script>
+    function updatePrice() {
+        let product = document.querySelector('#productSelect').selectedOptions[0];
+        let quantity = document.querySelector('#quantityInput').value;
+        let price = product.getAttribute('data-price');
+        let total = price * quantity;
+
+        document.querySelector('#priceDisplay').value = Number(total).toLocaleString('vi-VN') + ' đ';
+        document.querySelector('#priceInput').value = total;
+    }
+
+    document.querySelector('#productSelect').addEventListener('change', updatePrice);
+    document.querySelector('#quantityInput').addEventListener('input', updatePrice);
+
+    // Gọi lần đầu khi load
+    updatePrice();
+</script>
 @endsection

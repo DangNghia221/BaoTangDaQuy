@@ -7,7 +7,7 @@
 @endsection
 
 @section('content')  {{-- Bổ sung @section('content') để tránh lỗi --}}
-    <h2>Quản Lý Đặt Vé</h2>
+    <h2>Quản Lý Vé</h2>
     <a href="{{ route('bookings.create') }}" class="btn btn-success">Thêm Đặt Vé</a>
     <table class="table">
         <thead>
@@ -17,6 +17,7 @@
                 <th>Email</th>
                 <th>Sản Phẩm</th>
                 <th>Số Lượng</th>
+                <th>Giá Tiền</th> {{-- ✅ Thêm cột Giá Tiền --}}
                 <th>Trạng Thái</th>
                 <th>Ngày Đặt</th>
                 <th>Hành động</th>
@@ -30,23 +31,26 @@
                     <td>{{ $booking->user->email }}</td>
                     <td>{{ $booking->product->name }}</td>
                     <td>{{ $booking->quantity }}</td>
+                    <td>
+                        {{-- ✅ Hiển thị giá tiền: giá x số lượng --}}
+                        {{ number_format($booking->product->price * $booking->quantity, 0, ',', '.') }} đ
+                    </td>
                     @php
-    $statusText = [
-        'pending' => 'Chờ xử lý',
-        'confirmed' => 'Đã xác nhận',
-        'canceled' => 'Đã hủy'
-    ];
-@endphp
-<td>
-    {{ $statusText[$booking->status] ?? 'Không xác định' }} 
-    @if($booking->status == 'pending')
-        <form action="{{ route('bookings.pay', $booking->id) }}" method="POST" style="display:inline;">
-            @csrf
-            <button type="submit" class="btn btn-primary btn-sm">Thanh Toán</button>
-        </form>
-    @endif
-</td>
-
+                        $statusText = [
+                            'pending' => 'Chờ xử lý',
+                            'confirmed' => 'Đã xác nhận',
+                            'canceled' => 'Đã hủy'
+                        ];
+                    @endphp
+                    <td>
+                        {{ $statusText[$booking->status] ?? 'Không xác định' }} 
+                        @if($booking->status == 'pending')
+                            <form action="{{ route('bookings.pay', $booking->id) }}" method="POST" style="display:inline;">
+                                @csrf
+                                <button type="submit" class="btn btn-primary btn-sm">Thanh Toán</button>
+                            </form>
+                        @endif
+                    </td>
                     <td>{{ $booking->booking_date }}</td>
                     <td>
                         <a href="{{ route('bookings.edit', $booking->id) }}" class="btn btn-warning">Sửa</a>

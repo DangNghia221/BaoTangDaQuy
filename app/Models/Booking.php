@@ -9,15 +9,17 @@ class Booking extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['user_id', 'product_id', 'quantity', 'status', 'booking_date'];
+    protected $fillable = ['user_id', 'product_id', 'quantity', 'status', 'price', 'booking_date'];
 
-    public function user()
-    {
-        return $this->belongsTo(User::class);
-    }
-
+    // Mối quan hệ với Product (Booking thuộc về 1 Product)
     public function product()
     {
         return $this->belongsTo(Product::class);
+    }
+
+    // Mối quan hệ với User (Booking thuộc về 1 User)
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }

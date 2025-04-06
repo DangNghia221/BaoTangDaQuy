@@ -23,17 +23,36 @@ class BookingController extends Controller
 
     public function store(Request $request)
     {
+        // Xác thực các trường cần thiết
         $request->validate([
-            'user_id' => 'required|exists:users,id',
-            'product_id' => 'required|exists:products,id',
+            'user_id' => 'required',
+            'product_id' => 'required',
             'quantity' => 'required|integer|min:1',
-            'status' => 'required|in:pending,confirmed,canceled'
+            'status' => 'required',
         ]);
-
-        Booking::create($request->all());
-
-        return redirect()->route('bookings.index')->with('success', 'Đặt vé thành công!');
+        
+        // Lấy sản phẩm từ DB
+        $product = Product::findOrFail($request->product_id);
+        
+        // Tính giá tổng dựa trên sản phẩm và số lượng
+        $totalPrice = $product->price * $request->quantity;
+        
+        // Lưu thông tin đặt vé vào cơ sở dữ liệu
+        Booking::create([
+            'user_id' => $request->user_id,
+            'product_id' => $request->product_id,
+            'quantity' => $request->quantity,
+            'status' => $request->status,
+            'price' => $totalPrice,  // Lưu giá tiền tính toán vào trường price
+            'booking_date' => now()
+        ]);
+        
+        // Quay lại trang danh sách booking với thông báo thành công
+        return redirect()->route('bookings.index')->with('success', 'Đặt vé thành công');
     }
+    
+    
+    
 
     public function edit($id)
     {
@@ -44,24 +63,35 @@ class BookingController extends Controller
         return view('admin.bookings.edit', compact('booking', 'users', 'products'));
     }
     
-    public function update(Request $request, $id)
+    public function update(Request $request, Booking $booking)
     {
         $request->validate([
-            'user_id' => 'required|exists:users,id',
-            'product_id' => 'required|exists:products,id',
+            'user_id' => 'required',
+            'product_id' => 'required',
             'quantity' => 'required|integer|min:1',
-            'status' => 'required|in:pending,confirmed,canceled',
+            'status' => 'required'
         ]);
     
-        $booking = Booking::findOrFail($id);
-        $booking->update($request->all());
+        // Lấy giá sản phẩm từ DB
+        $product = Product::findOrFail($request->product_id);
+        $totalPrice = $product->price * $request->quantity;
     
-        return redirect()->route('bookings.index')->with('success', 'Đơn đặt vé đã được cập nhật thành công.');
+        $booking->update([
+            'user_id' => $request->user_id,
+            'product_id' => $request->product_id,
+            'quantity' => $request->quantity,
+            'status' => $request->status,
+            'price' => $totalPrice
+        ]);
+    
+        return redirect()->route('bookings.index')->with('success', 'Cập nhật vé thành công');
     }
+    
+    
     
     public function pay($id) {
         $booking = Booking::findOrFail($id);
-        $booking->status = 'confirmed'; // Cập nhật trạng thái thành "Đã xác nhận"
+        $booking->status = 'confirmed'; 
         $booking->save();
     
         return redirect()->route('bookings.index')->with('success', 'Thanh toán thành công!');
