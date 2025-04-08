@@ -343,8 +343,8 @@ return [
             'icon' => 'fas fa-fw fa-newspaper',
             'submenu' => [
                 [
-                    'text' => 'Tạo bài viết',
-                    'url' => 'admin/post/create',
+                    'text' => 'Quản lý bài viết',
+                    'url' => 'admin/post',
                     'icon' => 'fas fa-fw fa-plus',
                 ],
                 [

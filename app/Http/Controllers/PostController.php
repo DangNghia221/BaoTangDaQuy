@@ -13,6 +13,9 @@ class PostController extends Controller
     {
         $posts = Post::with('category', 'user')->get(); // Lấy bài viết và thông tin danh mục, người dùng
         return view('admin.post.index', compact('posts'));
+
+        $posts = Post::all(); 
+        return view('users.post.index', compact('posts'));
     }
     
 
