@@ -24,6 +24,21 @@ class PostController extends Controller
         $categories = Category::all(); // 🔥 Lấy danh mục để hiển thị
         return view('admin.post.create', compact('categories'));
     }
+    // Hiển thị danh sách bài viết
+public function list()
+{
+    $posts = Post::latest()->paginate(6); // phân trang 6 bài viết
+    return view('users.post.index', compact('posts')); // View ngoài giao diện người dùng
+}
+
+// Hiển thị chi tiết bài viết
+public function show($slug)
+{
+    $post = Post::where('slug', $slug)->firstOrFail();
+    return view('post.show', compact('post'));
+}
+
+
 
     public function store(Request $request)
 {

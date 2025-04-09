@@ -99,7 +99,8 @@
         <a href="{{ route('home') }}">Trang chủ</a>
         <a href="{{ route('login.form') }}">Đăng nhập</a>
         <a href="{{ route('register.form') }}">Đăng ký</a>
-        <a href="{{ route('post.index') }}">Bài viết</a>    
+        <a href="{{ route('news.index') }}">Bài viết</a>
+ 
     </nav>
 </header>
 
@@ -231,7 +232,7 @@
 </main>
 
     <footer>
-        &copy; {{ date('Y') }} Bảo Tàng Đá Quý. All rights reserved.
+        &copy; {{ date('Y') }} Bảo Tàng Đá Quý.
     </footer>
 
 </body>
