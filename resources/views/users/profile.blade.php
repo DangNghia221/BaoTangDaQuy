@@ -2,23 +2,11 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <title>{{ $post->title }}</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Font Awesome -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-    <style>
-    .post-content img {
-        max-width: 50% ;
-        height: auto !important;
-        display: block;
-        margin: 20px auto !important;
-        border-radius: 12px;
-    }
-</style>
-
+    <title>Thông tin cá nhân</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-<!-- CSS trong <style> -->
+<body class="bg-gray-100">
 <style>
     header, footer {
         background-color: #5D4037;
@@ -96,7 +84,7 @@
                 <span style="margin-left: 5px;">{{ Auth::user()->name }}</span>
             </div>
             <div class="dropdown-content">
-            <a href="{{ route('users.profile') }}">Thông tin cá nhân</a>
+                <a href="#">Thông tin cá nhân</a>
                 <a href="{{ route('logout') }}"
                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                    Đăng xuất
@@ -109,27 +97,56 @@
         @endauth
     </nav>
 </header>
+<div class="bg-gray-100 py-20">
 
-<body style="font-family: 'Roboto', sans-serif; background-color: #fdf7ef;">
+        <div class="max-w-5xl mx-auto p-6 bg-white shadow-xl rounded-2xl grid grid-cols-1 md:grid-cols-3 gap-6">
+            
+         <!-- Sidebar -->
+<div class="flex flex-col items-center justify-center space-y-3">
+    @if ($user->avatar)
+        <img src="{{ asset('storage/' . $user->avatar) }}" alt="Avatar" class="w-24 h-24 rounded-full shadow">
+    @else
+        <img src="https://via.placeholder.com/100" alt="avatar" class="w-24 h-24 rounded-full shadow">
+    @endif
 
-  
+    <div class="text-lg font-semibold">{{ $user->name }}</div>
+    <div class="text-gray-500">{{ $user->email }}</div>
+    <div class="text-green-600 font-medium">Trạng thái: Đang hoạt động</div>
+</div>
 
-    <div class="container mt-5">
-        <h2 style="color: #9b1c1c;">{{ $post->title }}</h2>
 
-        @if($post->image)
-            <img src="{{ asset('storage/' . $post->image) }}" alt="{{ $post->title }}" style="width: 50%; max-height: 500px; object-fit: cover; border-radius: 12px;">
-        @endif
+            <!-- Thông tin -->
+            <div class="md:col-span-2">
+                <div class="flex items-center justify-between mb-4">
+                    <h2 class="text-xl font-bold text-red-600">Thông tin cá nhân</h2>
+                    <a href="{{ route('users.profile.edit') }}" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">
+                       Cập nhật
+                    </a>
+                </div>
+                <div class="space-y-4">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm text-gray-600">Họ và tên</label>
+                            <div class="w-full border rounded px-3 py-2 bg-gray-100">{{ $user->name }}</div>
+                        </div>
+                        <div>
+                            <label class="block text-sm text-gray-600">Số điện thoại</label>
+                            <div class="w-full border rounded px-3 py-2 bg-gray-100">{{ $user->phone ?? 'Chưa cập nhật' }}</div>
+                        </div>
+                        <div class="md:col-span-2">
+                            <label class="block text-sm text-gray-600">Email</label>
+                            <div class="w-full border rounded px-3 py-2 bg-gray-100">{{ $user->email }}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-        {{-- 📌 Thêm class "post-content" để áp dụng style cho hình ảnh trong nội dung --}}
-        <div class="post-content mt-4" style="line-height: 1.7; font-size: 18px;">
-            {!! $post->content !!}
         </div>
-
-        <a href="{{ route('news.index') }}" class="btn btn-secondary mt-4">← Quay lại danh sách</a>
     </div>
+ 
 
 </body>
+
 <footer style="background-color: #7b1e1e; color: white; padding: 40px 20px;">
     <div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 20px;">
         
@@ -155,7 +172,11 @@
         </div>
     </div>
 </footer>
-<footer>
+
+
+</main>
+
+    <footer>
         &copy; {{ date('Y') }} Bảo Tàng Đá Quý.
     </footer>
 </html>

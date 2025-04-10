@@ -3,13 +3,13 @@
 @section('title', 'Quản Lý Vé')
 
 @section('content_header')
-   
 @endsection
 
-@section('content')  {{-- Bổ sung @section('content') để tránh lỗi --}}
+@section('content')
     <h2>Quản Lý Vé</h2>
-    <a href="{{ route('bookings.create') }}" class="btn btn-success">Thêm Đặt Vé</a>
-    <table class="table">
+    <a href="{{ route('bookings.create') }}" class="btn btn-success mb-3">Thêm Đặt Vé</a>
+
+    <table class="table table-bordered">
         <thead>
             <tr>
                 <th>ID</th>
@@ -17,7 +17,7 @@
                 <th>Email</th>
                 <th>Sản Phẩm</th>
                 <th>Số Lượng</th>
-                <th>Giá Tiền</th> {{-- ✅ Thêm cột Giá Tiền --}}
+                <th>Giá Tiền</th> 
                 <th>Trạng Thái</th>
                 <th>Ngày Đặt</th>
                 <th>Hành động</th>
@@ -27,14 +27,11 @@
             @foreach($bookings as $booking)
                 <tr>
                     <td>{{ $booking->id }}</td>
-                    <td>{{ $booking->user->name }}</td>
-                    <td>{{ $booking->user->email }}</td>
-                    <td>{{ $booking->product->name }}</td>
+                    <td>{{ $booking->user->name ?? 'N/A' }}</td>
+                    <td>{{ $booking->user->email ?? 'N/A' }}</td>
+                    <td>{{ $booking->product->name ?? 'N/A' }}</td>
                     <td>{{ $booking->quantity }}</td>
-                    <td>
-                        {{-- ✅ Hiển thị giá tiền: giá x số lượng --}}
-                        {{ number_format($booking->product->price * $booking->quantity, 0, ',', '.') }} đ
-                    </td>
+                    <td>{{ number_format($booking->price, 0, ',', '.') }} đ</td>
                     @php
                         $statusText = [
                             'pending' => 'Chờ xử lý',
@@ -43,7 +40,7 @@
                         ];
                     @endphp
                     <td>
-                        {{ $statusText[$booking->status] ?? 'Không xác định' }} 
+                        {{ $statusText[$booking->status] ?? 'Không xác định' }}
                         @if($booking->status == 'pending')
                             <form action="{{ route('bookings.pay', $booking->id) }}" method="POST" style="display:inline;">
                                 @csrf
@@ -53,14 +50,14 @@
                     </td>
                     <td>{{ $booking->booking_date }}</td>
                     <td>
-                        <a href="{{ route('bookings.edit', $booking->id) }}" class="btn btn-warning">Sửa</a>
+                        <a href="{{ route('bookings.edit', $booking->id) }}" class="btn btn-warning btn-sm">Sửa</a>
                         <form action="{{ route('bookings.destroy', $booking->id) }}" method="POST" style="display:inline;">
                             @csrf @method('DELETE')
-                            <button type="submit" class="btn btn-danger">Xóa</button>
+                            <button type="submit" class="btn btn-danger btn-sm">Xóa</button>
                         </form>
                     </td>
                 </tr>
             @endforeach
         </tbody>
     </table>
-@endsection  {{-- Đóng @section('content') đúng cách --}}
+@endsection

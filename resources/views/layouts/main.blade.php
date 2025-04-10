@@ -84,7 +84,43 @@
     max-width: 300px;
     z-index: 2; /* đảm bảo nó nổi hơn ảnh nếu cần */
 }
+.user-dropdown {
+        position: relative;
+        margin-left: 20px;
+    }
 
+    .user-icon {
+        cursor: pointer;
+        color: white;
+        display: flex;
+        align-items: center;
+    }
+
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        right: 0;
+        background-color: white;
+        min-width: 160px;
+        box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
+        border-radius: 6px;
+        z-index: 999;
+    }
+
+    .user-dropdown:hover .dropdown-content {
+        display: block;
+    }
+
+    .dropdown-content a {
+        padding: 12px 16px;
+        display: block;
+        color: black;
+        text-decoration: none;
+    }
+
+    .dropdown-content a:hover {
+        background-color: #f0f0f0;
+    }
 
     </style>
 </head>
@@ -95,13 +131,43 @@
         <img src="{{ asset('images/1.jpg') }}" alt="Logo" style="height: 50px; margin-right: 15px;">
         <h1 style="margin: 0;">Bảo Tàng Đá Quý</h1>
     </div>
-    <nav>
-        <a href="{{ route('home') }}">Trang chủ</a>
-        <a href="{{ route('login.form') }}">Đăng nhập</a>
-        <a href="{{ route('register.form') }}">Đăng ký</a>
-        <a href="{{ route('news.index') }}">Bài viết</a>
- 
-    </nav>
+    <nav style="display: flex; align-items: center;">
+    <a href="{{ route('home') }}">Trang chủ</a>
+    <a href="{{ route('news.index') }}">Bài viết</a>
+    <a href="{{ route('ticket.index') }}">Trưng bày-Vé tham quan</a>
+    @auth
+    <div class="user-dropdown">
+        <div class="user-icon">
+            @if (Auth::user()->avatar)
+                <img src="{{ asset('storage/' . Auth::user()->avatar) }}" 
+                     alt="Avatar" 
+                     style="width: 30px; height: 30px; border-radius: 50%; object-fit: cover;">
+            @else
+                <img src="https://via.placeholder.com/30" 
+                     alt="Avatar" 
+                     style="width: 30px; height: 30px; border-radius: 50%; object-fit: cover;">
+            @endif
+            <span style="margin-left: 5px;">{{ Auth::user()->name }}</span>
+        </div>
+        <div class="dropdown-content">
+        <a href="{{ route('users.profile') }}">Thông tin cá nhân</a>
+
+
+
+            <a href="{{ route('logout') }}"
+               onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+               Đăng xuất
+            </a>
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                @csrf
+            </form>
+        </div>
+    </div>
+@endauth
+
+
+</nav>
+
 </header>
 
     <!-- Hero Section -->
@@ -119,10 +185,7 @@
         </div>
     </div>
 
-    <!-- Breadcrumb -->
-    <div class="breadcrumb">
-        Trang chủ / <strong>Giới thiệu</strong>
-    </div>
+  
     <main style="background-color: #fdf7ef; padding: 40px 20px;">
     <!-- Giới thiệu chính -->
     <section style="display: flex; flex-wrap: wrap; gap: 40px; align-items: center; justify-content: center;">

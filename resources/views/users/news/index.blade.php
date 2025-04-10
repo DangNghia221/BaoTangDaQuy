@@ -8,23 +8,106 @@
 
     {{-- Bootstrap --}}
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
 </head>
 
 <body style="font-family: 'Roboto', sans-serif; margin: 0; background-color: #fdf7ef;">
+<!-- CSS trong <style> -->
+<style>
+    header, footer {
+        background-color: #5D4037;
+        color: white;
+        padding: 20px;
+        text-align: center;
+    }
+    nav a {
+        color: white;
+        margin: 0 10px;
+        text-decoration: none;
+        font-weight: bold;
+    }
+    .user-dropdown {
+        position: relative;
+        margin-left: 20px;
+    }
 
-    {{-- HEADER --}}
-    <header style="display: flex; align-items: center; justify-content: space-between; background-color: #5c3b32; padding: 10px 30px;">
-        <div style="display: flex; align-items: center;">
-            <img src="{{ asset('images/1.jpg') }}" alt="Logo" style="height: 50px; margin-right: 15px;">
-            <h1 style="margin: 0; color: white; font-size: 24px;">Bảo Tàng Đá Quý</h1>
+    .user-icon {
+        cursor: pointer;
+        color: white;
+        display: flex;
+        align-items: center;
+    }
+
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        right: 0;
+        background-color: white;
+        min-width: 160px;
+        box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
+        border-radius: 6px;
+        z-index: 999;
+    }
+
+    .user-dropdown:hover .dropdown-content {
+        display: block;
+    }
+
+    .dropdown-content a {
+        padding: 12px 16px;
+        display: block;
+        color: black;
+        text-decoration: none;
+    }
+
+    .dropdown-content a:hover {
+        background-color: #f0f0f0;
+    }
+</style>
+
+<!-- HTML phần <header> -->
+<header style="display: flex; align-items: center; justify-content: space-between;">
+    <div style="display: flex; align-items: center;">
+        <img src="{{ asset('images/1.jpg') }}" alt="Logo" style="height: 50px; margin-right: 15px;">
+        <h1 style="margin: 0;">Bảo Tàng Đá Quý</h1>
+    </div>
+    <nav style="display: flex; align-items: center;">
+        <a href="{{ route('home') }}">Trang chủ</a>
+        <a href="{{ route('news.index') }}">Bài viết</a>
+        <a href="{{ route('ticket.index') }}">Trưng bày-Vé tham quan</a>
+@auth
+    <div class="user-dropdown">
+        <div class="user-icon">
+            @if (Auth::user()->avatar)
+                <img src="{{ asset('storage/' . Auth::user()->avatar) }}" 
+                     alt="Avatar" 
+                     style="width: 30px; height: 30px; border-radius: 50%; object-fit: cover;">
+            @else
+                <img src="https://via.placeholder.com/30" 
+                     alt="Avatar" 
+                     style="width: 30px; height: 30px; border-radius: 50%; object-fit: cover;">
+            @endif
+            <span style="margin-left: 8px;">{{ Auth::user()->name }}</span>
         </div>
-        <nav style="display: flex; gap: 20px;">
-            <a href="{{ route('home') }}" style="color: white; text-decoration: none; font-weight: bold;">Trang chủ</a>
-            <a href="{{ route('login.form') }}" style="color: white; text-decoration: none; font-weight: bold;">Đăng nhập</a>
-            <a href="{{ route('register.form') }}" style="color: white; text-decoration: none; font-weight: bold;">Đăng ký</a>
-            <a href="{{ route('news.index') }}" style="color: white; text-decoration: none; font-weight: bold;">Bài viết</a>
-        </nav>
-    </header>
+
+
+            <div class="dropdown-content">
+            <a href="{{ route('users.profile') }}">Thông tin cá nhân</a>
+                <a href="{{ route('logout') }}"
+                   onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                   Đăng xuất
+                </a>
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                    @csrf
+                </form>
+            </div>
+        </div>
+        @endauth
+    </nav>
+</header>
+
 
     {{-- NỘI DUNG --}}
 <div style="padding: 40px;">
@@ -84,5 +167,8 @@
         </div>
     </div>
 </footer>
+<footer>
+        &copy; {{ date('Y') }} Bảo Tàng Đá Quý.
+    </footer>
 
 </html>

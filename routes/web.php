@@ -17,6 +17,26 @@ use App\Http\Controllers\RegisterController;
 */
 
 use App\Http\Controllers\User\NewsController;
+use App\Http\Controllers\User\TicketController;
+use App\Http\Controllers\User\ProfileController;
+Route::middleware(['auth'])->group(function () {
+    // Thông tin cá nhân người dùng (UserController)
+    Route::get('/user-info', [ProfileController::class, 'profile'])->name('users.profile');
+    Route::get('/user-info/edit', [ProfileController::class, 'edit'])->name('users.profile.edit');
+    Route::put('/user-info/update', [ProfileController::class, 'update'])->name('users.profile.update');
+
+});
+
+
+
+Route::post('/tickets/order/{id}', [TicketController::class, 'order'])->name('ticket.order');
+
+Route::get('/ticker/detail/{id}', [TicketController::class, 'show'])->name('ticket.detail');
+
+
+
+
+Route::get('/ve-tham-quan', [TicketController::class, 'index'])->name('ticket.index');
 
 Route::get('/bai-viet/{id}', [NewsController::class, 'show'])->name('posts.show');
 
@@ -28,7 +48,7 @@ Route::get('/bai-viet', [NewsController::class, 'index'])->name('news.index');
 
 // Trang chủ chuyển hướng đến đăng nhập
 Route::get('/', function () {
-    return redirect()->route('login.form');
+    return redirect()->route('login');
 });
 
 // Đăng ký
@@ -36,7 +56,7 @@ Route::get('register', [RegisterController::class, 'showRegistrationForm'])->nam
 Route::post('register', [RegisterController::class, 'register'])->name('register');
 
 // Đăng nhập
-Route::get('login', [LoginController::class, 'showLoginForm'])->name('login.form');
+Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('login', [LoginController::class, 'login'])->name('login.submit');
 
 // Trang chủ sau khi đăng nhập
@@ -47,6 +67,7 @@ Route::get('/home', [AdminController::class, 'index'])->name('home')->middleware
 Route::middleware(['auth'])->group(function () {
     // Thông tin cá nhân
     Route::match(['get', 'post'], '/admin/profile', [AdminController::class, 'profile'])->name('admin.profile');
+    
 });
 
 // ====== QUẢN TRỊ VIÊN (ADMIN) ======

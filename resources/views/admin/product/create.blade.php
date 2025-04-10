@@ -27,6 +27,10 @@
         <span class="input-group-text">VND</span>
     </div>
 </div>
+<div class="mb-3">
+    <label class="form-label">Quantity</label>
+    <input type="number" name="quantity" class="form-control" min="0" required>
+</div>
 
 
        

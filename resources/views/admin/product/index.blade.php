@@ -41,7 +41,8 @@
                 <th>ID</th>
                 <th>Name</th>
                 <th>Price</th>
-               
+                <th>Quantity</th>
+
                 <th>Image</th>
                 <th>Actions</th>
             </tr>
@@ -53,7 +54,8 @@
                     <td>{{ $product->name }}</td>
                     <td>{{ number_format($product->price, 0, ',', '.') }} VND</td>
 
-                   
+                    <td>{{ $product->quantity }}</td>
+
                     <td>
                         @if($product->image)
                             <img src="{{ asset('storage/' . $product->image) }}" width="50">

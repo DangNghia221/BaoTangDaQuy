@@ -19,27 +19,30 @@ class ProductController extends Controller
     }
 
     public function store(Request $request)
-    {
-        $request->validate([
-            'name' => 'required',
-            'price' => 'required|numeric',
-            'image' => 'nullable|image|mimes:jpg,png,jpeg|max:2048'
-        ]);
+{
+    $request->validate([
+        'name' => 'required',
+        'price' => 'required|numeric',
+        'quantity' => 'required|integer|min:0',
+        'image' => 'nullable|image|mimes:jpg,png,jpeg|max:2048'
+    ]);
 
-        $product = new Product();
-        $product->name = $request->name;
-        $product->description = $request->description;
-        $product->price = $request->price;
+    $product = new Product();
+    $product->name = $request->name;
+    $product->description = $request->description;
+    $product->price = $request->price;
+    $product->quantity = $request->quantity;
 
-        if ($request->hasFile('image')) {
-            $path = $request->file('image')->store('product', 'public');
-            $product->image = $path;
-        }
-
-        $product->save();
-
-        return redirect()->route('product.index')->with('success', 'Product created successfully.');
+    if ($request->hasFile('image')) {
+        $path = $request->file('image')->store('product', 'public');
+        $product->image = $path;
     }
+
+    $product->save();
+
+    return redirect()->route('product.index')->with('success', 'Product created successfully.');
+}
+
 
     public function edit(Product $product)
     {
@@ -54,11 +57,12 @@ class ProductController extends Controller
             'name' => 'required|string|max:255',
             'price' => 'required|numeric',
             'image' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048',
+            
         ]);
     
         $product->name = $request->name;
         $product->price = $request->price;
-    
+        $product->quantity = $request->quantity;
         // Kiểm tra và lưu ảnh mới (nếu có)
         if ($request->hasFile('image')) {
             // Xóa ảnh cũ nếu có

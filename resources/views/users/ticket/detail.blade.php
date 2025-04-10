@@ -2,23 +2,15 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <title>{{ $post->title }}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ $product->name }}</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <!-- Font Awesome -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    <style>
-    .post-content img {
-        max-width: 50% ;
-        height: auto !important;
-        display: block;
-        margin: 20px auto !important;
-        border-radius: 12px;
-    }
-</style>
-
 </head>
-<!-- CSS trong <style> -->
 <style>
     header, footer {
         background-color: #5D4037;
@@ -111,25 +103,98 @@
 </header>
 
 <body style="font-family: 'Roboto', sans-serif; background-color: #fdf7ef;">
+   
 
-  
+    {{-- NỘI DUNG --}}
+    <div class="container my-5">
+        <div class="row">
+            {{-- Cột trái: hình ảnh sản phẩm --}}
+            <div class="col-md-6">
+                @if ($product->image)
+                    <img src="{{ asset('storage/' . $product->image) }}" class="img-fluid rounded shadow mb-3" alt="{{ $product->name }}">
+                @else
+                    <img src="{{ asset('images/no-image.png') }}" class="img-fluid rounded shadow mb-3" alt="No Image">
+                @endif
+            </div>
 
-    <div class="container mt-5">
-        <h2 style="color: #9b1c1c;">{{ $post->title }}</h2>
+            {{-- Cột phải: chi tiết sản phẩm --}}
+            <div class="col-md-6">
+                <h2 class="text-danger">{{ $product->name }}</h2>
+                <div class="mb-2">
+                    {{-- Giả lập sao đánh giá --}}
+                    @for ($i = 0; $i < 5; $i++)
+                        <i class="fa{{ $i < 4 ? 's' : 'r' }} fa-star" style="color: gold;"></i>
+                    @endfor
+                </div>
+                <h4 class="text-success mb-3">{{ number_format($product->price, 0, ',', '.') }} VNĐ</h4>
 
-        @if($post->image)
-            <img src="{{ asset('storage/' . $post->image) }}" alt="{{ $post->title }}" style="width: 50%; max-height: 500px; object-fit: cover; border-radius: 12px;">
-        @endif
+                <p><strong>Số lượng còn:</strong> {{ $product->quantity }}</p>
+                <hr>
+                <h5>Mô tả sản phẩm:</h5>
+                <p>{{ $product->description }}</p>
 
-        {{-- 📌 Thêm class "post-content" để áp dụng style cho hình ảnh trong nội dung --}}
-        <div class="post-content mt-4" style="line-height: 1.7; font-size: 18px;">
-            {!! $post->content !!}
+                {{-- Nút đặt vé --}}
+                <form action="{{ route('ticket.order', $product->id) }}" method="POST" class="mt-4">
+    @csrf
+    <div class="input-group mb-3" style="max-width: 200px;">
+        <input type="number" name="quantity" class="form-control" min="1" max="{{ $product->quantity }}" value="1">
+        <button type="submit" class="btn btn-danger">Đặt vé</button>
+    </div>
+</form>
+
+            </div>
         </div>
 
-        <a href="{{ route('news.index') }}" class="btn btn-secondary mt-4">← Quay lại danh sách</a>
+        {{-- Dịch vụ tiện ích --}}
+        <div class="row text-center mt-5">
+            <div class="col-md-4">
+                <img src="{{ asset('images/ship.png') }}" alt="Ship" width="40">
+                <p class="fw-bold mt-2">SHIP HỎA TỐC</p>
+                <p>Trong nội thành</p>
+            </div>
+            <div class="col-md-4">
+                <img src="{{ asset('images/security.png') }}" alt="Secure" width="40">
+                <p class="fw-bold mt-2">BẢO MẬT</p>
+                <p>Bảo mật thông tin khách hàng</p>
+            </div>
+            <div class="col-md-4">
+                <img src="{{ asset('images/return.png') }}" alt="Return" width="40">
+                <p class="fw-bold mt-2">7 NGÀY ĐỔI TRẢ</p>
+                <p>Đổi trực tiếp tại cửa hàng</p>
+            </div>
+        </div>
     </div>
+    @if (session('success'))
+    <div id="success-alert" class="alert alert-success">{{ session('success') }}</div>
+@endif
+@if (session('error'))
+    <div id="error-alert" class="alert alert-danger">{{ session('error') }}</div>
+@endif
 
-</body>
+<script>
+    // Ẩn alert sau 3 giây
+    setTimeout(function() {
+        const successAlert = document.getElementById('success-alert');
+        const errorAlert = document.getElementById('error-alert');
+
+        if (successAlert) {
+            successAlert.style.transition = 'opacity 0.5s ease';
+            successAlert.style.opacity = '0';
+            setTimeout(() => successAlert.remove(), 500);
+        }
+
+        if (errorAlert) {
+            errorAlert.style.transition = 'opacity 0.5s ease';
+            errorAlert.style.opacity = '0';
+            setTimeout(() => errorAlert.remove(), 500);
+        }
+    }, 3000);
+</script>
+<!-- Nút quay lại danh sách sản phẩm -->
+<a href="{{ route('ticket.index') }}" class="btn btn-secondary mt-2">
+    <i class="fas fa-arrow-left"></i> Quay lại danh sách vé
+</a>
+
 <footer style="background-color: #7b1e1e; color: white; padding: 40px 20px;">
     <div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 20px;">
         
@@ -158,4 +223,5 @@
 <footer>
         &copy; {{ date('Y') }} Bảo Tàng Đá Quý.
     </footer>
+</body>
 </html>

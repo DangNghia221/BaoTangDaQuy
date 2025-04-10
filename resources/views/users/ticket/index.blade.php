@@ -2,20 +2,12 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <title>{{ $post->title }}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vé Tham Quan</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-    <style>
-    .post-content img {
-        max-width: 50% ;
-        height: auto !important;
-        display: block;
-        margin: 20px auto !important;
-        border-radius: 12px;
-    }
-</style>
 
 </head>
 <!-- CSS trong <style> -->
@@ -111,26 +103,43 @@
 </header>
 
 <body style="font-family: 'Roboto', sans-serif; background-color: #fdf7ef;">
+ 
 
-  
+    {{-- NỘI DUNG --}}
+    <div style="padding: 40px;">
+        <h2 style="text-align: center; color: #9b1c1c; margin-bottom: 40px;">Mua Vé Tham Quan</h2>
 
-    <div class="container mt-5">
-        <h2 style="color: #9b1c1c;">{{ $post->title }}</h2>
-
-        @if($post->image)
-            <img src="{{ asset('storage/' . $post->image) }}" alt="{{ $post->title }}" style="width: 50%; max-height: 500px; object-fit: cover; border-radius: 12px;">
+        <div class="container">
+            <div class="row">
+                @foreach ($products as $product)
+                <div class="col-md-4 mb-4">
+    <div class="card h-100 shadow">
+        @if ($product->image)
+            <a href="{{ url('ticker/detail/' . $product->id) }}">
+                <img src="{{ asset('storage/' . $product->image) }}" class="card-img-top" alt="{{ $product->name }}">
+            </a>
         @endif
-
-        {{-- 📌 Thêm class "post-content" để áp dụng style cho hình ảnh trong nội dung --}}
-        <div class="post-content mt-4" style="line-height: 1.7; font-size: 18px;">
-            {!! $post->content !!}
+        <div class="card-body">
+            <h5 class="card-title text-danger">
+                <a href="{{ url('ticker/detail/' . $product->id) }}" style="text-decoration: none; color: #dc3545;">
+                    {{ $product->name }}
+                </a>
+            </h5>
+            <p class="card-text">{{ Str::limit($product->description, 100) }}</p>
+            <p class="card-text fw-bold">{{ number_format($product->price, 0, ',', '.') }} VNĐ</p>
         </div>
-
-        <a href="{{ route('news.index') }}" class="btn btn-secondary mt-4">← Quay lại danh sách</a>
+    </div>
+</div>
+                @endforeach
+            <div class="d-flex justify-content-center mt-5">
+        {{ $products->links('pagination::bootstrap-4') }}
     </div>
 
-</body>
-<footer style="background-color: #7b1e1e; color: white; padding: 40px 20px;">
+            </div>
+        </div>
+    </div>
+
+    <footer style="background-color: #7b1e1e; color: white; padding: 40px 20px;">
     <div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 20px;">
         
         <!-- Bên trái: Thông tin bảo tàng -->
@@ -158,4 +167,5 @@
 <footer>
         &copy; {{ date('Y') }} Bảo Tàng Đá Quý.
     </footer>
+</body>
 </html>

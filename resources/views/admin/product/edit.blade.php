@@ -28,6 +28,13 @@
                 <small class="text-danger">{{ $message }}</small>
             @enderror
         </div>
+        <div class="mb-3">
+    <label for="quantity" class="form-label">Quantity</label>
+    <input type="number" id="quantity" name="quantity" class="form-control" value="{{ old('quantity', $product->quantity) }}" required>
+    @error('quantity')
+        <small class="text-danger">{{ $message }}</small>
+    @enderror
+</div>
 
         <div class="mb-3">
             <label for="image" class="form-label">Product Image</label>
