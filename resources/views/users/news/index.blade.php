@@ -13,9 +13,75 @@
 
 </head>
 
+<!-- Nút trở lên đầu trang -->
+<button id="backToTopBtn" title="Lên đầu trang">
+    <i class="fas fa-arrow-up"></i>
+</button>
+
+<script>
+    const backToTopBtn = document.getElementById("backToTopBtn");
+
+    window.addEventListener("scroll", () => {
+        const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+        const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+
+        // Nếu cuộn đến 80% thì hiển thị nút
+        if (scrollTop / scrollHeight > 0.8) {
+            backToTopBtn.classList.add("show");
+        } else {
+            backToTopBtn.classList.remove("show");
+        }
+    });
+
+    backToTopBtn.addEventListener("click", () => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    });
+</script>
+
 <body style="font-family: 'Roboto', sans-serif; margin: 0; background-color: #fdf7ef;">
 <!-- CSS trong <style> -->
 <style>
+     header {
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        background-color: #5D4037;
+        }
+ /* icon về đầu trang */
+  #backToTopBtn {
+    opacity: 0;
+    visibility: hidden;
+    position: fixed;
+    bottom: 40px;
+    right: 30px;
+    z-index: 99;
+    width: 50px;
+    height: 50px;
+    background-color: #b30000;
+    color: white;
+    border: none;
+    outline: none;
+    border-radius: 50%;
+    font-size: 18px;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    transition: opacity 0.5s ease, visibility 0.5s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#backToTopBtn.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+#backToTopBtn:hover {
+    background-color: #8b0000;
+}
     header, footer {
         background-color: #5D4037;
         color: white;
@@ -77,7 +143,7 @@
         <a href="{{ route('home') }}">Trang chủ</a>
         <a href="{{ route('news.index') }}">Bài viết</a>
         <a href="{{ route('ticket.index') }}">Trưng bày-Vé tham quan</a>
-@auth
+        @auth
     <div class="user-dropdown">
         <div class="user-icon">
             @if (Auth::user()->avatar)
@@ -95,6 +161,7 @@
 
             <div class="dropdown-content">
             <a href="{{ route('users.profile') }}">Thông tin cá nhân</a>
+            <a href="{{ route('user.invoices.index') }}">Hóa đơn của tôi</a>
                 <a href="{{ route('logout') }}"
                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                    Đăng xuất

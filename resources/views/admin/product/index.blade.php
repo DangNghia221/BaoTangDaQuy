@@ -7,7 +7,7 @@
 @endsection
 
 @section('content')
-    <a href="{{ route('product.create') }}" class="btn btn-success mb-3">Add Product</a>
+    <a href="{{ route('product.create') }}" class="btn btn-success mb-3"> Thêm Sản Phẩm</a>
 
     @if(session('success'))
     <div class="toast-container position-fixed top-0 end-0 p-3">
@@ -39,12 +39,12 @@
         <thead>
             <tr>
                 <th>ID</th>
-                <th>Name</th>
-                <th>Price</th>
-                <th>Quantity</th>
+                <th>Tên Sản phẩm</th>
+                <th>Giá tiền</th>
+                <th>Số lượng</th>
 
-                <th>Image</th>
-                <th>Actions</th>
+                <th>Ảnh</th>
+                <th>Hành động</th>
             </tr>
         </thead>
         <tbody>
@@ -62,7 +62,7 @@
                         @endif
                     </td>
                     <td>
-                        <a href="{{ route('product.edit', $product->id) }}" class="btn btn-warning">Edit</a>
+                        <a href="{{ route('product.edit', $product->id) }}" class="btn btn-warning">Sửa</a>
                         <form action="{{ route('product.destroy', $product->id) }}" method="POST" style="display:inline;">
                             @csrf
                             @method('DELETE')

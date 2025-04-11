@@ -3,41 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ $product->name }}</title>
+    <title>Bài viết</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+
+    {{-- Bootstrap --}}
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <!-- Font Awesome -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
+</head>
+<!-- Nút trở lên đầu trang -->
 <button id="backToTopBtn" title="Lên đầu trang">
     <i class="fas fa-arrow-up"></i>
 </button>
 
-<script>
-    const backToTopBtn = document.getElementById("backToTopBtn");
-
-    window.addEventListener("scroll", () => {
-        const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
-        const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-
-        // Nếu cuộn đến 80% thì hiển thị nút
-        if (scrollTop / scrollHeight > 0.8) {
-            backToTopBtn.classList.add("show");
-        } else {
-            backToTopBtn.classList.remove("show");
-        }
-    });
-
-    backToTopBtn.addEventListener("click", () => {
-        window.scrollTo({
-            top: 0,
-            behavior: 'smooth'
-        });
-    });
-</script>
-
-</head>
+<body style="font-family: 'Roboto', sans-serif; margin: 0; background-color: #fdf7ef;">
+<!-- CSS trong <style> -->
 <style>
      header {
         position: sticky;
@@ -45,7 +26,7 @@
         z-index: 1000;
         background-color: #5D4037;
         }
-     /* icon đầu trang */
+   /* icon đầu trang */
   #backToTopBtn {
     opacity: 0;
     visibility: hidden;
@@ -77,6 +58,7 @@
 #backToTopBtn:hover {
     background-color: #8b0000;
 }
+
     header, footer {
         background-color: #5D4037;
         color: white;
@@ -150,8 +132,10 @@
                      alt="Avatar" 
                      style="width: 30px; height: 30px; border-radius: 50%; object-fit: cover;">
             @endif
-                <span style="margin-left: 5px;">{{ Auth::user()->name }}</span>
-            </div>
+            <span style="margin-left: 8px;">{{ Auth::user()->name }}</span>
+        </div>
+
+
             <div class="dropdown-content">
             <a href="{{ route('users.profile') }}">Thông tin cá nhân</a>
             <a href="{{ route('user.invoices.index') }}">Hóa đơn của tôi</a>
@@ -167,99 +151,49 @@
         @endauth
     </nav>
 </header>
+<h2>Hóa đơn của tôi</h2>
 
-<body style="font-family: 'Roboto', sans-serif; background-color: #fdf7ef;">
-   
-
-    {{-- NỘI DUNG --}}
-    <div class="container my-5">
-        <div class="row">
-            {{-- Cột trái: hình ảnh sản phẩm --}}
-            <div class="col-md-6">
-                @if ($product->image)
-                    <img src="{{ asset('storage/' . $product->image) }}" class="img-fluid rounded shadow mb-3" alt="{{ $product->name }}">
-                @else
-                    <img src="{{ asset('images/no-image.png') }}" class="img-fluid rounded shadow mb-3" alt="No Image">
-                @endif
-            </div>
-
-            {{-- Cột phải: chi tiết sản phẩm --}}
-            <div class="col-md-6">
-                <h2 class="text-danger">{{ $product->name }}</h2>
-                <div class="mb-2">
-                    {{-- Giả lập sao đánh giá --}}
-                    @for ($i = 0; $i < 5; $i++)
-                        <i class="fa{{ $i < 4 ? 's' : 'r' }} fa-star" style="color: gold;"></i>
-                    @endfor
-                </div>
-                <h4 class="text-success mb-3">{{ number_format($product->price, 0, ',', '.') }} VNĐ</h4>
-
-                <p><strong>Số lượng còn:</strong> {{ $product->quantity }}</p>
-                <hr>
-                <h5>Mô tả sản phẩm:</h5>
-                <p>{{ $product->description }}</p>
-
-                {{-- Nút đặt vé --}}
-                <form action="{{ route('ticket.order', $product->id) }}" method="POST" class="mt-4">
-    @csrf
-    <div class="input-group mb-3" style="max-width: 200px;">
-        <input type="number" name="quantity" class="form-control" min="1" max="{{ $product->quantity }}" value="1">
-        <button type="submit" class="btn btn-danger">Đặt vé</button>
-    </div>
-</form>
-
-            </div>
-        </div>
-
-        {{-- Dịch vụ tiện ích --}}
-        <div class="row text-center mt-5">
-            <div class="col-md-4">
-                <img src="{{ asset('images/ship.png') }}" alt="Ship" width="40">
-                <p class="fw-bold mt-2">SHIP HỎA TỐC</p>
-                <p>Trong nội thành</p>
-            </div>
-            <div class="col-md-4">
-                <img src="{{ asset('images/security.png') }}" alt="Secure" width="40">
-                <p class="fw-bold mt-2">BẢO MẬT</p>
-                <p>Bảo mật thông tin khách hàng</p>
-            </div>
-            <div class="col-md-4">
-                <img src="{{ asset('images/return.png') }}" alt="Return" width="40">
-                <p class="fw-bold mt-2">7 NGÀY ĐỔI TRẢ</p>
-                <p>Đổi trực tiếp tại cửa hàng</p>
-            </div>
+<div class="container mt-5 mb-5">
+    <div class="card shadow rounded p-4">
+        <h4 class="mb-4"><i class="fas fa-file-invoice"></i> Hóa đơn của tôi</h4>
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover text-center align-middle">
+                <thead class="table-light">
+                    <tr>
+                        <th>ID</th>
+                        <th>Sản phẩm</th>
+                        <th>Số lượng</th>
+                        <th>Giá tiền</th>
+                        <th>Trạng thái</th>
+                        <th>Ngày đặt</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($bookings as $booking)
+                        <tr>
+                            <td>{{ $booking->id }}</td>
+                            <td>{{ $booking->product->name ?? 'Không rõ' }}</td>
+                            <td>{{ $booking->quantity }}</td>
+                            <td>{{ number_format($booking->price, 0, ',', '.') }} đ</td>
+                            <td>
+                                @if($booking->status == 'pending')
+                                    <span class="badge bg-warning text-dark">Đang chờ xử lý</span>
+                                @elseif($booking->status == 'confirmed')
+                                    <span class="badge bg-success">Đã xác nhận</span>
+                                @elseif($booking->status == 'cancelled')
+                                    <span class="badge bg-danger">Đã hủy</span>
+                                @else
+                                    <span class="badge bg-secondary">Không rõ</span>
+                                @endif
+                            </td>
+                            <td>{{ $booking->created_at }}</td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
         </div>
     </div>
-    @if (session('success'))
-    <div id="success-alert" class="alert alert-success">{{ session('success') }}</div>
-@endif
-@if (session('error'))
-    <div id="error-alert" class="alert alert-danger">{{ session('error') }}</div>
-@endif
-
-<script>
-    // Ẩn alert sau 3 giây
-    setTimeout(function() {
-        const successAlert = document.getElementById('success-alert');
-        const errorAlert = document.getElementById('error-alert');
-
-        if (successAlert) {
-            successAlert.style.transition = 'opacity 0.5s ease';
-            successAlert.style.opacity = '0';
-            setTimeout(() => successAlert.remove(), 500);
-        }
-
-        if (errorAlert) {
-            errorAlert.style.transition = 'opacity 0.5s ease';
-            errorAlert.style.opacity = '0';
-            setTimeout(() => errorAlert.remove(), 500);
-        }
-    }, 3000);
-</script>
-<!-- Nút quay lại danh sách sản phẩm -->
-<a href="{{ route('ticket.index') }}" class="btn btn-secondary mt-2">
-    <i class="fas fa-arrow-left"></i> Quay lại danh sách vé
-</a>
+</div>
 
 <footer style="background-color: #7b1e1e; color: white; padding: 40px 20px;">
     <div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 20px;">
@@ -286,8 +220,31 @@
         </div>
     </div>
 </footer>
+<script>
+    const backToTopBtn = document.getElementById("backToTopBtn");
+
+    window.addEventListener("scroll", () => {
+        const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+        const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+
+        // Nếu cuộn đến 80% thì hiển thị nút
+        if (scrollTop / scrollHeight > 0.8) {
+            backToTopBtn.classList.add("show");
+        } else {
+            backToTopBtn.classList.remove("show");
+        }
+    });
+
+    backToTopBtn.addEventListener("click", () => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    });
+</script>
+
+
 <footer>
         &copy; {{ date('Y') }} Bảo Tàng Đá Quý.
     </footer>
-</body>
-</html>
+    </html>

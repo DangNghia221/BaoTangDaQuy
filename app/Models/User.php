@@ -9,6 +9,9 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Database\Eloquent\SoftDeletes;
+
+
 
 class User extends Authenticatable
 {
@@ -17,12 +20,32 @@ class User extends Authenticatable
     use HasProfilePhoto;
     use Notifiable;
     use TwoFactorAuthenticatable;
-
+    use HasFactory, Notifiable, SoftDeletes;
     /**
      * The attributes that are mass assignable.
      *
      * @var array<int, string>
      */
+    public function adminlte_image()
+    {
+        // Trả về link ảnh avatar, ví dụ mặc định
+        return asset('storage/avatars/default-avatar.png');
+
+        // Hoặc nếu có cột avatar trong DB:
+        // return $this->avatar ? asset('storage/' . $this->avatar) : asset('images/avatar.png');
+    }
+
+    public function adminlte_desc()
+    {
+        return 'Quản trị viên'; // Hoặc lấy từ DB: $this->usertype;
+    }
+
+    public function adminlte_profile_url()
+    {
+        return route('admin.profile'); // link tới trang cá nhân
+    }
+    
+
     protected $fillable = [
         'name',
         'email',

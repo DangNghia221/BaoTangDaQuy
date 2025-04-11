@@ -3,6 +3,12 @@
 <head>
     <title>Chỉnh sửa thông tin cá nhân</title>
     <style>
+         header {
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        background-color: #5D4037;
+        }
         /* Reset mặc định */
         * {
             margin: 0;
@@ -149,6 +155,7 @@
                 </div>
                 <div class="dropdown-content">
                     <a href="{{ route('users.profile') }}">Thông tin cá nhân</a>
+                    <a href="{{ route('user.invoices.index') }}">Hóa đơn của tôi</a>
                     <a href="{{ route('logout') }}"
                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                         Đăng xuất

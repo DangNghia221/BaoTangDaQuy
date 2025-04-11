@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Facades\View;
 use Illuminate\Http\Request;
 use App\Models\User;
 
@@ -10,6 +10,27 @@ class UserController extends Controller
     /**
      * Constructor để thêm middleware
      */
+    public function restore($id)
+{
+    $user = User::onlyTrashed()->findOrFail($id);
+    $user->restore();
+
+    return redirect()->route('users.trashed')->with('success', 'User đã được khôi phục!');
+}
+
+public function forceDelete($id)
+{
+    $user = User::onlyTrashed()->findOrFail($id);
+    $user->forceDelete();
+
+    return redirect()->route('users.trashed')->with('success', 'User đã xoá vĩnh viễn!');
+}
+
+    public function trashed()
+{
+    $users = User::onlyTrashed()->get(); // Lấy user đã bị soft delete
+    return view('admin.users.trashed', compact('users'));
+}
     public function __construct()
     {
         $this->middleware('auth');
@@ -21,7 +42,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::select('id', 'name', 'email', 'usertype')->get();
+        $users = User::whereNull('deleted_at')->select('id', 'name', 'email', 'usertype')->get();
+
         return view('admin.users.index', compact('users'));
     }
 
@@ -91,12 +113,13 @@ class UserController extends Controller
     public function destroy(string $id)
     {
         $user = User::findOrFail($id);
-
+    
         if ($user->usertype === 'admin') {
             return redirect()->route('users.index')->with('error', 'Không thể xoá admin!');
         }
-
-        $user->delete();
-        return redirect()->route('users.index')->with('success', 'User deleted successfully!');
+    
+        $user->delete(); // Đây là xóa mềm
+        return redirect()->route('users.index')->with('success', 'User đã bị xóa khỏi danh sách!');
     }
+    
 }

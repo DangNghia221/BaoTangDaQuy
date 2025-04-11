@@ -11,24 +11,24 @@
         @csrf
 
         <div class="mb-3">
-            <label class="form-label">Name</label>
+            <label class="form-label">Tên Sản Phẩm</label>
             <input type="text" name="name" class="form-control">
         </div>
 
         <div class="mb-3">
-            <label class="form-label">Description</label>
+            <label class="form-label">Mô Tả</label>
             <textarea name="description" class="form-control"></textarea>
         </div>
 
         <div class="mb-3">
-    <label class="form-label">Price</label>
+    <label class="form-label">Giá Tiền</label>
     <div class="input-group">
         <input type="number" name="price" class="form-control" min="0" step="1000">
         <span class="input-group-text">VND</span>
     </div>
 </div>
 <div class="mb-3">
-    <label class="form-label">Quantity</label>
+    <label class="form-label">Số Lượng</label>
     <input type="number" name="quantity" class="form-control" min="0" required>
 </div>
 
@@ -36,11 +36,11 @@
        
 
         <div class="mb-3">
-            <label class="form-label">Image</label>
+            <label class="form-label">Ảnh</label>
             <input type="file" name="image" class="form-control">
         </div>
 
-        <button type="submit" class="btn btn-primary">Add Product</button>
-        <a href="{{ route('product.index') }}" class="btn btn-secondary">Back</a>
+        <button type="submit" class="btn btn-primary">Thêm Sản Phẩm</button>
+        <a href="{{ route('product.index') }}" class="btn btn-secondary">Quay Lại</a>
     </form>
 @endsection

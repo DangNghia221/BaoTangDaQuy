@@ -19,6 +19,23 @@ use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\User\NewsController;
 use App\Http\Controllers\User\TicketController;
 use App\Http\Controllers\User\ProfileController;
+
+use App\Http\Controllers\User\InvoiceController;
+
+Route::get('/users/trashed', [UserController::class, 'trashed'])->name('users.trashed');
+// Khôi phục user đã xóa
+Route::put('/users/restore/{id}', [UserController::class, 'restore'])->name('users.restore');
+
+// Xóa vĩnh viễn user
+Route::delete('/users/force-delete/{id}', [UserController::class, 'forceDelete'])->name('users.forceDelete');
+
+
+Route::middleware('auth')->group(function () {
+    Route::get('/user/invoices', [App\Http\Controllers\User\InvoiceController::class, 'index'])
+        ->name('user.invoices.index');
+});
+
+
 Route::middleware(['auth'])->group(function () {
     // Thông tin cá nhân người dùng (UserController)
     Route::get('/user-info', [ProfileController::class, 'profile'])->name('users.profile');
@@ -60,7 +77,10 @@ Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('login', [LoginController::class, 'login'])->name('login.submit');
 
 // Trang chủ sau khi đăng nhập
-Route::get('/home', [AdminController::class, 'index'])->name('home')->middleware('auth');
+Route::get('/home', [AdminController::class, 'index'])
+    ->name('home')
+    ->middleware(['auth', 'admin']); // <-- thêm admin middleware
+
 
 // ====== NGƯỜI DÙNG ĐÃ ĐĂNG NHẬP ======
 

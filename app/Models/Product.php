@@ -9,8 +9,10 @@ class Product extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'price'];
+    protected $table = 'products';
 
+    protected $fillable = ['name', 'price'];
+    
     // Mối quan hệ ngược lại với Booking
     public function bookings()
     {
