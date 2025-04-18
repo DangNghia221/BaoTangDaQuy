@@ -20,6 +20,13 @@
                 <small class="text-danger">{{ $message }}</small>
             @enderror
         </div>
+        <div class="mb-3">
+    <label for="description" class="form-label">Mô Tả Sản Phẩm</label>
+    <textarea id="description" name="description" class="form-control" rows="4">{{ old('description', $product->description) }}</textarea>
+    @error('description')
+        <small class="text-danger">{{ $message }}</small>
+    @enderror
+</div>
 
         <div class="mb-3">
             <label for="price" class="form-label">Giá Tiền (VND)</label>

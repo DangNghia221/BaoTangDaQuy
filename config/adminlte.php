@@ -327,7 +327,11 @@ return [
           
             'label_color' => 'success',
         ],
-        
+        [
+            'text' => 'Quản lý thông tin web',
+            'url' => 'admin/settings',
+            'icon' => 'fas fa-fw fa-cog',
+        ],
         [
             'text' => 'Thông tin admin',
             'url' => 'admin/profile',
@@ -353,6 +357,11 @@ return [
                     'icon' => 'fas fa-fw fa-folder',
                 ],
             ],
+        ],
+        [
+            'text' => 'Thư viện',
+            'url' => 'admin/libary',
+            'icon' => 'fas fa-fw fa-book',
         ],
         [
             'text' => 'Đặt vé',

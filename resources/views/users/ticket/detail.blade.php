@@ -266,7 +266,7 @@
         
         <!-- Bên trái: Thông tin bảo tàng -->
         <div style="flex: 1; min-width: 280px; margin-bottom: 20px; text-align: left;padding-left: 80px;">
-            <h3 style="color: #ffd700;">Bảo Tàng Đỗ Hùng</h3>
+            <h3 style="color: #ffd700;">Bảo Tàng Đặng Nghĩa</h3>
             <p><strong>Địa chỉ:</strong> 44 Đ. Nguyễn Khuyến, Tân An, Ninh Kiều, Cần Thơ 900000</p>
             <p><strong>Tầng trệt (G):</strong> Đá quý Việt Nam</p>
             <p><strong>Tầng 1-3:</strong> Đá quý nổi tiếng</p>

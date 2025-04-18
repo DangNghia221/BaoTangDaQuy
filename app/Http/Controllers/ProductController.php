@@ -9,10 +9,29 @@ class ProductController extends Controller
 {
     public function index()
     {
-        $products = Product::all();
-        return view('admin.product.index', compact('products'));
+        // Lấy sản phẩm chưa bị xóa
+        $products = Product::whereNull('deleted_at')->get();
+    
+        // Nếu muốn truyền thêm danh sách sản phẩm đã xóa:
+        $deletedProducts = Product::onlyTrashed()->get();
+    
+        return view('admin.product.index', compact('products', 'deletedProducts'));
     }
+    public function trashed()
+{
+    $deletedProducts = Product::onlyTrashed()->get();
+    return view('admin.product.trashed', compact('deletedProducts'));
+}
+    public function restore($id)
+    {
+        $product = Product::withTrashed()->findOrFail($id);
+        $product->restore();
+    
+        return redirect()->route('product.index')->with('success', 'Sản phẩm đã được khôi phục!');
+    }
+    
 
+    
     public function create()
     {
         return view('admin.product.create');
@@ -83,7 +102,8 @@ class ProductController extends Controller
 
     public function destroy(Product $product)
     {
-        $product->delete();
-        return redirect()->route('product.index')->with('success', 'Product deleted successfully.');
+        $product->delete(); // Soft delete
+        return redirect()->route('product.index')->with('success', 'Sản phẩm đã được ẩn.');
     }
+    
 }

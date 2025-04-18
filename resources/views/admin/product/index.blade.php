@@ -8,6 +8,7 @@
 
 @section('content')
     <a href="{{ route('product.create') }}" class="btn btn-success mb-3"> Thêm Sản Phẩm</a>
+    <a href="{{ route('product.trashed') }}" class="btn btn-warning mb-3"> Xem sản phẩm đã xoá</a>
 
     @if(session('success'))
     <div class="toast-container position-fixed top-0 end-0 p-3">

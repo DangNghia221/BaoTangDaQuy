@@ -55,7 +55,7 @@
                                     <td>{{ $user->email }}</td>
                                     <td>{{ $user->usertype }}</td> 
                                     <td>
-                                        <a href="{{ route('users.edit', $user->id) }}" class="btn btn-primary btn-sm">Sửa</a>
+                                        
 
                                         <form action="{{ route('users.destroy', $user->id) }}" method="POST" style="display:inline;">
                                             @csrf

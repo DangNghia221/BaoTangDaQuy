@@ -9,7 +9,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
-
+use App\Http\Controllers\SettingController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -21,6 +21,13 @@ use App\Http\Controllers\User\TicketController;
 use App\Http\Controllers\User\ProfileController;
 
 use App\Http\Controllers\User\InvoiceController;
+use App\Http\Controllers\LibraryController; 
+
+Route::prefix('admin')->group(function () {
+    Route::resource('libary', \App\Http\Controllers\LibaryController::class)->only(['index', 'store', 'destroy']);
+});
+
+
 
 Route::get('/users/trashed', [UserController::class, 'trashed'])->name('users.trashed');
 // Khôi phục user đã xóa
@@ -76,11 +83,8 @@ Route::post('register', [RegisterController::class, 'register'])->name('register
 Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('login', [LoginController::class, 'login'])->name('login.submit');
 
-// Trang chủ sau khi đăng nhập
-Route::get('/home', [AdminController::class, 'index'])
-    ->name('home')
-    ->middleware(['auth', 'admin']); // <-- thêm admin middleware
-
+// Trang chủ sau khi đăng nhậpp
+Route::get('/home', [AdminController::class, 'index'])->name('home')->middleware('auth');
 
 // ====== NGƯỜI DÙNG ĐÃ ĐĂNG NHẬP ======
 
@@ -117,8 +121,15 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
 
     // Quản lý sản phẩm
     Route::resource('product', ProductController::class);
+    Route::get('products/{id}/restore', [ProductController::class, 'restore'])->name('product.restore');
+    Route::get('/products/trashed', [ProductController::class, 'trashed'])->name('product.trashed');
 
     // Quản lý người dùng
     Route::get('/users', [UserController::class, 'index'])->name('admin.users.index');
     Route::resource('users', UserController::class);
+    // Quản lý thông tin web
+    Route::get('settings', [SettingController::class, 'index'])->name('admin.settings.index');
+    Route::put('settings', [SettingController::class, 'update'])->name('admin.settings.update');
+    
+    
 });

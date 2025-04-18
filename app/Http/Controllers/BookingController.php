@@ -95,7 +95,17 @@ use App\Models\User;
         
         public function destroy($id)
         {
-            Booking::findOrFail($id)->delete();
-            return redirect()->route('bookings.index')->with('success', 'Xóa đặt vé thành công!');
+            $booking = Booking::findOrFail($id);
+        
+            // Khôi phục lại số lượng sản phẩm
+            if ($booking->product) {
+                $booking->product->quantity += $booking->quantity;
+                $booking->product->save();
+            }
+        
+            $booking->delete();
+        
+            return redirect()->route('bookings.index')->with('success', 'Đã xóa đặt vé và cập nhật tồn kho.');
         }
+        
     }

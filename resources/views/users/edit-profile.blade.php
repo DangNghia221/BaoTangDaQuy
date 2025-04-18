@@ -208,7 +208,7 @@
     <div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 20px;">
     <!-- Bên trái: Thông tin bảo tàng -->
     <div style="flex: 1; min-width: 280px; margin-bottom: 20px; text-align: left; padding-left: 80px;">
-        <h3 style="color: #ffd700; margin-bottom: 20px;">Bảo Tàng Đỗ Hùng</h3>
+        <h3 style="color: #ffd700; margin-bottom: 20px;">Bảo Tàng Đặng Nghĩa</h3>
         
         <p style="margin-bottom: 12px; line-height: 1.6;"><strong>Địa chỉ:</strong> 44 Đ. Nguyễn Khuyến, Tân An, Ninh Kiều, Cần Thơ 900000</p>
         <p style="margin-bottom: 12px; line-height: 1.6;"><strong>Tầng trệt (G):</strong> Đá quý Việt Nam</p>
