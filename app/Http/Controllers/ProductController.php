@@ -69,35 +69,34 @@ class ProductController extends Controller
     }
 
     public function update(Request $request, $id)
-    {
-        $product = Product::findOrFail($id);
-    
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'price' => 'required|numeric',
-            'image' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048',
-            
-        ]);
-    
-        $product->name = $request->name;
-        $product->price = $request->price;
-        $product->quantity = $request->quantity;
-        // Kiểm tra và lưu ảnh mới (nếu có)
-        if ($request->hasFile('image')) {
-            // Xóa ảnh cũ nếu có
-            if ($product->image) {
-                Storage::delete('public/' . $product->image);
-            }
-    
-            // Lưu ảnh mới
-            $path = $request->file('image')->store('products', 'public');
-            $product->image = $path;
+{
+    $product = Product::findOrFail($id);
+
+    $request->validate([
+        'name' => 'required|string|max:255',
+        'price' => 'required|numeric',
+        'quantity' => 'required|integer|min:0',
+        'image' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048',
+    ]);
+
+    $product->name = $request->name;
+    $product->description = $request->description; // <--- THÊM DÒNG NÀY
+    $product->price = $request->price;
+    $product->quantity = $request->quantity;
+
+    if ($request->hasFile('image')) {
+        if ($product->image) {
+            Storage::delete('public/' . $product->image);
         }
-    
-        $product->save();
-    
-        return redirect()->route('product.index')->with('success', 'Product updated successfully!');
+        $path = $request->file('image')->store('products', 'public');
+        $product->image = $path;
     }
+
+    $product->save();
+
+    return redirect()->route('product.index')->with('success', 'Product updated successfully!');
+}
+
     
 
     public function destroy(Product $product)

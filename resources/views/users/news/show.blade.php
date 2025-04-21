@@ -7,6 +7,8 @@
     <!-- Font Awesome -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
+<!-- Favicon -->
+<link rel="icon" type="image/png" href="{{ asset('storage/' . $setting->favicon) }}">
 <button id="backToTopBtn" title="Lên đầu trang">
     <i class="fas fa-arrow-up"></i>
 </button>
@@ -35,65 +37,118 @@
 </script>
 
 </head>
-    <style>
-         header {
+   
+<!-- CSS trong <style> -->
+<style>
+      .post-content p,
+        .post-content li,
+        .post-content span,
+        .post-content h1,
+        .post-content h2,
+        .post-content h3 {
+            color: #D3D3D3 !important;
+        }
+
+        .post-content a {
+           
+            text-decoration: underline;
+        }
+     header {
         position: sticky;
         top: 0;
         z-index: 1000;
-        background-color: #5D4037;
+        background-color: #fff;
+        padding: 5px; 
         }
-    .post-content img {
-        max-width: 50% ;
-        height: auto !important;
-        display: block;
-        margin: 20px auto !important;
-        border-radius: 12px;
+ /* icon về đầu trang */
+ nav a {
+        color: white;
+        margin: 0 10px;
+        text-decoration: none;
+        font-weight: bold;
+        position: relative;
+        padding-bottom: 5px;
     }
-    
- /* icon đầu trang */
-  #backToTopBtn {
-    opacity: 0;
-    visibility: hidden;
-    position: fixed;
-    bottom: 40px;
-    right: 30px;
-    z-index: 99;
-    width: 50px;
-    height: 50px;
-    background-color: #b30000;
-    color: white;
-    border: none;
-    outline: none;
-    border-radius: 50%;
-    font-size: 18px;
-    cursor: pointer;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-    transition: opacity 0.5s ease, visibility 0.5s ease;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
 
-#backToTopBtn.show {
-    opacity: 1;
-    visibility: visible;
-}
+    nav a:hover {
+        color: white;
+    }
 
-#backToTopBtn:hover {
-    background-color: #8b0000;
-}
+    nav a:hover::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background-color: white;
+        animation: underline-animation 0.3s ease-in-out;
+    }
+
+    @keyframes underline-animation {
+        from {
+            width: 0;
+        }
+
+        to {
+            width: 100%;
+        }
+    }
+
+    #backToTopBtn {
+        opacity: 0;
+        visibility: hidden;
+        position: fixed;
+        bottom: 40px;
+        right: 30px;
+        z-index: 99;
+        width: 50px;
+        height: 50px;
+        background-color: #f1f1f1;
+        color: #333;
+        border: none;
+        outline: none;
+        border-radius: 50%;
+        font-size: 18px;
+        cursor: pointer;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        transition: opacity 0.5s ease, visibility 0.5s ease, background-color 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    #backToTopBtn.show {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    #backToTopBtn:hover {
+        background-color: #4CAF50;
+        color: white;
+    }
+
+    #backToTopBtn i {
+        font-size: 24px;
+    }
     header, footer {
-        background-color: #5D4037;
+        background-color: #000;
         color: white;
         padding: 20px;
         text-align: center;
     }
+    header h1{
+             font-size: 28px; 
+            color :white
+           
+        }
     nav a {
         color: white;
         margin: 0 10px;
         text-decoration: none;
         font-weight: bold;
     }
+   
     .user-dropdown {
         position: relative;
         margin-left: 20px;
@@ -110,7 +165,7 @@
         display: none;
         position: absolute;
         right: 0;
-        background-color: white;
+        background-color: black;
         min-width: 160px;
         box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
         border-radius: 6px;
@@ -124,26 +179,29 @@
     .dropdown-content a {
         padding: 12px 16px;
         display: block;
-        color: black;
+        color: white;
         text-decoration: none;
     }
 
     .dropdown-content a:hover {
-        background-color: #f0f0f0;
+        background-color: #333;
     }
 </style>
 
 <!-- HTML phần <header> -->
 <header style="display: flex; align-items: center; justify-content: space-between;">
-    <div style="display: flex; align-items: center;">
-        <img src="{{ asset('images/1.jpg') }}" alt="Logo" style="height: 50px; margin-right: 15px;">
-        <h1 style="margin: 0;">Bảo Tàng Đá Quý</h1>
-    </div>
+<div style="display: flex; align-items: center;">
+        <!-- Hiển thị logo -->
+<img src="{{ asset('storage/' . $setting->logo) }}" alt="Logo Website" width="120">
+
+<h1> {{ $setting->site_name ?? 'Website của bạn' }}</h1>
+
+</div>
     <nav style="display: flex; align-items: center;">
-        <a href="{{ route('home') }}">Trang chủ</a>
-        <a href="{{ route('news.index') }}">Bài viết</a>
-        <a href="{{ route('ticket.index') }}">Trưng bày-Vé tham quan</a>
-        @auth
+    <a href="{{ route('home') }}">Home</a>
+    <a href="{{ route('news.index') }}">Post</a>
+    <a href="{{ route('ticket.index') }}">Exhibition-Ticket</a>
+    @auth
     <div class="user-dropdown">
         <div class="user-icon">
             @if (Auth::user()->avatar)
@@ -155,70 +213,76 @@
                      alt="Avatar" 
                      style="width: 30px; height: 30px; border-radius: 50%; object-fit: cover;">
             @endif
-                <span style="margin-left: 5px;">{{ Auth::user()->name }}</span>
-            </div>
-            <div class="dropdown-content">
-            <a href="{{ route('users.profile') }}">Thông tin cá nhân</a>
-            <a href="{{ route('user.invoices.index') }}">Hóa đơn của tôi</a>
-                <a href="{{ route('logout') }}"
-                   onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                   Đăng xuất
-                </a>
-                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                    @csrf
-                </form>
-            </div>
+            <span style="margin-left: 5px;">{{ Auth::user()->name }}</span>
         </div>
-        @endauth
+        <div class="dropdown-content">
+        <a href="{{ route('users.profile') }}">Personal information</a>
+        <a href="{{ route('user.invoices.index') }}">My bill</a>
+            <a href="{{ route('logout') }}"
+               onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+               Log out
+            </a>
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                @csrf
+            </form>
+        </div>
+    </div>
+@endauth
     </nav>
 </header>
 
-<body style="font-family: 'Roboto', sans-serif; background-color: #fdf7ef;">
 
-  
+<body style="font-family: 'Roboto', sans-serif; background-color: #000; color: #fff;">
 
     <div class="container mt-5">
-        <h2 style="color: #9b1c1c;">{{ $post->title }}</h2>
+        <h2 style="color:  #BEBEBE;">{{ $post->title }}</h2>
 
         @if($post->image)
-            <img src="{{ asset('storage/' . $post->image) }}" alt="{{ $post->title }}" style="width: 50%; max-height: 500px; object-fit: cover; border-radius: 12px;">
+            <img src="{{ asset('storage/' . $post->image) }}" 
+                 alt="{{ $post->title }}" 
+                 style="width: 50%; max-height: 500px; object-fit: cover; border-radius: 12px; margin-top: 20px;">
         @endif
 
-        {{-- 📌 Thêm class "post-content" để áp dụng style cho hình ảnh trong nội dung --}}
+        {{-- Nội dung bài viết --}}
         <div class="post-content mt-4" style="line-height: 1.7; font-size: 18px;">
             {!! $post->content !!}
         </div>
 
-        <a href="{{ route('news.index') }}" class="btn btn-secondary mt-4">← Quay lại danh sách bài viết</a>
+        <a href="{{ route('news.index') }}" class="btn btn-outline-light mt-4">← Quay lại danh sách bài viết</a>
     </div>
-
 </body>
-<footer style="background-color: #7b1e1e; color: white; padding: 40px 20px;">
+<footer style="background-color:#1a1a1a; color: white; padding: 40px 20px;">
     <div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 20px;">
         
         <!-- Bên trái: Thông tin bảo tàng -->
         <div style="flex: 1; min-width: 280px; margin-bottom: 20px; text-align: left;padding-left: 80px;">
-            <h3 style="color: #ffd700;">Bảo Tàng Đặng Nghĩa</h3>
-            <p><strong>Địa chỉ:</strong> 44 Đ. Nguyễn Khuyến, Tân An, Ninh Kiều, Cần Thơ 900000</p>
-            <p><strong>Tầng trệt (G):</strong> Đá quý Việt Nam</p>
-            <p><strong>Tầng 1-3:</strong> Đá quý nổi tiếng</p>
-            <p><a href="https://www.google.com/maps/place/Museum+of+Tarot+-+B%E1%BA%A3o+T%C3%A0ng+Tarot/@10.034515,105.7806985,17z/data=!4m6!3m5!1s0x31a062a012ce1a7f:0x94227f06590edd93!8m2!3d10.0344872!4d105.783198!16s%2Fg%2F11bz092swr?hl=vi&entry=ttu&g_ep=EgoyMDI1MDQwMi4xIKXMDSoJLDEwMjExNDU1SAFQAw%3D%3D" style="color: #ffd700;">Xem bản đồ tại đây</a></p>
-            <p><strong>Giờ mở cửa:</strong> 08:30 – 21:00 Tất cả các ngày trong tuần</p>
-            <p><strong>Email:</strong> nghia@gmail.com</p>
-            <p><strong>Hotline:</strong> <a href="tel:1900633077" style="color: #ffd700;">1900 633 077</a></p>
-            <p><strong>Số điện thoại:</strong> <a href="tel:0589151934" style="color: #ffd700;">0589 151 934</a></p>
+            <h3 style="color:  #BEBEBE;">Dang Nghia Museum</h3>
+            <p><strong>Address:</strong> <a style="color:  #BEBEBE;">{{ $setting->address }} </a></p>
+            <p><strong>Ground floor (G):</strong> <a style="color:  #BEBEBE;">Vietnam Gemstones</a></p>
+            <p><strong>Floor 1-3:</strong> <a style="color:  #BEBEBE;">Famous Gemstones</a></p>
+            <p><a href="https://www.google.com/maps/place/Museum+of+Tarot+-+B%E1%BA%A3o+T%C3%A0ng+Tarot/@10.034515,105.7806985,17z/data=!4m6!3m5!1s0x31a062a012ce1a7f:0x94227f06590edd93!8m2!3d10.0344872!4d105.783198!16s%2Fg%2F11bz092swr?hl=vi&entry=ttu&g_ep=EgoyMDI1MDQwMi4xIKXMDSoJLDEwMjExNDU1SAFQAw%3D%3D" style="color: #BEBEBE;">See map here</a></p>
+            <p><strong>Opening hours:</strong><a style="color:  #BEBEBE;"> 08:30 – 21:00 All days of the week</a></p>
+            <p><strong>Email:</strong> <a style="color:  #BEBEBE;">{{ $setting->email }}</a></p>
+            <p><strong>Hotline:</strong> <a href="tel:1900633077" style="color:  #BEBEBE;">1900 633 077</a></p>
+            <p><strong>Phone number:</strong><a style="color:  #BEBEBE;"> {{ $setting->phone }}</a> </p>
+            <p><strong>Business information:</strong> <a style="color:  #BEBEBE;">{!! $setting->business_info !!}</a></p>
         </div>
 
         <!-- Bên phải: Bản đồ -->
         <div style="flex: 1; min-width: 300px;">
-            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2778.0711826556526!2d105.7806984925208!3d10.03451503907832!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31a062a012ce1a7f%3A0x94227f06590edd93!2sMuseum%20of%20Tarot%20-%20B%E1%BA%A3o%20T%C3%A0ng%20Tarot!5e0!3m2!1svi!2s!4v1744094936200!5m2!1svi!2s" 
-                width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy" 
-                referrerpolicy="no-referrer-when-downgrade">
-            </iframe>
-        </div>
+    <div style="width: 300px; height: 600px;">
+        {!! $setting->sitemap !!}
+    </div>
+</div>
+
     </div>
 </footer>
-<footer>
-        &copy; {{ date('Y') }} Bảo Tàng Đá Quý.
+
+
+</main>
+
+    <footer>
+        &copy; {{ date('Y') }} Gem Museum.
     </footer>
+
 </html>

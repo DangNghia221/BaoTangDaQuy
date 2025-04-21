@@ -23,6 +23,17 @@ use App\Http\Controllers\User\ProfileController;
 use App\Http\Controllers\User\InvoiceController;
 use App\Http\Controllers\LibraryController; 
 
+// routes/web.php
+Route::get('/lang/{locale}', function ($locale) {
+    // Kiểm tra ngôn ngữ hợp lệ (en, vi...)
+    if (in_array($locale, ['en', 'vi'])) {
+        session(['locale' => $locale]);  // Lưu ngôn ngữ vào session
+    }
+    return redirect()->back();  // Quay lại trang trước đó
+});
+
+
+
 Route::prefix('admin')->group(function () {
     Route::resource('libary', \App\Http\Controllers\LibaryController::class)->only(['index', 'store', 'destroy']);
 });

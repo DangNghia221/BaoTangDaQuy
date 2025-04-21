@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trang chủ</title>
+    <title>Home</title>
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <script src="https://cdn.tailwindcss.com"></script>
@@ -35,10 +35,47 @@
         });
     });
 </script>
-    <style>
-         
- /* icon đầu trang */
-  #backToTopBtn {
+<style>
+    .silver-text {
+        font-size: 40px;
+  font-weight: bold;
+  background: linear-gradient(90deg, #ccc, #fff, #999, #eee, #ccc);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+    }
+    nav a {
+    color: white;
+    margin: 0 10px;
+    text-decoration: none;
+    font-weight: bold;
+    position: relative;
+    padding-bottom: 5px; /* Khoảng cách cho đường dưới */
+}
+
+nav a:hover {
+    color: white;
+}
+
+nav a:hover::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: white;
+    animation: underline-animation 0.3s ease-in-out;
+}
+
+@keyframes underline-animation {
+    from {
+        width: 0;
+    }
+    to {
+        width: 100%;
+    }
+}
+#backToTopBtn {
     opacity: 0;
     visibility: hidden;
     position: fixed;
@@ -47,15 +84,15 @@
     z-index: 99;
     width: 50px;
     height: 50px;
-    background-color: #b30000;
-    color: white;
+    background-color: #f1f1f1; /* Màu nền sáng để nổi bật trên nền đen */
+    color: #333; /* Màu biểu tượng tối */
     border: none;
     outline: none;
     border-radius: 50%;
     font-size: 18px;
     cursor: pointer;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-    transition: opacity 0.5s ease, visibility 0.5s ease;
+    transition: opacity 0.5s ease, visibility 0.5s ease, background-color 0.3s ease;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -67,24 +104,36 @@
 }
 
 #backToTopBtn:hover {
-    background-color: #8b0000;
+    background-color: #4CAF50; /* Màu khi hover, có thể dùng xanh lá cây để nổi bật */
+    color: white; /* Đổi màu biểu tượng khi hover */
 }
+
+#backToTopBtn i {
+    font-size: 24px; /* Thay đổi kích thước biểu tượng cho dễ nhìn */
+}
+
         body {
             font-family: 'Arial', sans-serif;
-            background-color: #f7f7f7;
+            background-color: #000;
             margin: 0;
         }
         header {
         position: sticky;
         top: 0;
         z-index: 1000;
-        background-color: #5D4037;
+        background-color: #000;
+        padding: 5px; 
+        
         }
-
-        header, footer {
-            background-color: #5D4037;
+        header h1{
+             font-size: 28px; 
+            color :white
+           
+        }
+        footer {
+            background-color: #000;
             color: white;
-            padding: 20px;
+            padding: 10px;
             text-align: center;
         }
         nav a {
@@ -168,7 +217,7 @@
         display: none;
         position: absolute;
         right: 0;
-        background-color: white;
+        background-color: black;
         min-width: 160px;
         box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
         border-radius: 6px;
@@ -182,17 +231,17 @@
     .dropdown-content a {
         padding: 12px 16px;
         display: block;
-        color: black;
+        color: white;
         text-decoration: none;
     }
 
     .dropdown-content a:hover {
-        background-color: #f0f0f0;
+        background-color: #333;
     }
 
     </style>
 </head>
-<body>
+
 
 <header style="display: flex; align-items: center; justify-content: space-between;">
     <div style="display: flex; align-items: center;">
@@ -205,9 +254,9 @@
 
     </div>
     <nav style="display: flex; align-items: center;">
-    <a href="{{ route('home') }}">Trang chủ</a>
-    <a href="{{ route('news.index') }}">Bài viết</a>
-    <a href="{{ route('ticket.index') }}">Trưng bày-Vé tham quan</a>
+    <a href="{{ route('home') }}">Home</a>
+    <a href="{{ route('news.index') }}">Post</a>
+    <a href="{{ route('ticket.index') }}">Exhibition-Ticket</a>
     @auth
     <div class="user-dropdown">
         <div class="user-icon">
@@ -223,11 +272,11 @@
             <span style="margin-left: 5px;">{{ Auth::user()->name }}</span>
         </div>
         <div class="dropdown-content">
-        <a href="{{ route('users.profile') }}">Thông tin cá nhân</a>
-        <a href="{{ route('user.invoices.index') }}">Hóa đơn của tôi</a>
+        <a href="{{ route('users.profile') }}">Personal information</a>
+        <a href="{{ route('user.invoices.index') }}">My bill</a>
             <a href="{{ route('logout') }}"
                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-               Đăng xuất
+               Log out
             </a>
             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                 @csrf
@@ -240,15 +289,15 @@
 </nav>
 
 </header>
-
+<body>
     <!-- Hero Section -->
     <div class="hero">
         <div class="hero-info">
-            <p><i class="fas fa-clock"></i> <strong>Giờ mở cửa</strong></p>
+            <p><i class="fas fa-clock"></i> <strong>Opening hours</strong></p>
             <p>08:30 – 21:00</p>
-            <p>Tất Cả Các Ngày Trong Tuần</p>
+            <p>All Days of the Week</p>
             <br>
-            <p><i class="fas fa-map-marker-alt"></i> <strong>Địa chỉ</strong></p>
+            <p><i class="fas fa-map-marker-alt"></i> <strong>Address</strong></p>
             <p>{{ $setting->description }}</p>
             <address>{{ $setting->address }}</address>
 
@@ -259,100 +308,90 @@
     </div>
 
   
-    <main style="background-color: #fdf7ef; padding: 40px 20px;">
+    <main style="background-color: #000; padding: 40px 20px; color:#fff">
     <!-- Giới thiệu chính -->
-    <section style="display: flex; flex-wrap: wrap; gap: 40px; align-items: center; justify-content: center;">
-        <!-- Nội dung giới thiệu -->
-        <div style="flex: 1; min-width: 300px; max-width: 600px;">
-            <h2 style="color: #9b1c1c; font-size: 32px;">BẢO TÀNG ĐÁ QUÝ</h2>
-            <p>
-            Nằm trên tầng 5 của một tòa tháp nổi bật giữa lòng Hà Nội, bảo tàng đá quý là điểm đến hấp dẫn dành cho những ai yêu thích vẻ đẹp tự nhiên và giá trị văn hóa từ đá quý. Không gian trưng bày được thiết kế theo phong cách hang động độc đáo, mang đến trải nghiệm mới lạ cho du khách. Hành trình tham quan được chia thành 4 khu vực chính: khu vực đầu tiên giới thiệu quá trình khai thác và sử dụng đá quý từ thời nguyên thủy; khu thứ hai tái hiện việc khai thác thủ công từ lòng sông suối; khu thứ ba là mô hình hầm lò hiện đại với thiết bị máy móc; và cuối cùng là khu trưng bày các sản phẩm đá quý đã qua chế tác đầy tinh xảo.            </p>
-        </div>
+    <!-- Phần giới thiệu bảo tàng -->
+<section style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 40px; align-items: center; justify-content: center;">
+    <!-- Nội dung giới thiệu -->
+    <div>
+        <h2 class="silver-text">GEM MUSEUM</h2>
+        <p>
+            Located on the 5th floor of a prominent tower in the heart of Hanoi, the Gemstone Museum is an attractive destination for those who love the natural beauty and cultural value of gemstones. The exhibition space is designed in a unique cave style, offering visitors a fresh experience. The tour journey is divided into four main areas: the first area introduces the process of mining and using gemstones from prehistoric times; the second area re-enacts the manual mining process from riverbeds; the third area features a modern mine model with machinery and equipment; and finally, the last area displays finely crafted gemstone products.
+        </p>
+    </div>
 
-        <!-- Hình ảnh lớn -->
-       <!-- Hình ảnh lớn -->
-<div style="flex: 1; min-width: 300px; max-width: 700px; margin-top: 50px;">
-    <img src="{{ asset('images/rong.png') }}" alt="Tượng rồng đá quý"
-         style="width: 100%; border-radius: 15px; box-shadow: 0 4px 20px rgba(0,0,0,0.2);">
-</div>
-
-    </section>
-
-   <!-- Lưới hình ảnh nhỏ bên dưới -->
-<section style="margin-top: 60px;">
-    <div style="display: flex; flex-wrap: wrap; gap: 30px; justify-content: center; align-items: stretch;">
-        <!-- Ảnh rùa -->
-        <div style="flex: 1; min-width: 300px; max-width: 500px;">
-            <img src="{{ asset('images/rua.png') }}" alt="Hình ảnh 1"
-                 style="width: 100%; height: 100%; object-fit: cover; border-radius: 10px;">
-        </div>
-
-        <!-- Nội dung văn bản kế bên ảnh rùa -->
-        <div style="flex: 1; max-width: 500px;">
-            <h3 style="color: #9b1c1c;">Cổ Vật Trang Sức 54 Dân Tộc</h3>
-            <p>
-                Lại mang đến một góc nhìn đa dạng về văn hóa các dân tộc. Với hơn 20 năm sưu tầm và nghiên cứu, 
-                bảo tàng đã tập hợp được một bộ sưu tập trang sức đồ sộ, phản ánh sự phong phú và độc đáo của 
-                văn hóa trang sức Việt Nam. Mỗi bộ trang sức không chỉ là một tác phẩm nghệ thuật mà còn là 
-                minh chứng sinh động cho sự khéo léo, tinh tế của các nghệ nhân dân tộc.
-            </p>
-            <h3 style="color: #9b1c1c; margin-top: 20px;">Cổ Vật Hoàng Cung Triều Nguyễn</h3>
-            <p>
-                Tạo điều kiện cho du khách đắm mình trong không gian cung đình nguy nga, được chiêm ngưỡng 
-                những hiện vật quý giá như trang phục, đồ dùng, nội thất hoàng gia. Mỗi hiện vật đều kể một câu 
-                chuyện về cuộc sống xa hoa, quyền quý của các bậc đế vương và những sự kiện lịch sử quan trọng. 
-                Đặc biệt, các góc chụp hình độc đáo như ngai vàng, kiệu hoàng hậu, xe kéo hoàng hậu sẽ giúp bạn 
-                tạo nên những bức ảnh kỷ niệm ấn tượng.
-            </p>
-        </div>
+    <!-- Hình ảnh lớn -->
+    <div>
+        <img src="{{ asset('images/rong.png') }}" alt="Tượng rồng đá quý"
+             style="width: 100%; border-radius: 15px; box-shadow: 0 4px 20px rgba(0,0,0,0.2); object-fit: cover;">
     </div>
 </section>
-<section style="background-color: #7b1e1e; color: white; padding: 60px 20px;">
+
+<!-- Phần kho báu đá quý Việt Nam -->
+<section style="margin-top: 60px; display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; align-items: center;">
+    <!-- Ảnh rùa -->
+    <div>
+        <img src="{{ asset('images/rua.png') }}" alt="Hình ảnh rùa"
+             style="width: 100%; object-fit: cover; border-radius: 10px;">
+    </div>
+
+    <!-- Nội dung -->
+    <div>
+        <h3 class="silver-text" style="color:#BEBEBE; margin-top: 20px;">The Treasure of Vietnamese Gemstones</h3>
+        <p>
+            Explore the magical beauty of rare gemstones, where each mineral holds a story about the history, culture, and craftsmanship of Vietnam's ethnic groups. Each stone is not only a natural masterpiece but also a vivid testament to the elegance and skill of artisans through generations. Especially, you will have the chance to admire unique gemstone artworks that reflect the diversity and richness of ethnic cultures, creating an inspiring and memorable space.
+        </p>
+    </div>
+</section>
+
+<section style="background-color:  #1a1a1a; color: white; padding: 60px 20px;">
     <div style="display: flex; flex-wrap: wrap; align-items: flex-start; justify-content: center; gap: 40px;">
         
-        <!-- Phần nội dung bên trái -->
-        <div style="flex: 1; min-width: 300px; max-width: 600px; text-align: left;">
-        <p style="font-size: 18px; line-height: 1.7; text-align: left; margin-bottom: 30px;">
-                
-Đến thời điểm này, tôi không còn là một nhà sưu tầm, hay một người thường thức cổ vật nữa. Tôi đặt mình là một người có sứ mệnh phải giữ gìn, phát huy bằng cách giới thiệu các cổ vật ra công chúng. Chính vì vậy tôi thành lập Bảo tàng Trang sức 54 dân tộc Việt Nam và Bảo tàng Hoàng cung triều Nguyễn.
-            </p>
-            
-            <p style="font-size: 18px; line-height: 1.7; text-align: left; margin-bottom: 30px;">
-                Bảo tàng không chỉ là nơi lưu giữ những hiện vật quý giá mà còn là hiện thân cho những ước mơ và hoài bão lớn lao. 
-                Tôi hy vọng rằng đứa con tinh thần này sẽ góp phần giữ gìn và lan tỏa tinh thần văn hóa Việt Nam đến thế hệ hôm nay và mai sau, 
-                là điểm đến văn hóa, lịch sử quảng bá Việt Nam đến gần với bạn bè quốc tế.
-            </p>
+    <section style="display: flex; flex-wrap: wrap; gap: 40px; justify-content: center; align-items: stretch;">
+    <!-- Phần nội dung bên trái -->
+    <div style="flex: 1; min-width: 300px; max-width: 600px; text-align: left; display: flex; flex-direction: column; justify-content: center;">
+    <p style="font-size: 18px; line-height: 1.7; margin-bottom: 30px;">
+        The Janet Annenberg Hooker Hall of Geology, Gems, and Minerals is a mesmerizing exhibit that brings the world of geology and gemstones to life. Located within the Smithsonian National Museum of Natural History, this hall offers a deep dive into the geological wonders that have shaped our planet and the captivating beauty of gemstones.
+    </p>
+    <p style="font-size: 18px; line-height: 1.7; margin-bottom: 30px;">
+        This narrated virtual tour takes you through the fascinating history of mineral formation, gemstone discovery, and the cutting-edge science behind their dazzling beauty. Whether you are a geology enthusiast or simply enchanted by the world of gemstones, this tour promises an enriching experience filled with knowledge and awe-inspiring visuals.
+    </p>
+    <hr style="border-color: white; margin: 30px 0;">
+    <h3 class="silver-text" style="color:  #BEBEBE; font-size: 26px; margin: 0;">A Journey Through Earth's Treasures</h3>
+    <p style="font-size: 16px; margin-top: 5px;">Explore the wonders of geology and the artistry of gemstones, where science and beauty come together.</p>
+</div>
 
-            <hr style="border-color: white; margin: 30px 0;">
 
-            <h3 style="color: #ffd700; font-size: 26px; margin: 0;">Nhà Sáng Lập Đặng Nghĩa</h3>
-            <p style="font-size: 16px; margin-top: 5px;">Chuyên gia thâm niên hơn 30 năm nghiên cứu sưu tầm cổ vật.</p>
-        </div>
 
-        <!-- Phần hình ảnh bên phải -->
-        <div style="flex: 1; min-width: 250px; max-width: 400px;">
-            <img src="{{ asset('images/nhasanglap.jpg') }}" alt="Nhà sáng lập"
-                 style="width: 100%; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.4);">
-        </div>
+    <!-- Phần video bên phải -->
+    <div style="flex: 1; min-width: 250px; max-width: 700px; display: flex; align-items: center;">
+        <video controls style="width: 100%; height: 100%; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.4); object-fit: cover;">
+            <source src="{{ asset('videos/videodaquy.mp4') }}" type="video/mp4">
+            Trình duyệt của bạn không hỗ trợ video.
+        </video>
+    </div>
+</section>
+
 
     </div>
     
 </section>
-<footer style="background-color: #7b1e1e; color: white; padding: 40px 20px;">
+
+<footer style="background-color:#1a1a1a; color: white; padding: 40px 20px;">
     <div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 20px;">
         
         <!-- Bên trái: Thông tin bảo tàng -->
         <div style="flex: 1; min-width: 280px; margin-bottom: 20px; text-align: left;padding-left: 80px;">
-            <h3 style="color: #ffd700;">Bảo Tàng Đặng Nghĩa</h3>
-            <p><strong>Địa chỉ:</strong> {{ $setting->address }}</p>
-            <p><strong>Tầng trệt (G):</strong> Đá quý Việt Nam</p>
-            <p><strong>Tầng 1-3:</strong> Đá quý nổi tiếng</p>
-            <p><a href="https://www.google.com/maps/place/Museum+of+Tarot+-+B%E1%BA%A3o+T%C3%A0ng+Tarot/@10.034515,105.7806985,17z/data=!4m6!3m5!1s0x31a062a012ce1a7f:0x94227f06590edd93!8m2!3d10.0344872!4d105.783198!16s%2Fg%2F11bz092swr?hl=vi&entry=ttu&g_ep=EgoyMDI1MDQwMi4xIKXMDSoJLDEwMjExNDU1SAFQAw%3D%3D" style="color: #ffd700;">Xem bản đồ tại đây</a></p>
-            <p><strong>Giờ mở cửa:</strong> 08:30 – 21:00 Tất cả các ngày trong tuần</p>
-            <p><strong>Email:</strong> {{ $setting->email }}</p>
-            <p><strong>Hotline:</strong> <a href="tel:1900633077" style="color: #ffd700;">1900 633 077</a></p>
-            <p><strong>Số điện thoại:</strong> {{ $setting->phone }}</p>
-            <p><strong>Thông tin kinh doanh:</strong> {!! $setting->business_info !!}</p>
+            <h3 style="color:  #BEBEBE;">Dang Nghia Museum</h3>
+            <p><strong>Address:</strong> <a style="color:  #BEBEBE;">{{ $setting->address }} </a></p>
+            <p><strong>Ground floor (G):</strong> <a style="color:  #BEBEBE;">Vietnam Gemstones</a></p>
+            <p><strong>Floor 1-3:</strong> <a style="color:  #BEBEBE;">Famous Gemstones</a></p>
+            <p><a href="https://www.google.com/maps/place/Museum+of+Tarot+-+B%E1%BA%A3o+T%C3%A0ng+Tarot/@10.034515,105.7806985,17z/data=!4m6!3m5!1s0x31a062a012ce1a7f:0x94227f06590edd93!8m2!3d10.0344872!4d105.783198!16s%2Fg%2F11bz092swr?hl=vi&entry=ttu&g_ep=EgoyMDI1MDQwMi4xIKXMDSoJLDEwMjExNDU1SAFQAw%3D%3D" style="color: #BEBEBE;">See map here</a></p>
+            <p><strong>Opening hours:</strong><a style="color:  #BEBEBE;"> 08:30 – 21:00 All days of the week</a></p>
+            <p><strong>Email:</strong> <a style="color:  #BEBEBE;">{{ $setting->email }}</a></p>
+            <p><strong>Hotline:</strong> <a href="tel:1900633077" style="color:  #BEBEBE;">1900 633 077</a></p>
+            <p><strong>Phone number:</strong><a style="color:  #BEBEBE;"> {{ $setting->phone }}</a> </p>
+            <p><strong>Business information:</strong> <a style="color:  #BEBEBE;">{!! $setting->business_info !!}</a></p>
         </div>
 
         <!-- Bên phải: Bản đồ -->
@@ -369,7 +408,7 @@
 </main>
 
     <footer>
-        &copy; {{ date('Y') }} Bảo Tàng Đá Quý.
+        &copy; {{ date('Y') }} Gem Museum.
     </footer>
 
 </body>
