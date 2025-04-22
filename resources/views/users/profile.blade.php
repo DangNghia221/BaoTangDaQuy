@@ -205,7 +205,7 @@ nav a {
 </div>
     <nav style="display: flex; align-items: center;">
     <a href="{{ route('home') }}">Home</a>
-    <a href="{{ route('news.index') }}">Post</a>
+    <a href="{{ route('news.index') }}">Our Documentations</a>
     <a href="{{ route('ticket.index') }}">Exhibition-Ticket</a>
     @auth
     <div class="user-dropdown">
@@ -223,7 +223,9 @@ nav a {
         </div>
         <div class="dropdown-content">
         <a href="{{ route('users.profile') }}">Personal information</a>
-        <a href="{{ route('user.invoices.index') }}">My bill</a>
+        <a href="{{ route('user.invoices.index') }}">Booking History</a>
+        <a href="{{ route('history.index') }}">History</a>
+
             <a href="{{ route('logout') }}"
                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                Log out
@@ -239,8 +241,7 @@ nav a {
 <body style="font-family: 'Roboto', sans-serif; background-color: #000; color: #ccc;">
 
     <div class="py-20">
-        <div class="max-w-5xl mx-auto p-6 bg-gray-900 shadow-xl rounded-2xl grid grid-cols-1 md:grid-cols-3 gap-6">
-            
+    <div style="background-color:#1a1a1a; color: white; padding: 40px 20px;" class="max-w-5xl mx-auto shadow-xl rounded-2xl grid grid-cols-1 md:grid-cols-3 gap-6">            
             <!-- Sidebar -->
             <div class="flex flex-col items-center justify-center space-y-3">
                 @if ($user->avatar)
@@ -251,7 +252,7 @@ nav a {
 
                 <div class="text-lg font-semibold text-white">{{ $user->name }}</div>
                 <div class="text-gray-400">{{ $user->email }}</div>
-                <div class="text-green-600 font-medium">Status: Active</div>
+               
             </div>
 
             <!-- Thông tin -->

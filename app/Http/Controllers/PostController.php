@@ -3,7 +3,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Post;
-use App\Models\Category; // 🔥 Thêm model Category
+use App\Models\Category; 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
@@ -21,14 +21,14 @@ class PostController extends Controller
 
     public function create()
     {
-        $categories = Category::all(); // 🔥 Lấy danh mục để hiển thị
+        $categories = Category::all(); 
         return view('admin.post.create', compact('categories'));
     }
     // Hiển thị danh sách bài viết
 public function list()
 {
-    $posts = Post::latest()->paginate(6); // phân trang 6 bài viết
-    return view('users.post.index', compact('posts')); // View ngoài giao diện người dùng
+    $posts = Post::latest()->paginate(4); 
+    return view('users.post.index', compact('posts')); 
 }
 
 // Hiển thị chi tiết bài viết

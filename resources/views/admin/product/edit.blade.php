@@ -7,7 +7,6 @@
 @endsection
 
 @section('content')
-   
 
     <form action="{{ route('product.update', $product->id) }}" method="POST" enctype="multipart/form-data">
         @csrf
@@ -20,13 +19,14 @@
                 <small class="text-danger">{{ $message }}</small>
             @enderror
         </div>
+
         <div class="mb-3">
-    <label for="description" class="form-label">Mô Tả Sản Phẩm</label>
-    <textarea id="description" name="description" class="form-control" rows="4">{{ old('description', $product->description) }}</textarea>
-    @error('description')
-        <small class="text-danger">{{ $message }}</small>
-    @enderror
-</div>
+            <label for="description" class="form-label">Mô Tả Sản Phẩm</label>
+            <textarea id="description" name="description" class="form-control" rows="4">{{ old('description', $product->description) }}</textarea>
+            @error('description')
+                <small class="text-danger">{{ $message }}</small>
+            @enderror
+        </div>
 
         <div class="mb-3">
             <label for="price" class="form-label">Giá Tiền (VND)</label>
@@ -35,13 +35,23 @@
                 <small class="text-danger">{{ $message }}</small>
             @enderror
         </div>
+
         <div class="mb-3">
-    <label for="quantity" class="form-label">Số Lượng</label>
-    <input type="number" id="quantity" name="quantity" class="form-control" value="{{ old('quantity', $product->quantity) }}" required>
-    @error('quantity')
-        <small class="text-danger">{{ $message }}</small>
-    @enderror
-</div>
+            <label for="quantity" class="form-label">Số Lượng</label>
+            <input type="number" id="quantity" name="quantity" class="form-control" value="{{ old('quantity', $product->quantity) }}" required>
+            @error('quantity')
+                <small class="text-danger">{{ $message }}</small>
+            @enderror
+        </div>
+
+        <div class="mb-3">
+            <label for="event_date" class="form-label">Ngày Diễn Ra</label> {{-- ✅ THÊM --}}
+            <input type="date" id="event_date" name="event_date" class="form-control"
+                   value="{{ old('event_date', \Carbon\Carbon::parse($product->event_date)->format('Y-m-d')) }}" required>
+            @error('event_date')
+                <small class="text-danger">{{ $message }}</small>
+            @enderror
+        </div>
 
         <div class="mb-3">
             <label for="image" class="form-label">Ảnh</label>
@@ -55,7 +65,6 @@
             @enderror
         </div>
 
-        <button type="submit" class="btn btn-primary">Lưu </button>
-       
+        <button type="submit" class="btn btn-primary">Lưu</button>
     </form>
 @endsection

@@ -48,6 +48,17 @@
         .post-content h3 {
             color: #D3D3D3 !important;
         }
+        .post-content img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 80%;
+    height: auto;
+    border-radius: 12px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
 
         .post-content a {
            
@@ -199,7 +210,7 @@
 </div>
     <nav style="display: flex; align-items: center;">
     <a href="{{ route('home') }}">Home</a>
-    <a href="{{ route('news.index') }}">Post</a>
+    <a href="{{ route('news.index') }}">Our Documentations</a>
     <a href="{{ route('ticket.index') }}">Exhibition-Ticket</a>
     @auth
     <div class="user-dropdown">
@@ -217,7 +228,9 @@
         </div>
         <div class="dropdown-content">
         <a href="{{ route('users.profile') }}">Personal information</a>
-        <a href="{{ route('user.invoices.index') }}">My bill</a>
+        <a href="{{ route('user.invoices.index') }}">Booking History</a>
+        <a href="{{ route('history.index') }}">History</a>
+
             <a href="{{ route('logout') }}"
                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                Log out
@@ -238,10 +251,13 @@
         <h2 style="color:  #BEBEBE;">{{ $post->title }}</h2>
 
         @if($post->image)
-            <img src="{{ asset('storage/' . $post->image) }}" 
-                 alt="{{ $post->title }}" 
-                 style="width: 50%; max-height: 500px; object-fit: cover; border-radius: 12px; margin-top: 20px;">
-        @endif
+    <div style="text-align: center;">
+        <img src="{{ asset('storage/' . $post->image) }}" 
+             alt="{{ $post->title }}" 
+             style="width: 30%; max-height: 400px; object-fit: cover; border-radius: 12px; margin-top: 20px;">
+    </div>
+@endif
+
 
         {{-- Nội dung bài viết --}}
         <div class="post-content mt-4" style="line-height: 1.7; font-size: 18px;">

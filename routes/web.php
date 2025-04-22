@@ -22,15 +22,15 @@ use App\Http\Controllers\User\ProfileController;
 
 use App\Http\Controllers\User\InvoiceController;
 use App\Http\Controllers\LibraryController; 
+use App\Http\Controllers\ProductBookingController;
+use App\Http\Controllers\ProductHistoryController;
 
-// routes/web.php
-Route::get('/lang/{locale}', function ($locale) {
-    // Kiểm tra ngôn ngữ hợp lệ (en, vi...)
-    if (in_array($locale, ['en', 'vi'])) {
-        session(['locale' => $locale]);  // Lưu ngôn ngữ vào session
-    }
-    return redirect()->back();  // Quay lại trang trước đó
+Route::middleware(['auth'])->group(function () {
+    Route::get('/history/store/{id}', [ProductHistoryController::class, 'store'])->name('history.store');
+    Route::get('/history', [ProductHistoryController::class, 'showHistory'])->name('history.index');
 });
+
+Route::get('/booking', [ProductBookingController::class, 'index'])->name('book.index');
 
 
 
@@ -134,6 +134,8 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::resource('product', ProductController::class);
     Route::get('products/{id}/restore', [ProductController::class, 'restore'])->name('product.restore');
     Route::get('/products/trashed', [ProductController::class, 'trashed'])->name('product.trashed');
+    Route::delete('/product/{id}/deleteForever', [ProductController::class, 'deleteForever'])->name('product.deleteForever');
+
 
     // Quản lý người dùng
     Route::get('/users', [UserController::class, 'index'])->name('admin.users.index');

@@ -3,50 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Post</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
-
-    {{-- Bootstrap --}}
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Font Awesome -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-<!-- Favicon -->
-<link rel="icon" type="image/png" href="{{ asset('storage/' . $setting->favicon) }}">
+    <title>Lịch sử xem sản phẩm</title>
 </head>
-
-<!-- Nút trở lên đầu trang -->
-<button id="backToTopBtn" title="Lên đầu trang">
-    <i class="fas fa-arrow-up"></i>
-</button>
-
-<script>
-    const backToTopBtn = document.getElementById("backToTopBtn");
-
-    window.addEventListener("scroll", () => {
-        const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
-        const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-
-        // Nếu cuộn đến 80% thì hiển thị nút
-        if (scrollTop / scrollHeight > 0.8) {
-            backToTopBtn.classList.add("show");
-        } else {
-            backToTopBtn.classList.remove("show");
-        }
-    });
-
-    backToTopBtn.addEventListener("click", () => {
-        window.scrollTo({
-            top: 0,
-            behavior: 'smooth'
-        });
-    });
-</script>
-
-</head>
-   
-<!-- CSS trong <style> -->
 <style>
+     .silver-text {
+        font-size: 30px;
+  font-weight: bold;
+  background: linear-gradient(90deg, #ccc, #fff, #999, #eee, #ccc);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+    }
     .pagination {
     background-color: transparent; 
     border: none; 
@@ -210,6 +176,68 @@
     .dropdown-content a:hover {
         background-color: #333;
     }
+    body {
+    font-family: Arial, sans-serif;
+    background-color: #000; /* Nền đen */
+    margin: 0;
+    padding: 0;
+    color: white; /* Chữ trắng */
+}
+
+.container {
+    max-width: 1000px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #1a1a1a; /* Nền container tối */
+    box-shadow: 0 2px 10px rgba(255, 255, 255, 0.05);
+    margin-bottom: 60px;
+}
+
+.history-item {
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #444; /* Đường viền mờ tối */
+    padding: 15px 0;
+}
+
+.history-item:last-child {
+    border-bottom: none;
+}
+
+.history-item img {
+    width: 100px;        /* Kích thước chiều rộng cố định */
+    height: 150px;       /* Kích thước chiều cao cố định */
+    object-fit: cover;   /* Đảm bảo ảnh không bị méo và lấp đầy khung */
+    margin-right: 20px;
+}
+
+
+.history-item .details {
+    flex-grow: 1;
+}
+
+.history-item .details h3 {
+    margin: 0;
+    font-size: 18px;
+    color: #fff; /* Tiêu đề trắng */
+}
+
+.history-item .details p {
+    margin: 5px 0;
+    color: #ccc; /* Chữ xám sáng */
+}
+
+.history-item .details .price {
+    color: #e74c3c; /* Giữ màu đỏ nổi bật */
+    font-weight: bold;
+}
+
+.pagination {
+    text-align: center;
+    margin-top: 20px;
+}
+
+       
 </style>
 
 <!-- HTML phần <header> -->
@@ -256,42 +284,33 @@
 @endauth
     </nav>
 </header>
+<body>
+<div class="container">
+    <h2 class="silver-text">Viewed Museum Exhibits</h2>
+
+    @if($history->isEmpty())
+        <p>You haven't viewed any products yet</p>
+    @else
+        <div class="history-list">
+            @foreach($history as $item)
+                <div class="history-item">
+                <img src="{{ asset('storage/' . $item->image) }}" alt="{{ $item->name }}" style="width: 100px; height: 150px; object-fit: cover;">
 
 
-<body style="font-family: 'Roboto', sans-serif; margin: 0; background-color: #000;">
-    {{-- NỘI DUNG --}}
-<div style="padding: 40px;">
-    <h2 style="text-align: center; color:#BEBEBE; margin-bottom: 40px;">Our Documentations</h2>
-
-    <div style="display: flex; flex-wrap: wrap; gap: 30px; justify-content: center;">
-    @foreach($posts as $post)
-        <div style="width: 300px; background: #1a1a1a; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.4); overflow: hidden;">
-            @if($post->image)
-                <img src="{{ asset('storage/' . $post->image) }}" 
-                     alt="{{ $post->title }}" 
-                     style="width: 100%; height: 200px; object-fit: cover; border-bottom: 1px solid #333;">
-            @else
-                <div style="width: 100%; height: 200px; background: #333; display: flex; align-items: center; justify-content: center; color: #bbb; font-style: italic;">
-                    Không có ảnh
+                    <div class="details">
+                        <h3>{{ $item->name }}</h3>
+                        <p>Viewed on: {{ $item->event_date }}</p>
+                        <p class="price">{{ number_format($item->price, 0, ',', '.') }} đ</p>
+                    </div>
                 </div>
-            @endif
-
-            <div style="padding: 15px;">
-                <h3 style="font-size: 18px; color: #BEBEBE; margin-bottom: 10px;">
-                    <a href="{{ route('posts.show', $post->id) }}" style="color: inherit; text-decoration: none;">
-                        {{ $post->title }}
-                    </a>
-                </h3>
-            </div>
+            @endforeach
         </div>
-    @endforeach
-</div>
 
-
-    {{-- Phân trang --}}
-    <div class="d-flex justify-content-center mt-5">
-        {{ $posts->links('pagination::bootstrap-4') }}
-    </div>
+        <!-- Phân trang -->
+        <div class="pagination">
+            {{ $history->links('pagination::simple-bootstrap-4') }}
+        </div>
+    @endif
 </div>
 
 </body>
@@ -328,5 +347,4 @@
     <footer>
         &copy; {{ date('Y') }} Gem Museum.
     </footer>
-
 </html>

@@ -26,15 +26,12 @@
         document.addEventListener("DOMContentLoaded", function() {
             var toast = new bootstrap.Toast(document.getElementById('successToast'));
             toast.show();
-
-            // Tự động ẩn sau 3 giây
             setTimeout(function() {
                 toast.hide();
             }, 3000);
         });
     </script>
-@endif
-
+    @endif
 
     <table class="table">
         <thead>
@@ -43,7 +40,7 @@
                 <th>Tên Sản phẩm</th>
                 <th>Giá tiền</th>
                 <th>Số lượng</th>
-
+                <th>Ngày diễn ra</th> 
                 <th>Ảnh</th>
                 <th>Hành động</th>
             </tr>
@@ -54,9 +51,8 @@
                     <td>{{ $product->id }}</td>
                     <td>{{ $product->name }}</td>
                     <td>{{ number_format($product->price, 0, ',', '.') }} VND</td>
-
                     <td>{{ $product->quantity }}</td>
-
+                    <td>{{ \Carbon\Carbon::parse($product->event_date)->format('d/m/Y') }}</td> 
                     <td>
                         @if($product->image)
                             <img src="{{ asset('storage/' . $product->image) }}" width="50">

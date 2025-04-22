@@ -44,6 +44,23 @@
 <!-- CSS trong <style> -->
 <!-- CSS trong <style> -->
 <style>
+    .pagination {
+    background-color: transparent; /* Loại bỏ background */
+    border: none; /* Loại bỏ viền */
+}
+
+.pagination li a,
+.pagination li span {
+    background-color: transparent !important; /* Loại bỏ background của các liên kết */
+    color: white !important; /* Đặt màu chữ thành trắng */
+    border: none !important; /* Đảm bảo không có viền */
+}
+
+.pagination li.active a,
+.pagination li.active span {
+    color: white !important; /* Đặt màu chữ trắng cho trang hiện tại */
+}
+
     .card-title {
         font-size: 20px;
   font-weight: bold;
@@ -210,7 +227,7 @@
 </div>
     <nav style="display: flex; align-items: center;">
     <a href="{{ route('home') }}">Home</a>
-    <a href="{{ route('news.index') }}">Post</a>
+    <a href="{{ route('news.index') }}">Our Documentations</a>
     <a href="{{ route('ticket.index') }}">Exhibition-Ticket</a>
     @auth
     <div class="user-dropdown">
@@ -228,7 +245,9 @@
         </div>
         <div class="dropdown-content">
         <a href="{{ route('users.profile') }}">Personal information</a>
-        <a href="{{ route('user.invoices.index') }}">My bill</a>
+        <a href="{{ route('user.invoices.index') }}">Booking History</a>
+        <a href="{{ route('history.index') }}">History</a>
+
             <a href="{{ route('logout') }}"
                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                Log out
@@ -252,23 +271,23 @@
                 @foreach ($products as $product)
                     <div class="col-md-4 mb-4">
                         <div class="card h-100" style="background-color: #1a1a1a; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.4); overflow: hidden;">
-                            @if ($product->image)
-                                <a href="{{ url('ticker/detail/' . $product->id) }}">
-                                    <img src="{{ asset('storage/' . $product->image) }}"
-                                         class="card-img-top"
-                                         alt="{{ $product->name }}"
-                                         style="height: 200px; width: 100%; object-fit: cover; border-radius: 0;">
-                                </a>
-                            @endif
-                            <div class="card-body">
-                                <h5 class="card-title" style="color: #dc3545;">
-                                    <a href="{{ url('ticker/detail/' . $product->id) }}" style="text-decoration: none; color: inherit;">
-                                        {{ $product->name }}
-                                    </a>
-                                </h5>
-                                <p class="card-text" style="color: #ccc;">{{ Str::limit($product->description, 100) }}</p>
-                                <p class="card-text fw-bold" style="color: #fff;">{{ number_format($product->price, 0, ',', '.') }} VNĐ</p>
-                            </div>
+                        @if ($product->image)
+    <a href="{{ route('history.store', $product->id) }}">
+        <img src="{{ asset('storage/' . $product->image) }}"
+             class="card-img-top"
+             alt="{{ $product->name }}"
+             style="height: 200px; width: 100%; object-fit: cover; border-radius: 0;">
+    </a>
+@endif
+<div class="card-body">
+    <h5 class="card-title" style="color: #dc3545;">
+        <a href="{{ route('history.store', $product->id) }}" style="text-decoration: none; color: inherit;">
+            {{ $product->name }}
+        </a>
+    </h5>
+    <p class="card-text" style="color: #ccc;">{{ Str::limit($product->description, 100) }}</p>
+    <p class="card-text fw-bold" style="color: #fff;">{{ number_format($product->price, 0, ',', '.') }} VNĐ</p>
+</div>
                         </div>
                     </div>
                 @endforeach

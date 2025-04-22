@@ -2,17 +2,8 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Post</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
-
-    {{-- Bootstrap --}}
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Font Awesome -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-<!-- Favicon -->
-<link rel="icon" type="image/png" href="{{ asset('storage/' . $setting->favicon) }}">
+    <title>Chọn ngày tham quan</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
 
 <!-- Nút trở lên đầu trang -->
@@ -243,7 +234,6 @@
         <a href="{{ route('users.profile') }}">Personal information</a>
         <a href="{{ route('user.invoices.index') }}">Booking History</a>
         <a href="{{ route('history.index') }}">History</a>
-
             <a href="{{ route('logout') }}"
                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                Log out
@@ -256,45 +246,64 @@
 @endauth
     </nav>
 </header>
+<body class="bg-white text-gray-800">
+    <div class="max-w-6xl mx-auto p-6">
+        <h1 class="text-3xl font-bold mb-2">Exhibitions and Events</h1>
+        <p class="mb-6 text-gray-600">Use the filter below to view event products.</p>
 
+        <!-- Bộ lọc ngày -->
+        <form action="{{ route('book.index') }}" method="GET" class="flex flex-wrap items-center gap-4 mb-8">
+            @php
+                $today = \Carbon\Carbon::now()->format('Y-m-d');
+            @endphp
 
-<body style="font-family: 'Roboto', sans-serif; margin: 0; background-color: #000;">
-    {{-- NỘI DUNG --}}
-<div style="padding: 40px;">
-    <h2 style="text-align: center; color:#BEBEBE; margin-bottom: 40px;">Our Documentations</h2>
-
-    <div style="display: flex; flex-wrap: wrap; gap: 30px; justify-content: center;">
-    @foreach($posts as $post)
-        <div style="width: 300px; background: #1a1a1a; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.4); overflow: hidden;">
-            @if($post->image)
-                <img src="{{ asset('storage/' . $post->image) }}" 
-                     alt="{{ $post->title }}" 
-                     style="width: 100%; height: 200px; object-fit: cover; border-bottom: 1px solid #333;">
-            @else
-                <div style="width: 100%; height: 200px; background: #333; display: flex; align-items: center; justify-content: center; color: #bbb; font-style: italic;">
-                    Không có ảnh
-                </div>
-            @endif
-
-            <div style="padding: 15px;">
-                <h3 style="font-size: 18px; color: #BEBEBE; margin-bottom: 10px;">
-                    <a href="{{ route('posts.show', $post->id) }}" style="color: inherit; text-decoration: none;">
-                        {{ $post->title }}
-                    </a>
-                </h3>
+            <div class="flex items-center space-x-2">
+                <label for="from">From</label>
+                <input type="date" name="from" id="from" value="{{ $from }}" min="{{ $today }}"
+                       class="border border-gray-300 px-3 py-2 rounded">
             </div>
-        </div>
-    @endforeach
-</div>
+            <div class="flex items-center space-x-2">
+                <label for="to">To</label>
+                <input type="date" name="to" id="to" value="{{ $to }}" min="{{ $today }}"
+                       class="border border-gray-300 px-3 py-2 rounded">
+            </div>
+            <button type="submit" class="bg-black text-white px-4 py-2 rounded">Reset date range</button>
+        </form>
 
+        <!-- Hiển thị sản phẩm -->
+        @if(count($products) > 0)
+            <div class="space-y-6">
+                @foreach($products as $product)
+                    <div class="flex border border-gray-300 rounded-lg overflow-hidden shadow-sm w-full h-48">
+                        @if ($product->image)
+                            <a href="{{ route('history.store', $product->id) }}" class="w-48 h-full flex-shrink-0">
+                                <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}"
+                                     class="w-full h-full object-cover">
+                            </a>
+                        @endif
 
-    {{-- Phân trang --}}
-    <div class="d-flex justify-content-center mt-5">
-        {{ $posts->links('pagination::bootstrap-4') }}
+                        <div class="p-4 flex flex-col justify-between w-full">
+                            <div>
+                                <h3 class="text-xl font-bold mb-2">
+                                    <a href="{{ route('history.store', $product->id) }}" class="text-blue-600 hover:underline">
+                                        {{ $product->name }}
+                                    </a>
+                                </h3>
+                                <p class="text-gray-700">{{ $product->description }}</p>
+                                <p class="text-green-600 font-semibold mt-1">Price: {{ number_format($product->price) }}đ</p>
+                                <p class="text-gray-500 mt-1">Event-day: {{ \Carbon\Carbon::parse($product->event_date)->format('d/m/Y') }}</p>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+        @else
+            <p class="text-gray-500 mt-6">Không có sản phẩm nào trong khoảng ngày đã chọn.</p>
+        @endif
     </div>
-</div>
-
 </body>
+
+
 <footer style="background-color:#1a1a1a; color: white; padding: 40px 20px;">
     <div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 20px;">
         
@@ -328,5 +337,4 @@
     <footer>
         &copy; {{ date('Y') }} Gem Museum.
     </footer>
-
 </html>

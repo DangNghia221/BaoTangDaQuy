@@ -33,10 +33,10 @@ class TicketController extends Controller
     
         // Tạo bản ghi booking
         Booking::create([
-            'user_id' => Auth::id(), // người dùng đang đăng nhập
+            'user_id' => Auth::id(), 
             'product_id' => $product->id,
             'quantity' => $quantity,
-            'status' => 'pending', // hoặc 'confirmed' nếu bạn muốn
+            'status' => 'pending', 
             'price' => $product->price * $quantity,
             'booking_date' => now(),
         ]);

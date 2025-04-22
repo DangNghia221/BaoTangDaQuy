@@ -176,6 +176,26 @@ nav a:hover::after {
     justify-content: center;
     align-items: center;
 }
+.btn-book-now {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: white; /* Màu nền trắng */
+    color: black; /* Màu chữ đen */
+    font-size: 16px;
+    font-weight: bold;
+    text-decoration: none;
+    border: 2px solid black; /* Đặt viền đen xung quanh nút */
+    border-radius: 5px; /* Tạo các góc bo tròn */
+    transition: background-color 0.3s, color 0.3s, border-color 0.3s; /* Hiệu ứng chuyển màu khi hover */
+    margin-top: 20px; /* Khoảng cách phía trên */
+}
+
+.btn-book-now:hover {
+    background-color: black; /* Màu nền chuyển thành đen khi hover */
+    color: white; /* Màu chữ chuyển thành trắng khi hover */
+    border-color: white; /* Viền chuyển thành trắng khi hover */
+}
+
 .hero-phone {
     position: absolute;
     bottom: 30px;
@@ -255,7 +275,7 @@ nav a:hover::after {
     </div>
     <nav style="display: flex; align-items: center;">
     <a href="{{ route('home') }}">Home</a>
-    <a href="{{ route('news.index') }}">Post</a>
+    <a href="{{ route('news.index') }}">Our Documentations</a>
     <a href="{{ route('ticket.index') }}">Exhibition-Ticket</a>
     @auth
     <div class="user-dropdown">
@@ -273,7 +293,9 @@ nav a:hover::after {
         </div>
         <div class="dropdown-content">
         <a href="{{ route('users.profile') }}">Personal information</a>
-        <a href="{{ route('user.invoices.index') }}">My bill</a>
+        <a href="{{ route('user.invoices.index') }}">Booking History</a>
+        <a href="{{ route('history.index') }}">History</a>
+        
             <a href="{{ route('logout') }}"
                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                Log out
@@ -300,6 +322,8 @@ nav a:hover::after {
             <p><i class="fas fa-map-marker-alt"></i> <strong>Address</strong></p>
             <p>{{ $setting->description }}</p>
             <address>{{ $setting->address }}</address>
+            <a href="{{ route('book.index') }}" class="btn-book-now">Book Now</a>
+
 
         </div>
         <div class="hero-phone">
@@ -365,10 +389,13 @@ nav a:hover::after {
 
     <!-- Phần video bên phải -->
     <div style="flex: 1; min-width: 250px; max-width: 700px; display: flex; align-items: center;">
-        <video controls style="width: 100%; height: 100%; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.4); object-fit: cover;">
-            <source src="{{ asset('videos/videodaquy.mp4') }}" type="video/mp4">
-            Trình duyệt của bạn không hỗ trợ video.
-        </video>
+    <video controls preload="auto" style="width: 100%; height: auto; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.4);">
+    <source src="{{ asset('videos/videodaquy.mp4') }}" type="video/mp4">
+    Trình duyệt của bạn không hỗ trợ video.
+</video>
+
+
+
     </div>
 </section>
 

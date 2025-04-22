@@ -42,6 +42,13 @@
 
 </head>
 <style>
+      .silver-text {
+        font-size: 30px;
+  font-weight: bold;
+  background: linear-gradient(90deg, #ccc, #fff, #999, #eee, #ccc);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+    }
       .post-content p,
         .post-content li,
         .post-content span,
@@ -201,7 +208,7 @@
 </div>
     <nav style="display: flex; align-items: center;">
     <a href="{{ route('home') }}">Home</a>
-    <a href="{{ route('news.index') }}">Post</a>
+    <a href="{{ route('news.index') }}">Our Documentations</a>
     <a href="{{ route('ticket.index') }}">Exhibition-Ticket</a>
     @auth
     <div class="user-dropdown">
@@ -219,7 +226,9 @@
         </div>
         <div class="dropdown-content">
         <a href="{{ route('users.profile') }}">Personal information</a>
-        <a href="{{ route('user.invoices.index') }}">My bill</a>
+        <a href="{{ route('user.invoices.index') }}">Booking History</a>
+        <a href="{{ route('history.index') }}">History</a>
+
             <a href="{{ route('logout') }}"
                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                Log out
@@ -255,7 +264,7 @@
 
             {{-- Cột phải: chi tiết sản phẩm --}}
             <div class="col-md-6" style="background-color: #1a1a1a; padding: 20px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.4);">
-                <h2 class="text-danger">{{ $product->name }}</h2>
+                <h2 class="silver-text">{{ $product->name }}</h2>
 
                 {{-- Bỏ phần đánh giá sao --}}
 

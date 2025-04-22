@@ -12,7 +12,7 @@
 
         <div class="mb-3">
             <label class="form-label">Tên Sản Phẩm</label>
-            <input type="text" name="name" class="form-control">
+            <input type="text" name="name" class="form-control" required>
         </div>
 
         <div class="mb-3">
@@ -21,19 +21,22 @@
         </div>
 
         <div class="mb-3">
-    <label class="form-label">Giá Tiền</label>
-    <div class="input-group">
-        <input type="number" name="price" class="form-control" min="0" step="1000">
-        <span class="input-group-text">VND</span>
-    </div>
-</div>
-<div class="mb-3">
-    <label class="form-label">Số Lượng</label>
-    <input type="number" name="quantity" class="form-control" min="0" required>
-</div>
+            <label class="form-label">Giá Tiền</label>
+            <div class="input-group">
+                <input type="number" name="price" class="form-control" min="0" step="1000" required>
+                <span class="input-group-text">VND</span>
+            </div>
+        </div>
 
+        <div class="mb-3">
+            <label class="form-label">Số Lượng</label>
+            <input type="number" name="quantity" class="form-control" min="0" required>
+        </div>
 
-       
+        <div class="mb-3">
+            <label class="form-label">Ngày Diễn Ra</label> {{-- ✅ THÊM --}}
+            <input type="date" name="event_date" class="form-control" required>
+        </div>
 
         <div class="mb-3">
             <label class="form-label">Ảnh</label>

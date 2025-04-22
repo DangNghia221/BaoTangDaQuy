@@ -72,17 +72,20 @@ class ProductController extends Controller
 {
     $product = Product::findOrFail($id);
 
+    // Thêm validation cho event_date
     $request->validate([
         'name' => 'required|string|max:255',
         'price' => 'required|numeric',
         'quantity' => 'required|integer|min:0',
+        'event_date' => 'required|date',  // Validation cho event_date
         'image' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048',
     ]);
 
     $product->name = $request->name;
-    $product->description = $request->description; // <--- THÊM DÒNG NÀY
+    $product->description = $request->description; 
     $product->price = $request->price;
     $product->quantity = $request->quantity;
+    $product->event_date = $request->event_date;  // Thêm dòng này để lưu event_date
 
     if ($request->hasFile('image')) {
         if ($product->image) {
@@ -97,7 +100,30 @@ class ProductController extends Controller
     return redirect()->route('product.index')->with('success', 'Product updated successfully!');
 }
 
-    
+public function events(Request $request)
+{
+    $startDate = $request->start_date;
+    $endDate = $request->end_date;
+
+    $query = Product::query()->whereNull('deleted_at');
+
+    if ($startDate && $endDate) {
+        $query->whereBetween('event_date', [$startDate, $endDate]);
+    }
+
+    $products = $query->get();
+
+    return view('site.events', compact('products', 'startDate', 'endDate'));
+}
+
+public function deleteForever($id)
+{
+    $product = Product::onlyTrashed()->findOrFail($id);
+    $product->forceDelete();
+
+    return redirect()->route('product.deleted')->with('success', 'Sản phẩm đã bị xóa vĩnh viễn.');
+}
+
 
     public function destroy(Product $product)
     {

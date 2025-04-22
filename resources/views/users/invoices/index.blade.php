@@ -216,7 +216,7 @@
 </div>
     <nav style="display: flex; align-items: center;">
     <a href="{{ route('home') }}">Home</a>
-    <a href="{{ route('news.index') }}">Post</a>
+    <a href="{{ route('news.index') }}">Our Documentations</a>
     <a href="{{ route('ticket.index') }}">Exhibition-Ticket</a>
     @auth
     <div class="user-dropdown">
@@ -234,7 +234,8 @@
         </div>
         <div class="dropdown-content">
         <a href="{{ route('users.profile') }}">Personal information</a>
-        <a href="{{ route('user.invoices.index') }}">My bill</a>
+        <a href="{{ route('user.invoices.index') }}">Booking History </a>
+        <a href="{{ route('history.index') }}">History</a>
             <a href="{{ route('logout') }}"
                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                Log out
@@ -251,7 +252,7 @@
     <body>
     <div class="container mt-5 mb-5">
         <div class="card shadow rounded p-4">
-            <h4 class="mb-4"><i class="fas fa-file-invoice"></i> My Bill</h4>
+            <h4 class="mb-4"><i class="fas fa-file-invoice"></i> Booking History</h4>
             <div class="table-responsive">
                 <table class="table table-bordered table-hover text-center align-middle">
                     <thead class="custom-dark-header">
