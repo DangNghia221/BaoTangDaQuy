@@ -1,12 +1,15 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Models\Artifact;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use Illuminate\Support\Facades\Storage; 
 class ProductController extends Controller
 {
+    
+  
+    
     public function index()
     {
         // Lấy sản phẩm chưa bị xóa

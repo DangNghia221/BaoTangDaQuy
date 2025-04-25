@@ -37,7 +37,7 @@
         <thead>
             <tr>
                 <th>ID</th>
-                <th>Tên Sản phẩm</th>
+                <th>Tên khu trưng bày</th>
                 <th>Giá tiền</th>
                 <th>Số lượng</th>
                 <th>Ngày diễn ra</th> 

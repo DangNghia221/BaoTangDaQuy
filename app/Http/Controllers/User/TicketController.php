@@ -1,11 +1,14 @@
 <?php
+
 namespace App\Http\Controllers\User;
-use Illuminate\Support\Facades\Auth;
-use App\Models\Booking; 
+
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Models\Product;
-use Illuminate\Pagination\Paginator;
+use App\Models\Artifact;
+use App\Models\Booking;
+
 class TicketController extends Controller
 {
     public function index()
@@ -13,36 +16,38 @@ class TicketController extends Controller
         $products = Product::paginate(6);
         return view('users.ticket.index', compact('products'));
     }
+
     public function show($id)
     {
         $product = Product::findOrFail($id);
-        return view('users.ticket.detail', compact('product'));
+        $artifacts = Artifact::where('location', $product->name)->get();
+
+
+        return view('users.ticket.detail', compact('product', 'artifacts'));
     }
-    
+
     public function order(Request $request, $id)
     {
         $product = Product::findOrFail($id);
         $quantity = $request->input('quantity');
-    
+
         if ($quantity < 1 || $quantity > $product->quantity) {
             return back()->with('error', 'Số lượng không hợp lệ');
         }
-    
+
         // Trừ số lượng vé
         $product->decrement('quantity', $quantity);
-    
+
         // Tạo bản ghi booking
         Booking::create([
-            'user_id' => Auth::id(), 
+            'user_id' => Auth::id(),
             'product_id' => $product->id,
             'quantity' => $quantity,
-            'status' => 'pending', 
+            'status' => 'pending',
             'price' => $product->price * $quantity,
             'booking_date' => now(),
         ]);
-    
+
         return back()->with('success', 'Đặt vé thành công!');
     }
-
-
 }

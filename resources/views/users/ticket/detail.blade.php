@@ -42,6 +42,83 @@
 
 </head>
 <style>
+    .post-content * {
+    color: #ccc !important;
+}
+/* Sửa đổi cho khung hiện vật */
+.card {
+    border-radius: 12px; 
+    background-color: #111; 
+    color: #ccc;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%; /* Đảm bảo các card có cùng chiều cao */
+}
+
+.card-body {
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+}
+
+/* Đảm bảo các item trong carousel đều nhau */
+.carousel-item {
+    display: flex;
+    justify-content: space-between; /* Căn đều các item */
+}
+
+.card-title {
+    color: #fff; /* Màu trắng cho tiêu đề */
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+}
+
+.card-text {
+    color: #ccc; /* Màu xám cho mô tả */
+    margin-bottom: 10px;
+}
+
+.text-muted {
+    color: #bbb !important; /* Màu chữ cho vật liệu và tuổi */
+}
+
+/* Điều chỉnh khoảng cách giữa các thẻ hiện vật */
+.col-md-4 {
+    display: flex;
+    justify-content: center; /* Căn giữa các thẻ */
+    margin-bottom: 15px; /* Khoảng cách giữa các thẻ */
+}
+
+/* Đảm bảo ảnh hiện vật có cùng kích thước */
+.card img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 12px 12px 0 0;
+}
+
+   .carousel-control-prev-icon,
+    .carousel-control-next-icon {
+        background-color: rgba(0, 0, 0, 0.5); /* có thể đổi thành #fff nếu cần */
+        padding: 15px;
+        border-radius: 50%;
+    }
+
+    .carousel-control-prev,
+    .carousel-control-next {
+        width: 5%;
+    }
+
+    .carousel-control-prev {
+        left: -60px;
+    }
+
+    .carousel-control-next {
+        right: -60px;
+    }
       .silver-text {
         font-size: 30px;
   font-weight: bold;
@@ -248,32 +325,31 @@
         <div class="row">
             {{-- Cột trái: hình ảnh sản phẩm --}}
             <div class="col-md-6">
-    @if ($product->image)
-        <img src="{{ asset('storage/' . $product->image) }}" 
-             class="img-fluid rounded shadow mb-3" 
-             alt="{{ $product->name }}" 
-             style="border: 2px solid #333; width: 50%; max-width: 300px; margin-left: 80px;">
-    @else
-        <img src="{{ asset('images/no-image.png') }}" 
-             class="img-fluid rounded shadow mb-3" 
-             alt="No Image"
-             style="border: 2px solid #333; width: 50%; max-width: 300px; margin-left: 80px;">
-    @endif
-</div>
-
+                @if ($product->image)
+                    <img src="{{ asset('storage/' . $product->image) }}" 
+                         class="img-fluid rounded shadow mb-3" 
+                         alt="{{ $product->name }}" 
+                         style="border: 2px solid #333; width: 50%; max-width: 300px; margin-left: 80px;">
+                @else
+                    <img src="{{ asset('images/no-image.png') }}" 
+                         class="img-fluid rounded shadow mb-3" 
+                         alt="No Image"
+                         style="border: 2px solid #333; width: 50%; max-width: 300px; margin-left: 80px;">
+                @endif
+            </div>
 
             {{-- Cột phải: chi tiết sản phẩm --}}
             <div class="col-md-6" style="background-color: #1a1a1a; padding: 20px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.4);">
                 <h2 class="silver-text">{{ $product->name }}</h2>
-
-                {{-- Bỏ phần đánh giá sao --}}
-
                 <h4 class="mb-3" style="color: #4caf50;">{{ number_format($product->price, 0, ',', '.') }} VNĐ</h4>
-
                 <p><strong style="color: #bbb;">Quantity left:</strong> {{ $product->quantity }}</p>
                 <hr style="border-color: #444;">
-                <h5 style="color: #fff;">Product Description:</h5>
-                <p>{{ $product->description }}</p>
+                <h5 style="color: #000">Product Description:</h5>
+<div class="post-content">
+    {!! $product->description !!}
+</div>
+             
+
 
                 {{-- Nút đặt vé --}}
                 <form action="{{ route('ticket.order', $product->id) }}" method="POST" class="mt-4">
@@ -286,34 +362,65 @@
             </div>
         </div>
 
-        {{-- Dịch vụ tiện ích --}}
-        <div class="row text-center mt-5" style="color: #ccc;">
-            <div class="col-md-4">
-                <img src="{{ asset('images/ship.png') }}" alt="Ship" width="40">
-                <p class="fw-bold mt-2" style="color: #fff;">Express Shipping</p>
-                <p>In the city center</p>
+        {{-- Thông báo --}}
+        @if (session('success'))
+            <div id="success-alert" class="alert alert-success mt-4">{{ session('success') }}</div>
+        @endif
+        @if (session('error'))
+            <div id="error-alert" class="alert alert-danger mt-4">{{ session('error') }}</div>
+        @endif
+
+        {{-- Hiện vật --}}
+        @isset($artifacts)
+            @if ($artifacts->count())
+                <div class="container mt-5">
+                    <h3 class="text-light mb-4">Hiện vật </h3>
+                    <div id="relatedArtifactsCarousel" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-inner">
+        @foreach($artifacts->chunk(3) as $chunkIndex => $chunk)
+            <div class="carousel-item {{ $chunkIndex === 0 ? 'active' : '' }}">
+                <div class="row">
+                    @foreach($chunk as $artifact)
+                        <div class="col-md-4">
+                            <div class="card mb-3 shadow" style="border-radius: 12px; background-color: #111; color: #ccc;">
+                                @if ($artifact->image)
+                                    <img src="{{ asset('storage/' . $artifact->image) }}" 
+                                         class="img-fluid rounded-top" 
+                                         alt="{{ $artifact->name }}" 
+                                         style="height: 150px; object-fit: cover; width: 100%;">
+                                @else
+                                    <img src="{{ asset('images/no-image.png') }}" 
+                                         class="img-fluid rounded-top" 
+                                         alt="No image" 
+                                         style="height: 150px; object-fit: cover; width: 100%;">
+                                @endif
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ $artifact->name }}</h5>
+                                    <p class="card-text">{{ Str::limit(strip_tags($artifact->description), 100) }}</p>
+                                    <p class="text-muted"><small>{{ $artifact->material }} - {{ $artifact->age }}</small></p>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
             </div>
-            <div class="col-md-4">
-                <img src="{{ asset('images/security.png') }}" alt="Secure" width="40">
-                <p class="fw-bold mt-2" style="color: #fff;">Security</p>
-                <p>Customer Information Security</p>
-            </div>
-            <div class="col-md-4">
-                <img src="{{ asset('images/return.png') }}" alt="Return" width="40">
-                <p class="fw-bold mt-2" style="color: #fff;">7-Day Return</p>
-                <p>Exchange directly at the store</p>
-            </div>
-        </div>
+        @endforeach
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#relatedArtifactsCarousel" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon"></span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#relatedArtifactsCarousel" data-bs-slide="next">
+        <span class="carousel-control-next-icon"></span>
+    </button>
+</div>
+
+                </div>
+            @endif
+        @endisset
     </div>
 
-    {{-- Thông báo --}}
-    @if (session('success'))
-        <div id="success-alert" class="alert alert-success">{{ session('success') }}</div>
-    @endif
-    @if (session('error'))
-        <div id="error-alert" class="alert alert-danger">{{ session('error') }}</div>
-    @endif
 </body>
+
 
 <footer style="background-color:#1a1a1a; color: white; padding: 40px 20px;">
     <div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 20px;">
@@ -368,5 +475,5 @@
         }
     }, 3000);
 </script>
-</body>
+
 </html>

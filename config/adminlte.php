@@ -338,8 +338,13 @@ return [
             'icon' => 'fas fa-fw fa-user',
         ],
         [
-            'text' => 'Quản lý sản phẩm',
+            'text' => 'Quản lý khu trưng bày',
             'url' => 'admin/product',
+            'icon' => 'fas fa-fw fa-box',
+        ],
+        [
+            'text' => 'Quản lý hiện vật',
+            'url' => 'admin/artifacts',
             'icon' => 'fas fa-fw fa-box',
         ],
         [

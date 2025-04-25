@@ -106,6 +106,25 @@ public function forceDelete($id)
 
         return redirect()->route('users.index')->with('success', 'User updated successfully!');
     }
+    public function updatePassword(Request $request)
+{
+    $request->validate([
+        'current_password' => 'required',
+        'new_password' => 'required|string|min:6|confirmed',
+    ]);
+
+    $user = auth()->user();
+
+    if (!Hash::check($request->current_password, $user->password)) {
+        return back()->withErrors(['current_password' => 'Current password is incorrect']);
+    }
+
+    $user->password = bcrypt($request->new_password);
+    $user->save();
+
+    return back()->with('success', 'Password changed successfully!');
+}
+
 
     /**
      * Remove the specified resource from storage.

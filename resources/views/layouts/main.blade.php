@@ -395,15 +395,13 @@ nav a:hover::after {
 </video>
 
 
-
-    </div>
-</section>
-
-
     </div>
     
+    </div>
+</section>  
 </section>
 
+</body>
 <footer style="background-color:#1a1a1a; color: white; padding: 40px 20px;">
     <div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 20px;">
         
@@ -438,5 +436,4 @@ nav a:hover::after {
         &copy; {{ date('Y') }} Gem Museum.
     </footer>
 
-</body>
 </html>

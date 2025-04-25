@@ -16,9 +16,11 @@ class PostController extends Controller
 
         $posts = Post::all(); 
         return view('users.post.index', compact('posts'));
-    }
-    
 
+    }
+
+    
+    
     public function create()
     {
         $categories = Category::all(); 
@@ -118,4 +120,5 @@ public function update(Request $request, $id)
 
         return redirect()->route('post.index')->with('success', 'Post deleted successfully!');
     }
+    
 }

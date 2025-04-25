@@ -20,4 +20,9 @@ class Product extends Model
     {
         return $this->hasMany(Booking::class);
     }
+    public function artifacts()
+{
+    return $this->hasMany(Artifact::class);
+}
+
 }

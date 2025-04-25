@@ -59,7 +59,6 @@
     box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
     
 }
-
 .form-group label {
     display: block;
     margin-bottom: 8px;
@@ -68,7 +67,8 @@
 }
 
 .form-group input[type="text"],
-.form-group input[type="file"] {
+.form-group input[type="file"],
+.form-group input[type="password"] {
     width: 100%;
     padding: 8px;
     margin-bottom: 15px;
@@ -77,6 +77,7 @@
     color: #fff;
     border-radius: 4px;
 }
+
 
 .avatar-preview img {
     max-width: 100px;
@@ -305,6 +306,23 @@
                     </div>
                 @endif
             </div>
+            <hr style="margin: 30px 0; border: 1px solid #444;">
+<h3 class="silver-text">Change Password</h3>
+
+<div class="form-group">
+    <label for="current_password">Current Password</label>
+    <input type="password" name="current_password" id="current_password">
+</div>
+
+<div class="form-group">
+    <label for="new_password">New Password</label>
+    <input type="password" name="new_password" id="new_password">
+</div>
+
+<div class="form-group">
+    <label for="new_password_confirmation">Confirm New Password</label>
+    <input type="password" name="new_password_confirmation" id="new_password_confirmation">
+</div>
 
             <div class="form-actions">
                 <button type="submit">Save</button>

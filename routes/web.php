@@ -24,6 +24,22 @@ use App\Http\Controllers\User\InvoiceController;
 use App\Http\Controllers\LibraryController; 
 use App\Http\Controllers\ProductBookingController;
 use App\Http\Controllers\ProductHistoryController;
+use App\Http\Controllers\ArtifactController;
+
+
+// Quản lý hiện vật trong admin
+Route::prefix('admin')->middleware(['auth'])->group(function () {
+    // Route CRUD hiện vật
+    Route::get('/artifacts', [ArtifactController::class, 'index'])->name('artifacts.index');
+    Route::get('/artifacts/create', [ArtifactController::class, 'create'])->name('artifacts.create');
+    Route::post('/artifacts', [ArtifactController::class, 'store'])->name('artifacts.store');
+    Route::get('/artifacts/{artifact}/edit', [ArtifactController::class, 'edit'])->name('artifacts.edit');
+    Route::put('/artifacts/{artifact}', [ArtifactController::class, 'update'])->name('artifacts.update');
+    Route::delete('/artifacts/{artifact}', [ArtifactController::class, 'destroy'])->name('artifacts.destroy');
+    Route::get('artifacts/trashed', [ArtifactController::class, 'trashed'])->name('artifacts.trashed');
+    Route::post('artifacts/{id}/restore', [ArtifactController::class, 'restore'])->name('artifacts.restore');
+    Route::delete('artifacts/{id}/force-delete', [ArtifactController::class, 'forceDelete'])->name('artifacts.forceDelete');
+});
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/history/store/{id}', [ProductHistoryController::class, 'store'])->name('history.store');
