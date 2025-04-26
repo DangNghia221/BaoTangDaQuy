@@ -15,7 +15,14 @@
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
+   
     <style>
+        body {
+            background-color: #000;
+            color: #e0e0e0;
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+        }
         nav a {
             color: white;
             margin: 0 10px;
@@ -24,11 +31,9 @@
             position: relative;
             padding-bottom: 5px;
         }
-
         nav a:hover {
             color: white;
         }
-
         nav a:hover::after {
             content: "";
             position: absolute;
@@ -39,16 +44,40 @@
             background-color: white;
             animation: underline-animation 0.3s ease-in-out;
         }
-
         @keyframes underline-animation {
-            from {
-                width: 0;
-            }
-            to {
-                width: 100%;
-            }
+            from { width: 0; }
+            to { width: 100%; }
         }
+        .silver-text {
+    font-size: 20px;
+    font-weight: bold;
+    background: linear-gradient(90deg, #ccc, #fff, #999, #eee, #ccc);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    position: relative;
+    padding-bottom: 5px;
+    display: inline-block; /* Phải có để underline chạy */
+}
 
+.silver-text:hover::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 2px;
+    background: linear-gradient(90deg, #ccc, #fff, #999, #eee, #ccc);
+    animation: underline-animation 0.4s ease-in-out forwards;
+    width: 100%;
+}
+
+@keyframes underline-animation {
+    from {
+        width: 0;
+    }
+    to {
+        width: 100%;
+    }
+}
         #backToTopBtn {
             opacity: 0;
             visibility: hidden;
@@ -71,28 +100,14 @@
             align-items: center;
             justify-content: center;
         }
-
         #backToTopBtn.show {
             opacity: 1;
             visibility: visible;
         }
-
         #backToTopBtn:hover {
             background-color: #4CAF50;
             color: white;
         }
-
-        #backToTopBtn i {
-            font-size: 24px;
-        }
-
-        body {
-            background-color: #000;
-            color: #e0e0e0;
-            font-family: 'Roboto', sans-serif;
-            margin: 0;
-        }
-
         header {
             position: sticky;
             top: 0;
@@ -100,32 +115,24 @@
             background-color: #000;
             padding: 5px;
             color: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
         }
-
         header h1 {
             font-size: 28px;
             color: white;
         }
-
-        nav a {
-            color: white;
-            margin: 0 10px;
-            text-decoration: none;
-            font-weight: bold;
-        }
-
         .user-dropdown {
             position: relative;
             margin-left: 20px;
         }
-
         .user-icon {
             cursor: pointer;
             color: white;
             display: flex;
             align-items: center;
         }
-
         .dropdown-content {
             display: none;
             position: absolute;
@@ -136,138 +143,118 @@
             border-radius: 6px;
             z-index: 999;
         }
-
         .user-dropdown:hover .dropdown-content {
             display: block;
         }
-
         .dropdown-content a {
             padding: 12px 16px;
             display: block;
             color: white;
             text-decoration: none;
         }
-
         .dropdown-content a:hover {
             background-color: #333;
         }
-
         .card {
             background-color: #1a1a1a;
             color: #fff;
             border: none;
         }
-
         .table {
             color: #fff;
             background-color: #111;
         }
-
         .table thead {
             background-color: #222;
             color: #fff;
         }
-
-        .custom-dark-header {
-            background-color: #111 !important;
-            color: #fff !important;
-        }
-
         .table-bordered th,
         .table-bordered td {
             background-color: #000 !important;
             color: #fff !important;
             border-color: #444;
         }
-
         .table tbody tr:hover {
             background-color: #333;
         }
-
         footer {
             background-color: #1a1a1a;
             color: white;
             padding: 40px 20px;
         }
-
         footer h3 {
             color: #BEBEBE;
         }
-
         footer a {
             color: #BEBEBE;
         }
     </style>
 </head>
 
+<body>
 
-
-    <!-- Nút trở lên đầu trang -->
+    <!-- Nút trở về đầu trang -->
     <button id="backToTopBtn" title="Lên đầu trang">
         <i class="fas fa-arrow-up"></i>
     </button>
-    <header style="display: flex; align-items: center; justify-content: space-between;">
-<div style="display: flex; align-items: center;">
-        <!-- Hiển thị logo -->
-<img src="{{ asset('storage/' . $setting->logo) }}" alt="Logo Website" width="120">
 
-<h1> {{ $setting->site_name ?? 'Website của bạn' }}</h1>
+    <!-- Header -->
+    <header>
+        <div style="display: flex; align-items: center;">
+            <img src="{{ asset('storage/' . $setting->logo) }}" alt="Logo Website" width="120">
+            <h1>{{ $setting->site_name ?? 'Website của bạn' }}</h1>
+        </div>
+        <nav style="display: flex; align-items: center;">
+            <a href="{{ route('home') }}">Home</a>
+            <a href="{{ route('news.index') }}">Our Documentations</a>
+            <a href="{{ route('ticket.index') }}">Exhibition-Ticket</a>
 
-</div>
-    <nav style="display: flex; align-items: center;">
-    <a href="{{ route('home') }}">Home</a>
-    <a href="{{ route('news.index') }}">Our Documentations</a>
-    <a href="{{ route('ticket.index') }}">Exhibition-Ticket</a>
-    @auth
-<div class="user-dropdown">
-    <div class="user-icon">
-        @if (Auth::user()->avatar)
-            <img src="{{ asset('storage/' . Auth::user()->avatar) }}" 
-                 alt="Avatar" 
-                 style="width: 30px; height: 30px; border-radius: 50%; object-fit: cover;">
-        @else
-            <img src="https://via.placeholder.com/30" 
-                 alt="Avatar" 
-                 style="width: 30px; height: 30px; border-radius: 50%; object-fit: cover;">
-        @endif
-        <span style="margin-left: 5px;">{{ Auth::user()->name }}</span>
-    </div>
-    <div class="dropdown-content">
-        <a href="{{ route('users.profile') }}">Personal information</a>
-        <a href="{{ route('user.invoices.index') }}">Booking History</a>
-        <a href="{{ route('history.index') }}">History</a>
-        <a href="{{ route('logout') }}"
-           onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-           Log out
-        </a>
-        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-            @csrf
-        </form>
-    </div>
-</div>
-@endauth
+            @auth
+            <div class="user-dropdown">
+                <div class="user-icon">
+                    @if (Auth::user()->avatar)
+                        <img src="{{ asset('storage/' . Auth::user()->avatar) }}" alt="Avatar" style="width: 30px; height: 30px; border-radius: 50%; object-fit: cover;">
+                    @else
+                        <img src="https://via.placeholder.com/30" alt="Avatar" style="width: 30px; height: 30px; border-radius: 50%; object-fit: cover;">
+                    @endif
+                    <span style="margin-left: 5px;">{{ Auth::user()->name }}</span>
+                </div>
+                <div class="dropdown-content">
+                    <a href="{{ route('users.profile') }}">Personal information</a>
+                    <a href="{{ route('user.invoices.index') }}">Booking History</a>
+                    <a href="{{ route('history.index') }}">History</a>
+                    <a href="{{ route('logout') }}"
+                       onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                       Log out
+                    </a>
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                        @csrf
+                    </form>
+                </div>
+            </div>
+            @endauth
 
-@guest
-<div class="user-dropdown">
-    <div class="user-icon">
-        <i class="fas fa-user"></i> <span style="margin-left: 5px;">Tài khoản</span>
-    </div>
-    <div class="dropdown-content">
-        <a href="{{ route('login') }}">Đăng nhập</a>
-        <a href="{{ route('register') }}">Đăng ký</a>
-    </div>
-</div>
-@endguest
-    </nav>
-</header>
+            @guest
+            <div class="user-dropdown">
+                <div class="user-icon">
+                    <i class="fas fa-user"></i> <span style="margin-left: 5px;">Tài khoản</span>
+                </div>
+                <div class="dropdown-content">
+                    <a href="{{ route('login') }}">Đăng nhập</a>
+                    <a href="{{ route('register') }}">Đăng ký</a>
+                </div>
+            </div>
+            @endguest
+        </nav>
+    </header>
 
-    <body>
+    <!-- Booking History -->
     <div class="container mt-5 mb-5">
-        <div class="card shadow rounded p-4">
+        <div class="card bg-dark text-white shadow rounded p-4">
             <h4 class="mb-4"><i class="fas fa-file-invoice"></i> Booking History</h4>
             <div class="table-responsive">
                 <table class="table table-bordered table-hover text-center align-middle">
-                    <thead class="custom-dark-header">
+                    <thead class="custom-dark-header bg-dark text-white">
                         <tr>
                             <th>ID</th>
                             <th>Product</th>
@@ -281,7 +268,15 @@
                         @foreach($bookings as $booking)
                         <tr>
                             <td>{{ $booking->id }}</td>
-                            <td>{{ $booking->product->name ?? 'Không rõ' }}</td>
+                            <td>
+                                @if($booking->product)
+                                <a href="#" data-bs-toggle="modal" data-bs-target="#productModal{{ $booking->product->id }}" class="silver-text">
+                                    {{ $booking->product->name }}
+                                </a>
+                                @else
+                                Không rõ
+                                @endif
+                            </td>
                             <td>{{ $booking->quantity }}</td>
                             <td>{{ number_format($booking->price, 0, ',', '.') }} đ</td>
                             <td>
@@ -297,13 +292,57 @@
                             </td>
                             <td>{{ $booking->created_at }}</td>
                         </tr>
+
+                        @if($booking->product)
+                        <!-- Modal chi tiết sản phẩm -->
+                        <div class="modal fade" id="productModal{{ $booking->product->id }}" tabindex="-1" aria-labelledby="productModalLabel{{ $booking->product->id }}" aria-hidden="true">
+                          <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content bg-dark text-white">
+                              <div class="modal-header border-0">
+                                <h5 class="modal-title">{{ $booking->product->name }}</h5>
+                                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                              </div>
+                              <div class="modal-body text-start">
+                                <p><strong>Description:</strong> {{ $booking->product->description ?? 'Không có mô tả' }}</p>
+                                <p><strong>Price:</strong> {{ number_format($booking->product->price, 0, ',', '.') }} đ</p>
+                                @if($booking->product->image)
+                                <img src="{{ asset('storage/' . $booking->product->image) }}" alt="Product Image" class="img-fluid rounded">
+                                @else
+                                <p><i class="fas fa-image-slash"></i> No image available.</p>
+                                @endif
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        @endif
+
                         @endforeach
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
-    
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+    // Nút back to top
+    const backToTopBtn = document.getElementById('backToTopBtn');
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 300) {
+            backToTopBtn.classList.add('show');
+        } else {
+            backToTopBtn.classList.remove('show');
+        }
+    });
+    backToTopBtn.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+    </script>
+
+</body>
+</html>
+
 <footer style="background-color:#1a1a1a; color: white; padding: 40px 20px;">
     <div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 20px;">
         
@@ -355,6 +394,5 @@
         });
     </script>
 
-</body>
 
 </html>

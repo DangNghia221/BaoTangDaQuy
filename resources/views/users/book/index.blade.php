@@ -310,7 +310,7 @@
                 @endforeach
             </div>
         @else
-            <p class="text-gray-500 mt-6">Không có sản phẩm nào trong khoảng ngày đã chọn.</p>
+            <p class="text-gray-500 mt-6">There are no products within the selected date range.</p>
         @endif
     </div>
 </body>
