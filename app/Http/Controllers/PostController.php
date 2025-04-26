@@ -1,6 +1,6 @@
 <?php
 namespace App\Http\Controllers;
-
+use App\Models\Libary;
 use Illuminate\Http\Request;
 use App\Models\Post;
 use App\Models\Category; 
@@ -24,7 +24,8 @@ class PostController extends Controller
     public function create()
     {
         $categories = Category::all(); 
-        return view('admin.post.create', compact('categories'));
+        $libaries = Libary::latest()->get();  // Lấy danh sách ảnh từ thư viện
+    return view('admin.post.create', compact('categories', 'libaries')); 
     }
     // Hiển thị danh sách bài viết
 public function list()
@@ -72,7 +73,8 @@ public function edit($id)
 {
     $post = Post::findOrFail($id);
     $categories = Category::all();
-    return view('admin.post.edit', compact('post', 'categories'));
+    $libaries = Libary::latest()->get();  // Lấy danh sách ảnh từ thư viện
+    return view('admin.post.edit', compact('post', 'categories', 'libaries'));
 }
 
 public function update(Request $request, $id)
@@ -82,6 +84,7 @@ public function update(Request $request, $id)
         'content' => 'required|string',
         'category_id' => 'nullable|exists:categories,id',
         'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        'image_from_libary' => 'nullable|string', // Thêm validation cho ảnh từ thư viện
     ]);
 
     $post = Post::findOrFail($id);
@@ -89,7 +92,10 @@ public function update(Request $request, $id)
     $post->content = $request->content;
     $post->category_id = $request->category_id;
 
-    if ($request->hasFile('image')) {
+    // Kiểm tra nếu người dùng chọn ảnh từ thư viện
+    if ($request->has('image_from_libary')) {
+        $post->image = $request->image_from_libary; // Sử dụng ảnh từ thư viện
+    } elseif ($request->hasFile('image')) {
         // Xóa ảnh cũ nếu có
         if ($post->image) {
             Storage::delete('public/' . $post->image);
@@ -101,6 +107,7 @@ public function update(Request $request, $id)
 
     return redirect()->route('post.index')->with('success', 'Bài viết đã được cập nhật thành công!');
 }
+
 
 
     public function destroy($id)
