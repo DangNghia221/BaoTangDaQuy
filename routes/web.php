@@ -99,8 +99,9 @@ Route::get('/bai-viet', [NewsController::class, 'index'])->name('news.index');
 
 // Trang chủ chuyển hướng đến đăng nhập
 Route::get('/', function () {
-    return redirect()->route('login');
+    return redirect()->route('home');
 });
+
 
 // Đăng ký
 Route::get('register', [RegisterController::class, 'showRegistrationForm'])->name('register.form');
@@ -111,7 +112,10 @@ Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('login', [LoginController::class, 'login'])->name('login.submit');
 
 // Trang chủ sau khi đăng nhậpp
-Route::get('/home', [AdminController::class, 'index'])->name('home')->middleware('auth');
+Route::get('/', function () {
+    return redirect()->route('home');
+});
+Route::get('/home', [AdminController::class, 'index'])->name('home');
 
 // ====== NGƯỜI DÙNG ĐÃ ĐĂNG NHẬP ======
 

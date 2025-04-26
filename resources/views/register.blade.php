@@ -1,4 +1,3 @@
-<!-- resources/views/auth/register.blade.php -->
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -9,10 +8,8 @@
     <style>
         body {
             font-family: 'Figtree', sans-serif;
-            background: linear-gradient(135deg, rgba(6, 105, 212, 0.7), rgba(35, 213, 114, 0.7)), url('https://via.placeholder.com/1600x900');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
+            background-color: #1c1c1c; /* Nền màu đen */
+            color: white; /* Chữ màu trắng */
             margin: 0;
             height: 100vh;
             display: flex;
@@ -22,10 +19,10 @@
 
         .container {
             position: absolute;
-            background-color: rgba(255, 255, 255, 0.9);
+            background-color: rgba(0, 0, 0, 0.8); /* Nền container màu đen trong suốt */
             padding: 40px;
             border-radius: 15px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
             width: 100%;
             max-width: 400px;
             text-align: center;
@@ -34,7 +31,7 @@
         h1 {
             font-weight: 600;
             margin-bottom: 20px;
-            color: #333;
+            color: #fff;
         }
 
         input[type="text"], input[type="email"], input[type="password"], button {
@@ -44,10 +41,12 @@
             border: 1px solid #ddd;
             border-radius: 5px;
             font-size: 16px;
+            background-color: #333; /* Nền input tối */
+            color: white; /* Chữ input trắng */
         }
 
         button {
-            background-color: #007bff;
+            background-color: #007bff; /* Màu xanh cho nút */
             color: white;
             border: none;
             cursor: pointer;
@@ -61,7 +60,7 @@
         .link {
             display: block;
             margin-top: 10px;
-            color: #28a745;
+            color: #28a745; /* Màu xanh lá cho link */
             text-decoration: none;
         }
 

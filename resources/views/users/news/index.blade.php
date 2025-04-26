@@ -226,34 +226,45 @@
     <a href="{{ route('news.index') }}">Our Documentations</a>
     <a href="{{ route('ticket.index') }}">Exhibition-Ticket</a>
     @auth
-    <div class="user-dropdown">
-        <div class="user-icon">
-            @if (Auth::user()->avatar)
-                <img src="{{ asset('storage/' . Auth::user()->avatar) }}" 
-                     alt="Avatar" 
-                     style="width: 30px; height: 30px; border-radius: 50%; object-fit: cover;">
-            @else
-                <img src="https://via.placeholder.com/30" 
-                     alt="Avatar" 
-                     style="width: 30px; height: 30px; border-radius: 50%; object-fit: cover;">
-            @endif
-            <span style="margin-left: 5px;">{{ Auth::user()->name }}</span>
-        </div>
-        <div class="dropdown-content">
+<div class="user-dropdown">
+    <div class="user-icon">
+        @if (Auth::user()->avatar)
+            <img src="{{ asset('storage/' . Auth::user()->avatar) }}" 
+                 alt="Avatar" 
+                 style="width: 30px; height: 30px; border-radius: 50%; object-fit: cover;">
+        @else
+            <img src="https://via.placeholder.com/30" 
+                 alt="Avatar" 
+                 style="width: 30px; height: 30px; border-radius: 50%; object-fit: cover;">
+        @endif
+        <span style="margin-left: 5px;">{{ Auth::user()->name }}</span>
+    </div>
+    <div class="dropdown-content">
         <a href="{{ route('users.profile') }}">Personal information</a>
         <a href="{{ route('user.invoices.index') }}">Booking History</a>
         <a href="{{ route('history.index') }}">History</a>
-
-            <a href="{{ route('logout') }}"
-               onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-               Log out
-            </a>
-            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                @csrf
-            </form>
-        </div>
+        <a href="{{ route('logout') }}"
+           onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+           Log out
+        </a>
+        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+            @csrf
+        </form>
     </div>
+</div>
 @endauth
+
+@guest
+<div class="user-dropdown">
+    <div class="user-icon">
+        <i class="fas fa-user"></i> <span style="margin-left: 5px;">Tài khoản</span>
+    </div>
+    <div class="dropdown-content">
+        <a href="{{ route('login') }}">Đăng nhập</a>
+        <a href="{{ route('register') }}">Đăng ký</a>
+    </div>
+</div>
+@endguest
     </nav>
 </header>
 

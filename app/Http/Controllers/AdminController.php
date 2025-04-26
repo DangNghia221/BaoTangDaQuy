@@ -10,19 +10,20 @@ use App\Models\User;
 class AdminController extends Controller
 {
     public function index()
-    {
-        if (Auth::check()) {
-            $usertype = Auth::user()->usertype;
+{
+    if (Auth::check()) {
+        $usertype = Auth::user()->usertype;
 
-            if ($usertype == 'user') {
-                return view('dashboard');
-            } else if ($usertype == 'admin') {
-                return view('admin.dashboard');
-            }
+        if ($usertype == 'user') {
+            return view('dashboard');
+        } else if ($usertype == 'admin') {
+            return view('admin.dashboard');
         }
-
-        return redirect()->route('login');
     }
+    return view('users.home');
+
+}
+
 
     // Hiển thị trang profile admin
     public function profile()
