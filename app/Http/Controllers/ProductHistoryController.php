@@ -61,7 +61,8 @@ class ProductHistoryController extends Controller
     public function showHistory()
     {
         // Lấy tất cả lịch sử xem sản phẩm của người dùng hiện tại
-        $history = ProductHistory::where('user_id', Auth::id())->paginate(10);  // Phân trang kết quả
+        $history = ProductHistory::where('user_id', Auth::id())->get();
+        // Phân trang kết quả
 
         // Trả về view với dữ liệu lịch sử
         return view('users.history.index', compact('history'));

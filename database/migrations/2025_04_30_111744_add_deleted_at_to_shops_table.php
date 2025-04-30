@@ -11,15 +11,16 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('artifacts', function (Blueprint $table) {
-            $table->softDeletes(); // Thêm cột deleted_at
+        Schema::table('shops', function (Blueprint $table) {
+            $table->softDeletes();
         });
     }
-
+    
     public function down()
     {
-        Schema::table('artifacts', function (Blueprint $table) {
-            $table->dropSoftDeletes(); // Xóa cột deleted_at nếu rollback
+        Schema::table('shops', function (Blueprint $table) {
+            $table->dropSoftDeletes();
         });
     }
+    
 };

@@ -237,11 +237,11 @@
             @guest
             <div class="user-dropdown">
                 <div class="user-icon">
-                    <i class="fas fa-user"></i> <span style="margin-left: 5px;">Tài khoản</span>
-                </div>
-                <div class="dropdown-content">
-                    <a href="{{ route('login') }}">Đăng nhập</a>
-                    <a href="{{ route('register') }}">Đăng ký</a>
+                <i class="fas fa-user"></i> <span style="margin-left: 5px;">Account</span>
+    </div>
+    <div class="dropdown-content">
+        <a href="{{ route('login') }}">Login</a>
+        <a href="{{ route('register') }}">Register</a>
                 </div>
             </div>
             @endguest
@@ -259,7 +259,7 @@
                             <th>ID</th>
                             <th>Product</th>
                             <th>Quantity</th>
-                            <th>Price</th>
+                            <th class="hidden-price">Price</th> <!-- Ẩn cột giá -->
                             <th>Status</th>
                             <th>Date booked</th>
                         </tr>
@@ -278,7 +278,7 @@
                                 @endif
                             </td>
                             <td>{{ $booking->quantity }}</td>
-                            <td>{{ number_format($booking->price, 0, ',', '.') }} đ</td>
+                            <td class="hidden-price">{{ number_format($booking->price, 0, ',', '.') }} đ</td> <!-- Ẩn giá trong bảng -->
                             <td>
                                 @if($booking->status == 'pending')
                                 <span class="badge bg-warning text-dark">Pending</span>
@@ -304,7 +304,7 @@
                               </div>
                               <div class="modal-body text-start">
                                 <p><strong>Description:</strong> {{ $booking->product->description ?? 'Không có mô tả' }}</p>
-                                <p><strong>Price:</strong> {{ number_format($booking->product->price, 0, ',', '.') }} đ</p>
+                                <p class="hidden-price"><strong>Price:</strong> {{ number_format($booking->product->price, 0, ',', '.') }} đ</p> <!-- Ẩn giá trong modal -->
                                 @if($booking->product->image)
                                 <img src="{{ asset('storage/' . $booking->product->image) }}" alt="Product Image" class="img-fluid rounded">
                                 @else
@@ -340,7 +340,15 @@
     });
     </script>
 
+    <!-- CSS để ẩn giá -->
+    <style>
+        .hidden-price {
+            display: none;
+        }
+    </style>
+
 </body>
+
 </html>
 
 <footer style="background-color:#1a1a1a; color: white; padding: 40px 20px;">

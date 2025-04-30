@@ -261,11 +261,11 @@
 @guest
 <div class="user-dropdown">
     <div class="user-icon">
-        <i class="fas fa-user"></i> <span style="margin-left: 5px;">Tài khoản</span>
+    <i class="fas fa-user"></i> <span style="margin-left: 5px;">Account</span>
     </div>
     <div class="dropdown-content">
-        <a href="{{ route('login') }}">Đăng nhập</a>
-        <a href="{{ route('register') }}">Đăng ký</a>
+        <a href="{{ route('login') }}">Login</a>
+        <a href="{{ route('register') }}">Register</a>
     </div>
 </div>
 @endguest
@@ -275,7 +275,7 @@
 <body style="font-family: 'Roboto', sans-serif; background-color: #000; margin: 0;">
 
     <div style="padding: 40px;">
-        <h2 style="text-align: center; color: #BEBEBE; margin-bottom: 40px;">Buy Tickets</h2>
+        <h2 style="text-align: center; color: #BEBEBE; margin-bottom: 40px;">Exhibitions and events</h2>
 
         <div class="container">
             <div class="row">
@@ -297,7 +297,6 @@
         </a>
     </h5>
     <p class="card-text" style="color: #ccc;">{{ Str::limit($product->description, 100) }}</p>
-    <p class="card-text fw-bold" style="color: #fff;">{{ number_format($product->price, 0, ',', '.') }} VNĐ</p>
 </div>
                         </div>
                     </div>

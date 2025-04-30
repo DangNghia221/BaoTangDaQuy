@@ -337,16 +337,36 @@ return [
             'url' => 'admin/profile',
             'icon' => 'fas fa-fw fa-user',
         ],
+        
+       
         [
-            'text' => 'Quản lý khu trưng bày',
-            'url' => 'admin/product',
-            'icon' => 'fas fa-fw fa-box',
+            'text' => 'Khu trưng bày',
+            'icon' => 'fas fa-fw fa-newspaper',
+            'submenu' => [
+                [
+                    'text' => 'Quản lý khu triển lãm',
+                    'url' => 'admin/product',
+                    'icon' => 'fas fa-fw fa-box',
+                ],
+                [
+                    'text' => 'Quản lý hiện vật',
+                    'url' => 'admin/artifacts',
+                    'icon' => 'fas fa-fw fa-box',
+                ],
+                [
+                    'text' => 'Quản lý shop',
+                    'url' => 'admin/shop',
+                    'icon' => 'fas fa-shopping-bag',                ],
+                [
+                    'text' => 'Quản lý danh mục shop',
+                    'url' => 'admin/shopcategory',
+                    'icon' => 'fas fa-folder-open',
+                ],
+            ],
         ],
-        [
-            'text' => 'Quản lý hiện vật',
-            'url' => 'admin/artifacts',
-            'icon' => 'fas fa-fw fa-box',
-        ],
+
+
+
         [
             'text' => 'Bài viết',
             'icon' => 'fas fa-fw fa-newspaper',

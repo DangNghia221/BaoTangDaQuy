@@ -276,7 +276,8 @@ nav a:hover::after {
     <nav style="display: flex; align-items: center;">
     <a href="{{ route('home') }}">Home</a>
     <a href="{{ route('news.index') }}">Our Documentations</a>
-    <a href="{{ route('ticket.index') }}">Exhibition-Ticket</a>
+    <a href="{{ route('ticket.index') }}">Collections</a>
+    <a href="{{ route('categoryshop.index') }}">Shop</a>
     @auth
 <div class="user-dropdown">
     <div class="user-icon">
@@ -309,11 +310,11 @@ nav a:hover::after {
 @guest
 <div class="user-dropdown">
     <div class="user-icon">
-        <i class="fas fa-user"></i> <span style="margin-left: 5px;">Tài khoản</span>
+    <i class="fas fa-user"></i> <span style="margin-left: 5px;">Account</span>
     </div>
     <div class="dropdown-content">
-        <a href="{{ route('login') }}">Đăng nhập</a>
-        <a href="{{ route('register') }}">Đăng ký</a>
+        <a href="{{ route('login') }}">Login</a>
+        <a href="{{ route('register') }}">Register</a>
     </div>
 </div>
 @endguest

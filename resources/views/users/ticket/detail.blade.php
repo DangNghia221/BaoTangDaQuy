@@ -42,6 +42,7 @@
 
 </head>
 <style>
+    
     .post-content * {
     color: #ccc !important;
 }
@@ -63,7 +64,80 @@
     justify-content: space-between;
     height: 100%;
 }
+.artifact-carousel-wrapper {
+    overflow: hidden;
+    width: 100%;
+    padding: 20px 0;
+    position: relative;
+}
 
+.artifact-carousel {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    gap: 20px;
+    padding: 0 20px;
+    scroll-behavior: smooth;
+}
+
+.artifact-card {
+    flex: 0 0 calc((100% - 40px) / 3);
+    background-color: #1a1a1a;
+    border-radius: 12px;
+    color: #fff;
+    scroll-snap-align: start;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+    transition: transform 0.3s ease;
+    height: 450px; /* cố định chiều cao cho card */
+}
+
+.artifact-card:hover {
+    transform: scale(1.03);
+}
+
+.artifact-image {
+    width: 100%;
+    height: 250px; /* chiều cao cố định cho ảnh */
+    background-color: #222;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.artifact-image img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+.artifact-info {
+    flex-grow: 1;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* để tên + mô tả + age đều nhau */
+}
+
+.artifact-info h3 {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.artifact-info p {
+    font-size: 14px;
+    margin-bottom: 8px;
+    color: #ccc;
+    flex-grow: 1; /* để mô tả chiếm chỗ còn lại */
+}
+
+.artifact-info small {
+    font-size: 12px;
+    color: #aaa;
+}
 /* Đảm bảo các item trong carousel đều nhau */
 .carousel-item {
     display: flex;
@@ -113,12 +187,50 @@
     }
 
     .carousel-control-prev {
-        left: -60px;
+        left: -90px;
     }
 
     .carousel-control-next {
-        right: -60px;
+        right: -90px;
     }
+    .artifact-card img {
+        width: 100%;
+        height: 150px;
+        object-fit: cover;
+        border-radius: 12px 12px 0 0;
+        transition: 0.3s ease;
+        filter: brightness(20%); /* Tối đen luôn */
+    }
+
+    /* Khi card active hoặc hover thì ảnh sáng rõ */
+    .artifact-card.active img,
+    .artifact-card:hover img {
+        filter: brightness(100%);
+    }
+
+    /* Optional: thêm viền sáng khi hover */
+    .artifact-card:hover {
+        border: 1px solid #666;
+        transition: 0.3s ease;
+    }
+
+    /* Làm cho text (title, description) ẩn/mờ theo hình ảnh */
+    .artifact-card .card-body {
+        opacity: 0.3; /* Mặc định mờ */
+        transition: 0.3s ease;
+    }
+
+    .artifact-card.active .card-body,
+    .artifact-card:hover .card-body {
+        opacity: 1; /* Khi active hoặc hover mới hiện rõ chữ */
+    }
+/* Nút mũi tên */
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 15px;
+    border-radius: 50%;}
+
       .silver-text {
         font-size: 30px;
   font-weight: bold;
@@ -319,28 +431,27 @@
 @guest
 <div class="user-dropdown">
     <div class="user-icon">
-        <i class="fas fa-user"></i> <span style="margin-left: 5px;">Tài khoản</span>
+    <i class="fas fa-user"></i> <span style="margin-left: 5px;">Account</span>
     </div>
     <div class="dropdown-content">
-        <a href="{{ route('login') }}">Đăng nhập</a>
-        <a href="{{ route('register') }}">Đăng ký</a>
+        <a href="{{ route('login') }}">Login</a>
+        <a href="{{ route('register') }}">Register</a>
     </div>
 </div>
 @endguest
     </nav>
 </header>
 <body style="font-family: 'Roboto', sans-serif; background-color: #000; color: #ccc;">
-
-    {{-- NỘI DUNG --}}
     <div class="container my-5">
+        <!-- Nội dung bạn giữ nguyên -->
         <div class="row">
-            {{-- Cột trái: hình ảnh sản phẩm --}}
+            <!-- Cột trái: Hình ảnh sản phẩm -->
             <div class="col-md-6">
                 @if ($product->image)
                     <img src="{{ asset('storage/' . $product->image) }}" 
                          class="img-fluid rounded shadow mb-3" 
                          alt="{{ $product->name }}" 
-                         style="border: 2px solid #333; width: 50%; max-width: 300px; margin-left: 80px;">
+                         style="border: 2px solid #333; width: 80%; height: auto; object-fit: cover;">
                 @else
                     <img src="{{ asset('images/no-image.png') }}" 
                          class="img-fluid rounded shadow mb-3" 
@@ -349,20 +460,19 @@
                 @endif
             </div>
 
-            {{-- Cột phải: chi tiết sản phẩm --}}
+            <!-- Cột phải: Chi tiết sản phẩm -->
             <div class="col-md-6" style="background-color: #1a1a1a; padding: 20px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.4);">
                 <h2 class="silver-text">{{ $product->name }}</h2>
-                <h4 class="mb-3" style="color: #4caf50;">{{ number_format($product->price, 0, ',', '.') }} VNĐ</h4>
                 <p><strong style="color: #bbb;">Quantity left:</strong> {{ $product->quantity }}</p>
+                <p><strong style="color: #bbb;">Event date:</strong> {{ \Carbon\Carbon::parse($product->event_date)->format('d/m/Y') }}</p>
+
                 <hr style="border-color: #444;">
-                <h5 style="color: #000">Product Description:</h5>
-<div class="post-content">
-    {!! $product->description !!}
-</div>
-             
+                <h5 style="color: #ccc;">Product Description:</h5>
+                <div class="post-content">
+                    {!! $product->description !!}
+                </div>
 
-
-                {{-- Nút đặt vé --}}
+                <!-- Nút đặt vé -->
                 <form action="{{ route('ticket.order', $product->id) }}" method="POST" class="mt-4">
                     @csrf
                     <div class="input-group mb-3" style="max-width: 200px;">
@@ -373,7 +483,7 @@
             </div>
         </div>
 
-        {{-- Thông báo --}}
+        <!-- Thông báo -->
         @if (session('success'))
             <div id="success-alert" class="alert alert-success mt-4">{{ session('success') }}</div>
         @endif
@@ -381,56 +491,80 @@
             <div id="error-alert" class="alert alert-danger mt-4">{{ session('error') }}</div>
         @endif
 
-        {{-- Hiện vật --}}
-        @isset($artifacts)
-            @if ($artifacts->count())
-                <div class="container mt-5">
-                    <h3 class="text-light mb-4">Hiện vật </h3>
-                    <div id="relatedArtifactsCarousel" class="carousel slide" data-bs-ride="carousel">
-    <div class="carousel-inner">
-        @foreach($artifacts->chunk(3) as $chunkIndex => $chunk)
-            <div class="carousel-item {{ $chunkIndex === 0 ? 'active' : '' }}">
-                <div class="row">
-                    @foreach($chunk as $artifact)
-                        <div class="col-md-4">
-                            <div class="card mb-3 shadow" style="border-radius: 12px; background-color: #111; color: #ccc;">
+       <!-- Hiện vật -->
+@isset($artifacts)
+    @if ($artifacts->count())
+        <div class="mt-5 position-relative">
+            <h3 class="silver-text">Artifacts</h3>
+
+            <!-- Nút kéo trái -->
+            <button id="scrollLeftBtn" class="btn btn-outline-light position-absolute start-0 top-50 translate-middle-y" style="z-index: 10; border-radius: 50%; width: 40px; height: 40px;">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+
+            <!-- Bọc container -->
+            <div class="position-relative" style="overflow: hidden;">
+                <div id="artifactContainer" class="d-flex" style="gap: 1rem; transition: transform 0.5s ease;">
+                    @foreach($artifacts as $artifact)
+                        <div class="card artifact-card" style="min-width: 300px; max-width: 300px; background-color: #111; color: #ccc; border-radius: 12px; flex: 0 0 auto; overflow: hidden;">
+                            <div style="width: 100%; height: 250px; background-color: #222; display: flex; align-items: center; justify-content: center;">
                                 @if ($artifact->image)
-                                    <img src="{{ asset('storage/' . $artifact->image) }}" 
-                                         class="img-fluid rounded-top" 
-                                         alt="{{ $artifact->name }}" 
-                                         style="height: 150px; object-fit: cover; width: 100%;">
+                                    <img src="{{ asset('storage/' . $artifact->image) }}" alt="{{ $artifact->name }}" style="max-width: 100%; max-height: 100%; object-fit: contain;">
                                 @else
-                                    <img src="{{ asset('images/no-image.png') }}" 
-                                         class="img-fluid rounded-top" 
-                                         alt="No image" 
-                                         style="height: 150px; object-fit: cover; width: 100%;">
+                                    <img src="{{ asset('images/no-image.png') }}" alt="No image" style="max-width: 100%; max-height: 100%; object-fit: contain;">
                                 @endif
-                                <div class="card-body">
-                                    <h5 class="card-title">{{ $artifact->name }}</h5>
-                                    <p class="card-text">{{ Str::limit(strip_tags($artifact->description), 100) }}</p>
-                                    <p class="text-muted"><small>{{ $artifact->material }} - {{ $artifact->age }}</small></p>
-                                </div>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">{{ $artifact->name }}</h5>
+                                <p class="card-text">{{ Str::limit(strip_tags($artifact->description), 100) }}</p>
+                                <p class="text-muted"><small>{{ $artifact->material }} - {{ $artifact->age }}</small></p>
                             </div>
                         </div>
                     @endforeach
                 </div>
             </div>
-        @endforeach
-    </div>
-    <button class="carousel-control-prev" type="button" data-bs-target="#relatedArtifactsCarousel" data-bs-slide="prev">
-        <span class="carousel-control-prev-icon"></span>
-    </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#relatedArtifactsCarousel" data-bs-slide="next">
-        <span class="carousel-control-next-icon"></span>
-    </button>
-</div>
 
-                </div>
-            @endif
-        @endisset
+            <!-- Nút kéo phải -->
+            <button id="scrollRightBtn" class="btn btn-outline-light position-absolute end-0 top-50 translate-middle-y" style="z-index: 10; border-radius: 50%; width: 40px; height: 40px;">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+        </div>
+    @endif
+@endisset
+
     </div>
+
+    <!-- FontAwesome icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <!-- Script cho nút kéo -->
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        let currentTranslateX = 0;
+        const container = document.getElementById('artifactContainer');
+        const scrollLeftBtn = document.getElementById('scrollLeftBtn');
+        const scrollRightBtn = document.getElementById('scrollRightBtn');
+
+        scrollLeftBtn.addEventListener('click', function() {
+            currentTranslateX += 300; // Đi về trái
+            currentTranslateX = Math.min(currentTranslateX, 0); 
+            container.style.transform = `translateX(${currentTranslateX}px)`;
+        });
+
+        scrollRightBtn.addEventListener('click', function() {
+            const parentWidth = container.parentElement.offsetWidth;
+            const containerWidth = container.scrollWidth;
+            const maxTranslateX = -(containerWidth - parentWidth);
+
+            currentTranslateX -= 300; // Đi về phải
+            currentTranslateX = Math.max(currentTranslateX, maxTranslateX);
+            container.style.transform = `translateX(${currentTranslateX}px)`;
+        });
+    });
+    </script>
 
 </body>
+
 
 
 <footer style="background-color:#1a1a1a; color: white; padding: 40px 20px;">

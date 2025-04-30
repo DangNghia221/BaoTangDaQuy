@@ -1,21 +1,12 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lịch sử xem sản phẩm</title>
-</head>
-<style>
-     .silver-text {
-        font-size: 30px;
-  font-weight: bold;
-  background: linear-gradient(90deg, #ccc, #fff, #999, #eee, #ccc);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-    }
-    .pagination {
-    background-color: transparent; 
-    border: none; 
+    <title>Shop Categories</title>
+    <style>
+          .pagination {
+    background-color: transparent; /* Loại bỏ background */
+    border: none; /* Loại bỏ viền */
 }
 
 .pagination li a,
@@ -30,6 +21,13 @@
     color: white !important; /* Đặt màu chữ trắng cho trang hiện tại */
 }
 
+    .card-title {
+        font-size: 20px;
+  font-weight: bold;
+  background: linear-gradient(90deg, #ccc, #fff, #999, #eee, #ccc);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+    }
       .post-content p,
         .post-content li,
         .post-content span,
@@ -138,7 +136,7 @@
         text-decoration: none;
         font-weight: bold;
     }
-  
+    
 .user-dropdown {
         position: relative;
         margin-left: 20px;
@@ -178,67 +176,125 @@
     }
     body {
     font-family: Arial, sans-serif;
-    background-color: #000; /* Nền đen */
+    background: #f9f9f9;
     margin: 0;
     padding: 0;
-    color: white; /* Chữ trắng */
+    padding-bottom: 520px;
+    text-align: center; /* Căn giữa nội dung trang */
 }
 
-.container {
-    max-width: 1000px;
-    margin: 20px auto;
-    padding: 20px;
-    background-color: #1a1a1a; /* Nền container tối */
-    box-shadow: 0 2px 10px rgba(255, 255, 255, 0.05);
-    margin-bottom: 60px;
+h1 {
+    margin: 20px 0;
+    font-size: 36px; 
+    text-align: center; 
 }
 
-.history-item {
-    display: flex;
-    align-items: center;
-    border-bottom: 1px solid #444; /* Đường viền mờ tối */
-    padding: 15px 0;
+.grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* Luôn hiển thị 3 cột */
+    gap: 40px;
+    justify-content: center;
+    padding: 0 40px;
+    margin-bottom: 50px; 
 }
-
-.history-item:last-child {
-    border-bottom: none;
-}
-
-.history-item img {
-    width: 100px;        /* Kích thước chiều rộng cố định */
-    height: 150px;       /* Kích thước chiều cao cố định */
-    object-fit: cover;   /* Đảm bảo ảnh không bị méo và lấp đầy khung */
-    margin-right: 20px;
-}
-
-
-.history-item .details {
-    flex-grow: 1;
-}
-
-.history-item .details h3 {
-    margin: 0;
-    font-size: 18px;
-    color: #fff; /* Tiêu đề trắng */
-}
-
-.history-item .details p {
-    margin: 5px 0;
-    color: #ccc; /* Chữ xám sáng */
-}
-
-.history-item .details .price {
-    color: #e74c3c; /* Giữ màu đỏ nổi bật */
-    font-weight: bold;
-}
-
-.pagination {
+.category {
+    background: #1a1a1a; /* Màu nền tối cho khung */
+    color: white;        /* Chữ trắng */
     text-align: center;
-    margin-top: 20px;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(255, 255, 255, 0.1);
+    transition: transform 0.3s ease;
+    padding-bottom: 20px;
 }
 
-       
-</style>
+.category:hover {
+    transform: translateY(-5px);
+}
+
+.circle-img {
+    width: 180px;
+    height: 180px;
+    margin: 0 auto 15px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 4px solid #f0f0f0;
+}
+
+.circle-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.category h3 {
+    margin: 10px 0 5px;
+    font-size: 20px;
+    color: white; /* Chữ tiêu đề trắng */
+}
+
+.shop-now {
+    color: #4db8ff; /* Màu xanh dương nhẹ cho link */
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.shop-now:hover {
+    text-decoration: underline;
+}
+.silver-text {
+        font-size: 30px;
+  font-weight: bold;
+  background: linear-gradient(90deg, #ccc, #fff, #999, #eee, #ccc);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+    }
+
+    </style>
+</head>
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admission Tickets</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+<!-- Favicon -->
+<link rel="icon" type="image/png" href="{{ asset('storage/' . $setting->favicon) }}">
+    <!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<button id="backToTopBtn" title="Lên đầu trang">
+    <i class="fas fa-arrow-up"></i>
+</button>
+
+<script>
+    const backToTopBtn = document.getElementById("backToTopBtn");
+
+    window.addEventListener("scroll", () => {
+        const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+        const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+
+        // Nếu cuộn đến 80% thì hiển thị nút
+        if (scrollTop / scrollHeight > 0.8) {
+            backToTopBtn.classList.add("show");
+        } else {
+            backToTopBtn.classList.remove("show");
+        }
+    });
+
+    backToTopBtn.addEventListener("click", () => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    });
+</script>
+
+
+</head>
 
 <!-- HTML phần <header> -->
 <header style="display: flex; align-items: center; justify-content: space-between;">
@@ -295,29 +351,31 @@
 @endguest
     </nav>
 </header>
-<body>
-<div class="container">
-    <h2 class="silver-text">Viewed Museum Exhibits</h2>
+<body style="font-family: 'Roboto', sans-serif; background-color: #000; margin: 0;">
 
-    @if($history->isEmpty())
-        <p>You haven't viewed any products yet</p>
-    @else
-        <div class="history-list">
-            @foreach($history as $item)
-                <div class="history-item">
-                    <img src="{{ asset('storage/' . $item->image) }}" alt="{{ $item->name }}" style="width: 100px; height: 150px; object-fit: cover;">
+    <h1 class="silver-text">Gift Shop</h1>
 
-                    <div class="details">
-                        <h3>{{ $item->name }}</h3>
-                        <p>Viewed on: {{ $item->event_date }}</p>
-                        <p class="price" style="display: none;">{{ number_format($item->price, 0, ',', '.') }} đ</p>
+    <div class="grid">
+        @foreach ($categories as $category)
+            <div class="category">
+                <!-- Bao quanh ảnh bằng thẻ a để có thể nhấp vào -->
+                <a href="{{ route('categoryshop.detail', ['category' => $category->id]) }}">
+                    <div class="circle-img">
+                        <img src="{{ asset('storage/' . $category->image) }}" alt="{{ $category->name }}">
                     </div>
-                </div>
-            @endforeach
-        </div>
-    @endif
-</div>
+                </a>
+                <!-- Bao quanh tên danh mục bằng thẻ a để có thể nhấp vào -->
+                <a href="{{ route('categoryshop.detail', ['category' => $category->id]) }}" style="text-decoration: none; color: inherit;">
+                    <h3>{{ $category->name }}</h3>
+                </a>
+                <a href="{{ route('categoryshop.detail', ['category' => $category->id]) }}" style="text-decoration: none;">Shop now &rarr;</a>
+            </div>
+        @endforeach
+    </div>
+
 </body>
+
+
 
 <footer style="background-color:#1a1a1a; color: white; padding: 40px 20px;">
     <div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 20px;">
@@ -352,4 +410,6 @@
     <footer>
         &copy; {{ date('Y') }} Gem Museum.
     </footer>
+</html>
+
 </html>

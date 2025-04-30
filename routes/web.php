@@ -25,6 +25,40 @@ use App\Http\Controllers\LibraryController;
 use App\Http\Controllers\ProductBookingController;
 use App\Http\Controllers\ProductHistoryController;
 use App\Http\Controllers\ArtifactController;
+use App\Http\Controllers\ShopController;
+use App\Http\Controllers\ShopCategoryController;
+use App\Http\Controllers\User\CategoryShopController;
+
+Route::get('/shop', [CategoryShopController::class, 'index'])->name('categoryshop.index');
+Route::get('/categoryshop/{category}', [CategoryShopController::class, 'showDetail'])->name('categoryshop.detail');
+Route::get('/shop/{shop}', [ShopController::class, 'show'])->name('shop.show');
+Route::get('/shopcategory/{shopcategory}/showshop', [ShopCategoryController::class, 'showshop'])->name('shopcategory.showshop');
+
+
+
+
+Route::prefix('admin')->middleware(['auth'])->group(function () {
+    // Route CRUD sản phẩm
+    Route::get('/shop', [ShopController::class, 'index'])->name('shop.index');
+    Route::get('/shop/create', [ShopController::class, 'create'])->name('shop.create');
+    Route::post('/shop', [ShopController::class, 'store'])->name('shop.store');
+    Route::get('/shop/{shop}/edit', [ShopController::class, 'edit'])->name('shop.edit');
+    Route::put('/shop/{shop}', [ShopController::class, 'update'])->name('shop.update');
+    Route::delete('/shop/{shop}', [ShopController::class, 'destroy'])->name('shop.destroy');
+    Route::post('/shop/{id}/restore', [ShopController::class, 'restore'])->name('shop.restore');
+    Route::get('/shop/trashed', [ShopController::class, 'trashed'])->name('shop.trashed');
+
+});
+Route::prefix('admin')->middleware(['auth'])->group(function () {
+    // Route CRUD danh mục sản phẩm (ShopCategory)
+    Route::get('/shopcategory', [ShopCategoryController::class, 'index'])->name('shopcategory.index');
+    Route::get('/shopcategory/create', [ShopCategoryController::class, 'create'])->name('shopcategory.create');
+    Route::post('/shopcategory', [ShopCategoryController::class, 'store'])->name('shopcategory.store');
+    Route::get('/shopcategory/{shopcategory}/edit', [ShopCategoryController::class, 'edit'])->name('shopcategory.edit');
+    Route::put('/shopcategory/{shopcategory}', [ShopCategoryController::class, 'update'])->name('shopcategory.update');
+    Route::delete('/shopcategory/{shopcategory}', [ShopCategoryController::class, 'destroy'])->name('shopcategory.destroy');
+});
+
 
 
 // Quản lý hiện vật trong admin
