@@ -49,7 +49,7 @@
     text-decoration: none;
     font-weight: bold;
     position: relative;
-    padding-bottom: 5px; /* Khoảng cách cho đường dưới */
+    padding-bottom: 5px; 
 }
 
 nav a:hover {
@@ -84,8 +84,8 @@ nav a:hover::after {
     z-index: 99;
     width: 50px;
     height: 50px;
-    background-color: #f1f1f1; /* Màu nền sáng để nổi bật trên nền đen */
-    color: #333; /* Màu biểu tượng tối */
+    background-color: #f1f1f1; 
+    color: #333; 
     border: none;
     outline: none;
     border-radius: 50%;
@@ -104,12 +104,12 @@ nav a:hover::after {
 }
 
 #backToTopBtn:hover {
-    background-color: #4CAF50; /* Màu khi hover, có thể dùng xanh lá cây để nổi bật */
-    color: white; /* Đổi màu biểu tượng khi hover */
+    background-color: #4CAF50; 
+    color: white; 
 }
 
 #backToTopBtn i {
-    font-size: 24px; /* Thay đổi kích thước biểu tượng cho dễ nhìn */
+    font-size: 24px; 
 }
 
         body {
@@ -276,7 +276,7 @@ nav a:hover::after {
     <nav style="display: flex; align-items: center;">
     <a href="{{ route('home') }}">Home</a>
     <a href="{{ route('news.index') }}">Our Documentations</a>
-    <a href="{{ route('ticket.index') }}">Collections</a>
+    <a href="{{ route('ticket.index') }}">Exhibition-Events</a>
     <a href="{{ route('categoryshop.index') }}">Shop</a>
     @auth
 <div class="user-dropdown">
@@ -364,15 +364,13 @@ nav a:hover::after {
     </div>
 </section>
 
-<!-- Phần kho báu đá quý Việt Nam -->
 <section style="margin-top: 60px; display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; align-items: center;">
-    <!-- Ảnh rùa -->
+   
     <div>
         <img src="{{ asset('images/rua.png') }}" alt="Hình ảnh rùa"
              style="width: 100%; object-fit: cover; border-radius: 10px;">
     </div>
 
-    <!-- Nội dung -->
     <div>
         <h3 class="silver-text" style="color:#BEBEBE; margin-top: 20px;">The Treasure of Vietnamese Gemstones</h3>
         <p>

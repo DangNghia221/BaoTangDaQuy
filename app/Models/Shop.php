@@ -11,7 +11,7 @@ class Shop extends Model
 
     protected $fillable = ['name', 'description', 'price', 'image', 'category_id'];
 
-    protected $dates = ['deleted_at']; // để Eloquent xử lý cột này tự động
+    protected $dates = ['deleted_at']; 
 
     public function category()
     {
@@ -24,5 +24,11 @@ class Shop extends Model
 
     return redirect()->route('shop.trashed')->with('success', 'Khôi phục sản phẩm thành công!');
 }
+// Trong model ShopCategory
+public function shops()
+{
+    return $this->hasMany(Shop::class, 'category_id');
+}
+
 
 }

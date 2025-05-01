@@ -249,6 +249,18 @@ h1 {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
     }
+    .shop-now-link {
+    color: white; /* Màu chữ ban đầu */
+    text-decoration: none; /* Loại bỏ gạch chân ban đầu */
+    transition: color 0.3s ease, text-decoration 0.3s ease, transform 0.3s ease; /* Thêm hiệu ứng chuyển màu, gạch chân và phóng to */
+}
+
+.shop-now-link:hover {
+    color: #ffcc00; /* Màu chữ sáng khi di chuột vào */
+    text-decoration: underline; /* Gạch chân chữ khi di chuột vào */
+    transform: scale(1.1); /* Tạo hiệu ứng phóng to */
+}
+
 
     </style>
 </head>
@@ -308,7 +320,8 @@ h1 {
     <nav style="display: flex; align-items: center;">
     <a href="{{ route('home') }}">Home</a>
     <a href="{{ route('news.index') }}">Our Documentations</a>
-    <a href="{{ route('ticket.index') }}">Exhibition-Ticket</a>
+    <a href="{{ route('ticket.index') }}">Exhibition-Events</a>
+    <a href="{{ route('categoryshop.index') }}">Shop</a>
     @auth
 <div class="user-dropdown">
     <div class="user-icon">
@@ -368,8 +381,8 @@ h1 {
                 <a href="{{ route('categoryshop.detail', ['category' => $category->id]) }}" style="text-decoration: none; color: inherit;">
                     <h3>{{ $category->name }}</h3>
                 </a>
-                <a href="{{ route('categoryshop.detail', ['category' => $category->id]) }}" style="text-decoration: none;">Shop now &rarr;</a>
-            </div>
+                <a href="{{ route('categoryshop.detail', ['category' => $category->id]) }}" class="shop-now-link" style="text-decoration: none;">Shop now &rarr;</a>
+                </div>
         @endforeach
     </div>
 

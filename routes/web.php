@@ -33,6 +33,7 @@ Route::get('/shop', [CategoryShopController::class, 'index'])->name('categorysho
 Route::get('/categoryshop/{category}', [CategoryShopController::class, 'showDetail'])->name('categoryshop.detail');
 Route::get('/shop/{shop}', [ShopController::class, 'show'])->name('shop.show');
 Route::get('/shopcategory/{shopcategory}/showshop', [ShopCategoryController::class, 'showshop'])->name('shopcategory.showshop');
+Route::get('/categoryshop/detail/{id}', [ShopController::class, 'detail'])->name('shop.detail');
 
 
 

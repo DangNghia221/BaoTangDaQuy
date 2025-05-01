@@ -12,4 +12,5 @@ class ShopCategory extends Model
         
         return $this->hasMany(Shop::class, 'category_id');
     }
+    
 }

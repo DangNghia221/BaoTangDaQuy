@@ -11,6 +11,7 @@ class ShopController extends Controller
     public function index()
     {
         $items = Shop::with('category')->get();
+      
         return view('admin.shop.index', compact('items'));
     }
 
@@ -53,7 +54,7 @@ class ShopController extends Controller
             'name' => 'required',
             'description' => 'nullable',
             'price' => 'required|numeric',
-            'shop_category_id' => 'required|exists:shop_categories,id', // Đảm bảo trường này đúng
+            'category_id' => 'required|exists:shop_categories,id', // Đảm bảo trường này đúng
             'image' => 'nullable|image|max:2048',
         ]);
     
@@ -82,7 +83,17 @@ class ShopController extends Controller
     $items = Shop::onlyTrashed()->get();
     return view('admin.shop.trashed', compact('items'));
 }
-
+public function detail($id)
+{
+    $shop = Shop::with('category')->findOrFail($id);
+   
+    return view('users.categoryshop.detail', compact('shop'));
+}
+public function showCategory($id)
+{
+    $category = ShopCategory::with('shops')->findOrFail($id);
+    return view('users.categoryshop.detail', compact('category'));
+}
 
 
 }

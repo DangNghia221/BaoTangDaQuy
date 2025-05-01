@@ -84,10 +84,6 @@ public function show(ShopCategory $shopcategory)
 {
     return view('users.shopcategory.show', compact('shopcategory'));
 }
-public function showshop(ShopCategory $shopcategory)
-{
-    $products = Shop::where('category_id', $shopcategory->id)->get();
-    return view('users.shopcategory.show', compact('shopcategory', 'products'));
-}
+
 
 }

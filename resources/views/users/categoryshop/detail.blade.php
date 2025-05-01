@@ -180,6 +180,7 @@
     background: #f9f9f9;
     margin: 0;
     padding: 0;
+    
 }
 
 .category-container {
@@ -289,7 +290,57 @@ h1 {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
     }
+    .shop-items {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 sản phẩm 1 hàng */
+    gap: 20px;
+    margin-top: 30px;
+}
 
+.shop-item {
+  width: 100%;
+  max-width: 100%; /* cho phép nó chiếm toàn bộ cột */
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 15px;
+  text-align: center;
+  background: #fff;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+
+  .shop-item:hover {
+    transform: translateY(8px);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+  }
+
+  .shop-item img {
+    max-width: 100%;
+    height: auto;
+    object-fit: cover;
+  }
+
+  .shop-item h3 {
+    font-size: 16px;
+    margin: 10px 0;
+    font-weight: bold;
+  }
+
+  .shop-item .price {
+    font-size: 14px;
+    margin: 5px 0;
+    color: #333;
+  }
+
+  .exclusive-label {
+    display: inline-block;
+    background: black;
+    color: white;
+    padding: 4px 8px;
+    font-size: 12px;
+    margin-top: 10px;
+  }
     </style>
 </head>
 <!DOCTYPE html>
@@ -348,7 +399,9 @@ h1 {
     <nav style="display: flex; align-items: center;">
     <a href="{{ route('home') }}">Home</a>
     <a href="{{ route('news.index') }}">Our Documentations</a>
-    <a href="{{ route('ticket.index') }}">Exhibition-Ticket</a>
+    <a href="{{ route('ticket.index') }}">Exhibition-Events</a>
+    <a href="{{ route('categoryshop.index') }}">Shop</a>
+
     @auth
 <div class="user-dropdown">
     <div class="user-icon">
@@ -392,18 +445,29 @@ h1 {
     </nav>
 </header>
 <body>
-  <div class="category-container">
-    <div class="category-banner">
-      <img src="{{ asset('storage/' . $category->image) }}" alt="{{ $category->name }}">
-    </div>
+  <div class="category-container" style="text-align: center;">
+  <div class="category-banner">
+   <img src="{{ asset('storage/' . $category->image) }}" alt="{{ $category->name }}" style="width: 1200px; height: 322px; object-fit: cover;">
+</div>
+
 
     <h2>{{ $category->name }}</h2>
     <p>{!! nl2br(e($category->description)) !!}</p>
+
+    <div class="shop-items">
+      @foreach ($category->shops as $shop)
+        <div class="shop-item">
+          @if ($shop->image)
+            <img src="{{ asset('storage/' . $shop->image) }}" alt="{{ $shop->name }}">
+          @endif
+          <h3>{{ $shop->name }}</h3>
+          {{ number_format($shop->price, 0) }} VND
+        </div>
+      @endforeach
+    </div>
   </div>
   
 </body>
-
-
 
 
 <footer style="background-color:#1a1a1a; color: white; padding: 40px 20px;">

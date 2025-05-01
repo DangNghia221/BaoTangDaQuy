@@ -23,19 +23,20 @@
                 <!-- Mô tả -->
                 <div class="form-group">
                     <label>Mô tả:</label>
-                    <textarea name="description" class="form-control" rows="5">{{ old('description', $shop->description) }}</textarea>
+                    <textarea name="description" class="form-control" rows="5">{!! old('description', $shop->description) !!}</textarea>
                 </div>
 
                 <!-- Danh mục -->
                 <div class="form-group">
                     <label>Danh mục:</label>
-                    <select name="shop_category_id" class="form-control" required>
-                        @foreach($categories as $cat)
-                            <option value="{{ $cat->id }}" {{ $shop->shop_category_id == $cat->id ? 'selected' : '' }}>
-                                {{ $cat->name }}
-                            </option>
-                        @endforeach
-                    </select>
+                    <select name="category_id" class="form-control" required>
+    @foreach($categories as $cat)
+        <option value="{{ $cat->id }}" {{ $shop->category_id == $cat->id ? 'selected' : '' }}>
+            {{ $cat->name }}
+        </option>
+    @endforeach
+</select>
+
                 </div>
 
                 <!-- Giá -->
