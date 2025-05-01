@@ -393,6 +393,12 @@ return [
             'url' => 'admin/bookings',
             'icon' => 'fas fa-fw fa-ticket-alt',
         ],
+        [
+            'text' => 'Lịch sử mua hàng',
+            'url' => 'admin/shopping',
+            'icon' => 'fas fa-fw fa-ticket-alt',
+        ],
+
        
     ],
 

@@ -29,11 +29,23 @@ use App\Http\Controllers\ShopController;
 use App\Http\Controllers\ShopCategoryController;
 use App\Http\Controllers\User\CategoryShopController;
 
+use App\Http\Controllers\ShoppingHistoryController;
+
+Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
+    Route::get('shopping', [ShoppingHistoryController::class, 'index'])->name('shopping.index');
+});
+Route::post('shop/{id}/purchase', [ShopController::class, 'purchase'])->name('shop.purchase');
+Route::post('shopping/{id}/confirm', [ShoppingController::class, 'confirm'])->name('admin.shopping.confirm');
+Route::post('/shopping/confirm/{id}', [ShoppingHistoryController::class, 'confirm'])->name('admin.shopping.confirm');
+
+Route::post('shop/{id}/purchase', [ShoppingHistoryController::class, 'store'])->name('shop.purchase');
+
 Route::get('/shop', [CategoryShopController::class, 'index'])->name('categoryshop.index');
 Route::get('/categoryshop/{category}', [CategoryShopController::class, 'showDetail'])->name('categoryshop.detail');
 Route::get('/shop/{shop}', [ShopController::class, 'show'])->name('shop.show');
 Route::get('/shopcategory/{shopcategory}/showshop', [ShopCategoryController::class, 'showshop'])->name('shopcategory.showshop');
 Route::get('/categoryshop/detail/{id}', [ShopController::class, 'detail'])->name('shop.detail');
+Route::delete('/admin/shopping/{id}', [ShoppingHistoryController::class, 'destroy'])->name('admin.shopping.destroy');
 
 
 

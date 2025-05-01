@@ -95,6 +95,7 @@ use App\Models\User;
         
         public function destroy($id)
         {
+            // Tìm đặt vé theo ID hoặc lỗi nếu không tìm thấy
             $booking = Booking::findOrFail($id);
         
             // Khôi phục lại số lượng sản phẩm
@@ -103,9 +104,11 @@ use App\Models\User;
                 $booking->product->save();
             }
         
+            // Xóa mềm đặt vé
             $booking->delete();
         
             return redirect()->route('bookings.index')->with('success', 'Đã xóa đặt vé và cập nhật tồn kho.');
         }
+        
         
     }

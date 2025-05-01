@@ -50,7 +50,6 @@
                     </td>
                     <td>{{ $booking->booking_date }}</td>
                     <td>
-                        <a href="{{ route('bookings.edit', $booking->id) }}" class="btn btn-warning btn-sm">Sửa</a>
                         <form action="{{ route('bookings.destroy', $booking->id) }}" method="POST" style="display:inline;">
                             @csrf @method('DELETE')
                             <button type="submit" class="btn btn-danger btn-sm">Xóa</button>

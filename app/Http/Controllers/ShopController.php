@@ -5,7 +5,7 @@ use App\Models\Shop;
 use App\Models\ShopCategory;
 use App\Models\Libary;  // Sử dụng đúng tên model
 use Illuminate\Http\Request;
-
+use App\Models\ShoppingHistory;
 class ShopController extends Controller
 {
     public function index()
@@ -93,6 +93,30 @@ public function showCategory($id)
 {
     $category = ShopCategory::with('shops')->findOrFail($id);
     return view('users.categoryshop.detail', compact('category'));
+}
+public function purchase($shopId, Request $request)
+{
+    // Lấy sản phẩm shop tương ứng
+    $shop = Shop::findOrFail($shopId);
+
+    // Lấy người dùng hiện tại
+    $user = auth()->user();
+
+    // Lấy số lượng từ form, mặc định là 1 nếu không có
+    $quantity = $request->input('quantity', 1);
+
+    // Tạo mới lịch sử mua hàng với trạng thái 'pending'
+    $shoppingHistory = new ShoppingHistory();
+    $shoppingHistory->user_id = $user->id;
+    $shoppingHistory->shop_id = $shop->id;
+    $shoppingHistory->quantity = $quantity;
+    $shoppingHistory->price = $shop->price * $quantity;  // Tổng tiền = giá * số lượng
+    $shoppingHistory->status = 'pending';  // Trạng thái chờ xử lý
+    $shoppingHistory->purchased_at = now(); // Ghi nhận thời gian mua
+    $shoppingHistory->save();
+
+    // Chuyển hướng lại và thông báo
+    return redirect()->back()->with('success', 'Đặt mua thành công, trạng thái đang chờ xử lý!');
 }
 
 

@@ -17,6 +17,7 @@
     
    
     <style>
+        
         body {
             background-color: #000;
             color: #e0e0e0;
@@ -188,6 +189,31 @@
         footer a {
             color: #BEBEBE;
         }
+        .hidden-price {
+            display: none;
+        }
+        /* Điều chỉnh chiều cao và chiều rộng của modal */
+.modal-dialog {
+    max-width: 60%;  /* Điều chỉnh chiều rộng của modal */
+    height: 90%;     /* Chiều cao của modal */
+    margin: auto;    /* Căn giữa modal */
+}
+
+/* Nếu bạn muốn kéo dài nội dung, có thể thêm nội dung cuộn */
+.modal-body {
+    max-height: 75vh;  /* Giới hạn chiều cao của modal body */
+    overflow-y: auto;  /* Thêm cuộn dọc nếu nội dung quá dài */
+}
+/* Căn giữa ảnh trong modal */
+.modal-body img {
+    display: block;         /* Làm cho ảnh thành block để dễ căn giữa */
+    margin-left: auto;      /* Tự động căn trái */
+    margin-right: auto;     /* Tự động căn phải */
+    max-width: 100%;        /* Đảm bảo ảnh không vượt quá chiều rộng modal */
+    max-height: 60vh;       /* Đặt giới hạn chiều cao ảnh nếu cần */
+    border-radius: 10px;    /* Bo góc ảnh (tuỳ chọn) */
+}
+
     </style>
 </head>
 
@@ -340,14 +366,6 @@
         window.scrollTo({ top: 0, behavior: 'smooth' });
     });
     </script>
-
-    <!-- CSS để ẩn giá -->
-    <style>
-        .hidden-price {
-            display: none;
-        }
-    </style>
-
 </body>
 
 </html>

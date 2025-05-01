@@ -445,29 +445,56 @@ h1 {
     </nav>
 </header>
 <body>
-  <div class="category-container" style="text-align: center;">
-  <div class="category-banner">
-   <img src="{{ asset('storage/' . $category->image) }}" alt="{{ $category->name }}" style="width: 1200px; height: 322px; object-fit: cover;">
+   <div class="category-container" style="text-align: center;">
+      <div class="category-banner">
+         <img src="{{ asset('storage/' . $category->image) }}" alt="{{ $category->name }}" style="width: 1200px; height: 322px; object-fit: cover;">
+      </div>
+
+      <h2>{{ $category->name }}</h2>
+      <p>{!! nl2br(e($category->description)) !!}</p>
+
+      <!-- Hiển thị thông báo thành công -->
+      @if(session('success'))
+         <div class="alert alert-success" id="success-message">
+            {{ session('success') }}
+         </div>
+      @endif
+
+      <div class="shop-items">
+   @foreach ($category->shops as $shop)
+      <div class="shop-item" style="display: flex; flex-direction: column; align-items: center; justify-content: center; margin-bottom: 20px;">
+         @if ($shop->image)
+            <img src="{{ asset('storage/' . $shop->image) }}" alt="{{ $shop->name }}" style="max-width: 100%; height: auto;">
+         @endif
+         <h3>{{ $shop->name }}</h3>
+         <p style="font-size: 18px; font-weight: bold;">{{ number_format($shop->price, 0) }} VND</p>
+
+         <!-- Nút Mua -->
+         <form action="{{ route('shop.purchase', $shop->id) }}" method="POST" style="display: flex; justify-content: center;">
+   @csrf
+   <input type="number" name="quantity" min="1" value="1" class="form-control" style="width: 80px; margin-right: 10px;">
+   <button type="submit" class="btn btn-primary">Mua</button>
+</form>
+
+      </div>
+   @endforeach
 </div>
 
+   </div>
 
-    <h2>{{ $category->name }}</h2>
-    <p>{!! nl2br(e($category->description)) !!}</p>
-
-    <div class="shop-items">
-      @foreach ($category->shops as $shop)
-        <div class="shop-item">
-          @if ($shop->image)
-            <img src="{{ asset('storage/' . $shop->image) }}" alt="{{ $shop->name }}">
-          @endif
-          <h3>{{ $shop->name }}</h3>
-          {{ number_format($shop->price, 0) }} VND
-        </div>
-      @endforeach
-    </div>
-  </div>
-  
+   <!-- Thêm đoạn JavaScript để ẩn thông báo sau 3 giây -->
+   @if(session('success'))
+      <script>
+         setTimeout(function() {
+            var successMessage = document.getElementById('success-message');
+            if (successMessage) {
+                successMessage.style.display = 'none';
+            }
+         }, 3000);  // 3 giây
+      </script>
+   @endif
 </body>
+
 
 
 <footer style="background-color:#1a1a1a; color: white; padding: 40px 20px;">

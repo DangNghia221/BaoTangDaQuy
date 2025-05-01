@@ -499,10 +499,10 @@
         <div class="mt-5 position-relative">
             <h3 class="silver-text">Artifacts</h3>
 
-            <!-- Nút kéo trái -->
-            <button id="scrollLeftBtn" class="btn btn-outline-light position-absolute start-0 top-50 translate-middle-y" style="z-index: 10; border-radius: 50%; width: 40px; height: 40px;">
-                <i class="fas fa-chevron-left"></i>
-            </button>
+           <!-- Nút kéo trái -->
+<button id="scrollLeftBtn" class="btn btn-outline-light position-absolute" style="left: -50px; top: 50%; transform: translateY(-50%); z-index: 10; border-radius: 50%; width: 40px; height: 40px;">
+    <i class="fas fa-chevron-left"></i>
+</button>
 
             <!-- Bọc container -->
             <div class="position-relative" style="overflow: hidden;">
@@ -526,10 +526,10 @@
                 </div>
             </div>
 
-            <!-- Nút kéo phải -->
-            <button id="scrollRightBtn" class="btn btn-outline-light position-absolute end-0 top-50 translate-middle-y" style="z-index: 10; border-radius: 50%; width: 40px; height: 40px;">
-                <i class="fas fa-chevron-right"></i>
-            </button>
+         <!-- Nút kéo phải -->
+<button id="scrollRightBtn" class="btn btn-outline-light position-absolute" style="right: -50px; top: 50%; transform: translateY(-50%); z-index: 10; border-radius: 50%; width: 40px; height: 40px;">
+    <i class="fas fa-chevron-right"></i>
+</button>
         </div>
     @endif
 @endisset
