@@ -61,15 +61,25 @@ public function confirm($id)
     // Quay lại trang danh sách với thông báo thành công
     return redirect()->route('admin.shopping.index')->with('success', 'Lịch sử mua đã được xác nhận.');
 }
+public function cancel($id)
+{
+    $history = ShoppingHistory::findOrFail($id);
+    $history->status = 'canceled';  // Cập nhật trạng thái thành đã hủy
+    $history->save();
+
+    return redirect()->route('admin.shopping.index')->with('success', 'Giao dịch đã được hủy');
+}
+
 public function userIndex()
 {
     $shoppingHistory = ShoppingHistory::with('shop')
         ->where('user_id', auth()->id())
-        ->orderByDesc('purchased_at')
+        ->orderBy('purchased_at') // ⬅️ Sắp xếp tăng dần: cũ -> mới
         ->get();
 
     return view('users.shoppinghistory.index', compact('shoppingHistory'));
 }
+
 
 
 }

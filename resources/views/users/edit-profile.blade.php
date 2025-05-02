@@ -1,11 +1,14 @@
 <!DOCTYPE html>
-<html>
+<html lang="vi">
 <head>
-    <title>Edit personal information</title>
- 
+    <meta charset="UTF-8">
+    <title>Personal information</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
 <!-- Favicon -->
 <link rel="icon" type="image/png" href="{{ asset('storage/' . $setting->favicon) }}">
-<button id="backToTopBtn" title="Lên đầu trang">
+    <button id="backToTopBtn" title="Lên đầu trang">
     <i class="fas fa-arrow-up"></i>
 </button>
 
@@ -34,8 +37,11 @@
 
 
 </head>
+
 <style>
-     .silver-text {
+    
+
+  .silver-text {
         font-size: 30px;
   font-weight: bold;
   background: linear-gradient(90deg, #ccc, #fff, #999, #eee, #ccc);
@@ -98,6 +104,30 @@
 .form-actions button:hover {
     background-color: #666;
 }
+    footer {
+    padding: 10px 20px;
+}
+
+      .silver-text {
+        font-size: 20px;
+  font-weight: bold;
+  background: linear-gradient(90deg, #ccc, #fff, #999, #eee, #ccc);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+    }
+      .post-content p,
+        .post-content li,
+        .post-content span,
+        .post-content h1,
+        .post-content h2,
+        .post-content h3 {
+            color: #D3D3D3 !important;
+        }
+
+        .post-content a {
+           
+            text-decoration: underline;
+        }
      header {
         position: sticky;
         top: 0;
@@ -105,8 +135,8 @@
         background-color: #fff;
         padding: 5px; 
         }
- /* icon về đầu trang */
- nav a {
+/* icon về đầu trang */
+nav a {
         color: white;
         margin: 0 10px;
         text-decoration: none;
@@ -141,42 +171,41 @@
     }
 
     #backToTopBtn {
-    opacity: 0;
-    visibility: hidden;
-    position: fixed;
-    bottom: 40px;
-    right: 30px;
-    z-index: 99;
-    width: 50px;
-    height: 50px;
-    background-color: #f1f1f1;
-    color: #333;
-    border: none;
-    outline: none;
-    border-radius: 50%;
-    font-size: 18px;
-    cursor: pointer;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-    transition: opacity 0.5s ease, visibility 0.5s ease, background-color 0.3s ease;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
+        opacity: 0;
+        visibility: hidden;
+        position: fixed;
+        bottom: 40px;
+        right: 30px;
+        z-index: 99;
+        width: 50px;
+        height: 50px;
+        background-color: #f1f1f1;
+        color: #333;
+        border: none;
+        outline: none;
+        border-radius: 50%;
+        font-size: 18px;
+        cursor: pointer;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        transition: opacity 0.5s ease, visibility 0.5s ease, background-color 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
 
-#backToTopBtn.show {
-    opacity: 1;
-    visibility: visible;
-}
+    #backToTopBtn.show {
+        opacity: 1;
+        visibility: visible;
+    }
 
-#backToTopBtn:hover {
-    background-color: #4CAF50;
-    color: white;
-}
+    #backToTopBtn:hover {
+        background-color: #4CAF50;
+        color: white;
+    }
 
-#backToTopBtn i {
-    font-size: 24px;
-}
-
+    #backToTopBtn i {
+        font-size: 24px;
+    }
     header, footer {
         background-color: #000;
         color: white;
@@ -232,6 +261,12 @@
     .dropdown-content a:hover {
         background-color: #333;
     }
+    @media (max-width: 768px) {
+    .sitemap-wrapper iframe {
+        width: 50px !important;
+        height: 25px !important;
+    }
+}
 </style>
 
 <!-- HTML phần <header> -->
@@ -291,8 +326,7 @@
 @endguest
     </nav>
 </header>
-    <body>
-    <!-- Nội dung chính -->
+<body>
     <div class="container">
         <h2 class="silver-text">Edit personal information</h2>
         <form action="{{ route('users.profile.update') }}" method="POST" enctype="multipart/form-data">
@@ -343,9 +377,8 @@
         </form>
     </div>
     </body>
-  
 
-    <footer style="background-color:#1a1a1a; color: white; padding: 40px 20px;">
+<footer style="background-color:#1a1a1a; color: white; padding: 40px 20px;">
     <div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 20px;">
         
         <!-- Bên trái: Thông tin bảo tàng -->
@@ -363,10 +396,10 @@
         </div>
 
         <!-- Bên phải: Bản đồ -->
-        <div style="flex: 1; min-width: 300px;">
-    <div style="width: 300px; height: 600px;">
-        {!! $setting->sitemap !!}
-    </div>
+        <div class="sitemap-wrapper">
+    {!! $setting->sitemap !!}
+</div>
+
 </div>
 
     </div>
@@ -377,5 +410,6 @@
 
     <footer>
         &copy; {{ date('Y') }} Gem Museum.
-    </footer>    
+    </footer>
+    
 </html>

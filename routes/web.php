@@ -31,6 +31,8 @@ use App\Http\Controllers\User\CategoryShopController;
 
 use App\Http\Controllers\ShoppingHistoryController;
 
+Route::post('shopping/{id}/cancel', [ShoppingHistoryController::class, 'cancel'])->name('admin.shopping.cancel');
+Route::post('bookings/{id}/cancel', [BookingController::class, 'cancel'])->name('bookings.cancel');
 
 Route::get('/my-shopping-history', [ShoppingHistoryController::class, 'userIndex'])
     ->name('user.shoppinghistory.index');

@@ -42,9 +42,15 @@
                     <td>
                         {{ $statusText[$booking->status] ?? 'Không xác định' }}
                         @if($booking->status == 'pending')
+                            <!-- Nút Thanh Toán -->
                             <form action="{{ route('bookings.pay', $booking->id) }}" method="POST" style="display:inline;">
                                 @csrf
                                 <button type="submit" class="btn btn-primary btn-sm">Thanh Toán</button>
+                            </form>
+                            <!-- Nút Hủy -->
+                            <form action="{{ route('bookings.cancel', $booking->id) }}" method="POST" style="display:inline;">
+                                @csrf
+                                <button type="submit" class="btn btn-warning btn-sm" onclick="return confirm('Bạn có chắc chắn muốn hủy đơn đặt này?')">Hủy</button>
                             </form>
                         @endif
                     </td>

@@ -50,4 +50,5 @@ class TicketController extends Controller
 
         return back()->with('success', 'Đặt vé thành công!');
     }
+    
 }

@@ -39,6 +39,10 @@
 </head>
 
 <style>
+    footer {
+    padding: 10px 20px;
+}
+
       .silver-text {
         font-size: 20px;
   font-weight: bold;
@@ -192,6 +196,12 @@ nav a {
     .dropdown-content a:hover {
         background-color: #333;
     }
+    @media (max-width: 768px) {
+    .sitemap-wrapper iframe {
+        width: 50px !important;
+        height: 25px !important;
+    }
+}
 </style>
 
 <!-- HTML phần <header> -->
@@ -317,10 +327,10 @@ nav a {
         </div>
 
         <!-- Bên phải: Bản đồ -->
-        <div style="flex: 1; min-width: 300px;">
-    <div style="width: 300px; height: 600px;">
-        {!! $setting->sitemap !!}
-    </div>
+        <div class="sitemap-wrapper">
+    {!! $setting->sitemap !!}
+</div>
+
 </div>
 
     </div>

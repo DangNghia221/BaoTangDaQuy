@@ -49,6 +49,11 @@
                                 @csrf
                                 <button type="submit" class="btn btn-success btn-sm">Xác Nhận</button>
                             </form>
+                            <!-- Nút Hủy -->
+                            <form action="{{ route('admin.shopping.cancel', $history->id) }}" method="POST" style="display:inline;">
+                                @csrf
+                                <button type="submit" class="btn btn-warning btn-sm" onclick="return confirm('Bạn có chắc chắn muốn hủy giao dịch này?')">Hủy</button>
+                            </form>
                         @endif
                     </td>
 

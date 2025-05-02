@@ -4,9 +4,13 @@
     <meta charset="UTF-8">
     <title>Chọn ngày tham quan</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-</head>
 
-<!-- Nút trở lên đầu trang -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<!-- Favicon -->
+<link rel="icon" type="image/png" href="{{ asset('storage/' . $setting->favicon) }}">
 <button id="backToTopBtn" title="Lên đầu trang">
     <i class="fas fa-arrow-up"></i>
 </button>
@@ -36,38 +40,8 @@
 
 </head>
    
-<!-- CSS trong <style> -->
 <style>
-    .pagination {
-    background-color: transparent; 
-    border: none; 
-}
-
-.pagination li a,
-.pagination li span {
-    background-color: transparent !important; /* Loại bỏ background của các liên kết */
-    color: white !important; /* Đặt màu chữ thành trắng */
-    border: none !important; /* Đảm bảo không có viền */
-}
-
-.pagination li.active a,
-.pagination li.active span {
-    color: white !important; /* Đặt màu chữ trắng cho trang hiện tại */
-}
-
-      .post-content p,
-        .post-content li,
-        .post-content span,
-        .post-content h1,
-        .post-content h2,
-        .post-content h3 {
-            color: #D3D3D3 !important;
-        }
-
-        .post-content a {
-           
-            text-decoration: underline;
-        }
+   
      header {
         position: sticky;
         top: 0;
@@ -163,8 +137,8 @@
         text-decoration: none;
         font-weight: bold;
     }
-  
-.user-dropdown {
+   
+    .user-dropdown {
         position: relative;
         margin-left: 20px;
     }
@@ -201,12 +175,18 @@
     .dropdown-content a:hover {
         background-color: #333;
     }
+    @media (max-width: 768px) {
+    .sitemap-wrapper iframe {
+        width: 100% !important;
+        height: 200px !important;
+    }
+}
+
 </style>
 
-<!-- HTML phần <header> -->
 <header style="display: flex; align-items: center; justify-content: space-between;">
 <div style="display: flex; align-items: center;">
-        <!-- Hiển thị logo -->
+    
 <img src="{{ asset('storage/' . $setting->logo) }}" alt="Logo Website" width="120">
 
 <h1> {{ $setting->site_name ?? 'Website của bạn' }}</h1>
@@ -250,7 +230,7 @@
 @guest
 <div class="user-dropdown">
     <div class="user-icon">
-    <i class="fas fa-user"></i> <span style="margin-left: 5px;">Account</span>
+        <i class="fas fa-user"></i> <span style="margin-left: 5px;">Account</span>
     </div>
     <div class="dropdown-content">
         <a href="{{ route('login') }}">Login</a>
@@ -317,7 +297,6 @@
     </div>
 </body>
 
-
 <footer style="background-color:#1a1a1a; color: white; padding: 40px 20px;">
     <div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 20px;">
         
@@ -336,10 +315,8 @@
         </div>
 
         <!-- Bên phải: Bản đồ -->
-        <div style="flex: 1; min-width: 300px;">
-    <div style="width: 300px; height: 600px;">
-        {!! $setting->sitemap !!}
-    </div>
+        <div class="sitemap-wrapper">
+    {!! $setting->sitemap !!}
 </div>
 
     </div>
@@ -351,4 +328,4 @@
     <footer>
         &copy; {{ date('Y') }} Gem Museum.
     </footer>
-</html>
+

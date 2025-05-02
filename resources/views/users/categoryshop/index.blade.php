@@ -1,46 +1,131 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <title>Shop Categories</title>
-    <style>
-          .pagination {
-    background-color: transparent; /* Loại bỏ background */
-    border: none; /* Loại bỏ viền */
+    <title>Post</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<!-- Favicon -->
+<link rel="icon" type="image/png" href="{{ asset('storage/' . $setting->favicon) }}">
+<button id="backToTopBtn" title="Lên đầu trang">
+    <i class="fas fa-arrow-up"></i>
+</button>
+
+<script>
+    const backToTopBtn = document.getElementById("backToTopBtn");
+
+    window.addEventListener("scroll", () => {
+        const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+        const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+
+        // Nếu cuộn đến 80% thì hiển thị nút
+        if (scrollTop / scrollHeight > 0.8) {
+            backToTopBtn.classList.add("show");
+        } else {
+            backToTopBtn.classList.remove("show");
+        }
+    });
+
+    backToTopBtn.addEventListener("click", () => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    });
+</script>
+
+</head>
+   
+<style>
+   
+
+  body {
+    font-family: Arial, sans-serif;
+    background: #f9f9f9;
+    margin: 0;
+    padding: 0;
+    text-align: center; /* Căn giữa nội dung trang */
 }
 
-.pagination li a,
-.pagination li span {
-    background-color: transparent !important; /* Loại bỏ background của các liên kết */
-    color: white !important; /* Đặt màu chữ thành trắng */
-    border: none !important; /* Đảm bảo không có viền */
+h1 {
+    margin: 20px 0;
+    font-size: 36px; 
+    text-align: center; 
 }
 
-.pagination li.active a,
-.pagination li.active span {
-    color: white !important; /* Đặt màu chữ trắng cho trang hiện tại */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* Luôn hiển thị 3 cột */
+    gap: 40px;
+    justify-content: center;
+    padding: 0 40px;
+    margin-bottom: 50px; 
+}
+.category {
+    background: #1a1a1a; /* Màu nền tối cho khung */
+    color: white;        /* Chữ trắng */
+    text-align: center;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(255, 255, 255, 0.1);
+    transition: transform 0.3s ease;
+    padding-bottom: 20px;
 }
 
-    .card-title {
-        font-size: 20px;
+.category:hover {
+    transform: translateY(-5px);
+}
+
+.circle-img {
+    width: 180px;
+    height: 180px;
+    margin: 0 auto 15px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 4px solid #f0f0f0;
+}
+
+.circle-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.category h3 {
+    margin: 10px 0 5px;
+    font-size: 20px;
+    color: white; /* Chữ tiêu đề trắng */
+}
+
+.shop-now {
+    color: #4db8ff; /* Màu xanh dương nhẹ cho link */
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.shop-now:hover {
+    text-decoration: underline;
+}
+.silver-text {
+        font-size: 30px;
   font-weight: bold;
   background: linear-gradient(90deg, #ccc, #fff, #999, #eee, #ccc);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
     }
-      .post-content p,
-        .post-content li,
-        .post-content span,
-        .post-content h1,
-        .post-content h2,
-        .post-content h3 {
-            color: #D3D3D3 !important;
-        }
+    .shop-now-link {
+    color: white; /* Màu chữ ban đầu */
+    text-decoration: none; /* Loại bỏ gạch chân ban đầu */
+    transition: color 0.3s ease, text-decoration 0.3s ease, transform 0.3s ease; /* Thêm hiệu ứng chuyển màu, gạch chân và phóng to */
+}
 
-        .post-content a {
-           
-            text-decoration: underline;
-        }
+.shop-now-link:hover {
+    color: #ffcc00; /* Màu chữ sáng khi di chuột vào */
+    text-decoration: underline; /* Gạch chân chữ khi di chuột vào */
+    transform: scale(1.1); /* Tạo hiệu ứng phóng to */
+}
      header {
         position: sticky;
         top: 0;
@@ -136,8 +221,8 @@
         text-decoration: none;
         font-weight: bold;
     }
-    
-.user-dropdown {
+   
+    .user-dropdown {
         position: relative;
         margin-left: 20px;
     }
@@ -174,143 +259,18 @@
     .dropdown-content a:hover {
         background-color: #333;
     }
-    body {
-    font-family: Arial, sans-serif;
-    background: #f9f9f9;
-    margin: 0;
-    padding: 0;
-    text-align: center; /* Căn giữa nội dung trang */
-}
-
-h1 {
-    margin: 20px 0;
-    font-size: 36px; 
-    text-align: center; 
-}
-
-.grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr); /* Luôn hiển thị 3 cột */
-    gap: 40px;
-    justify-content: center;
-    padding: 0 40px;
-    margin-bottom: 50px; 
-}
-.category {
-    background: #1a1a1a; /* Màu nền tối cho khung */
-    color: white;        /* Chữ trắng */
-    text-align: center;
-    padding: 20px;
-    border-radius: 12px;
-    box-shadow: 0 2px 10px rgba(255, 255, 255, 0.1);
-    transition: transform 0.3s ease;
-    padding-bottom: 20px;
-}
-
-.category:hover {
-    transform: translateY(-5px);
-}
-
-.circle-img {
-    width: 180px;
-    height: 180px;
-    margin: 0 auto 15px;
-    border-radius: 50%;
-    overflow: hidden;
-    border: 4px solid #f0f0f0;
-}
-
-.circle-img img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.category h3 {
-    margin: 10px 0 5px;
-    font-size: 20px;
-    color: white; /* Chữ tiêu đề trắng */
-}
-
-.shop-now {
-    color: #4db8ff; /* Màu xanh dương nhẹ cho link */
-    font-weight: bold;
-    text-decoration: none;
-}
-
-.shop-now:hover {
-    text-decoration: underline;
-}
-.silver-text {
-        font-size: 30px;
-  font-weight: bold;
-  background: linear-gradient(90deg, #ccc, #fff, #999, #eee, #ccc);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+    @media (max-width: 768px) {
+    .sitemap-wrapper iframe {
+        width: 50px !important;
+        height: 25px !important;
     }
-    .shop-now-link {
-    color: white; /* Màu chữ ban đầu */
-    text-decoration: none; /* Loại bỏ gạch chân ban đầu */
-    transition: color 0.3s ease, text-decoration 0.3s ease, transform 0.3s ease; /* Thêm hiệu ứng chuyển màu, gạch chân và phóng to */
 }
 
-.shop-now-link:hover {
-    color: #ffcc00; /* Màu chữ sáng khi di chuột vào */
-    text-decoration: underline; /* Gạch chân chữ khi di chuột vào */
-    transform: scale(1.1); /* Tạo hiệu ứng phóng to */
-}
+</style>
 
-
-    </style>
-</head>
-<!DOCTYPE html>
-<html lang="vi">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admission Tickets</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    
-<!-- Favicon -->
-<link rel="icon" type="image/png" href="{{ asset('storage/' . $setting->favicon) }}">
-    <!-- Font Awesome -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-<button id="backToTopBtn" title="Lên đầu trang">
-    <i class="fas fa-arrow-up"></i>
-</button>
-
-<script>
-    const backToTopBtn = document.getElementById("backToTopBtn");
-
-    window.addEventListener("scroll", () => {
-        const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
-        const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-
-        // Nếu cuộn đến 80% thì hiển thị nút
-        if (scrollTop / scrollHeight > 0.8) {
-            backToTopBtn.classList.add("show");
-        } else {
-            backToTopBtn.classList.remove("show");
-        }
-    });
-
-    backToTopBtn.addEventListener("click", () => {
-        window.scrollTo({
-            top: 0,
-            behavior: 'smooth'
-        });
-    });
-</script>
-
-
-</head>
-
-<!-- HTML phần <header> -->
 <header style="display: flex; align-items: center; justify-content: space-between;">
 <div style="display: flex; align-items: center;">
-        <!-- Hiển thị logo -->
+    
 <img src="{{ asset('storage/' . $setting->logo) }}" alt="Logo Website" width="120">
 
 <h1> {{ $setting->site_name ?? 'Website của bạn' }}</h1>
@@ -354,7 +314,7 @@ h1 {
 @guest
 <div class="user-dropdown">
     <div class="user-icon">
-    <i class="fas fa-user"></i> <span style="margin-left: 5px;">Account</span>
+        <i class="fas fa-user"></i> <span style="margin-left: 5px;">Account</span>
     </div>
     <div class="dropdown-content">
         <a href="{{ route('login') }}">Login</a>
@@ -364,6 +324,7 @@ h1 {
 @endguest
     </nav>
 </header>
+
 <body style="font-family: 'Roboto', sans-serif; background-color: #000; margin: 0;">
 
     <h1 class="silver-text">Gift Shop</h1>
@@ -389,7 +350,6 @@ h1 {
 </body>
 
 
-
 <footer style="background-color:#1a1a1a; color: white; padding: 40px 20px;">
     <div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 20px;">
         
@@ -408,10 +368,8 @@ h1 {
         </div>
 
         <!-- Bên phải: Bản đồ -->
-        <div style="flex: 1; min-width: 300px;">
-    <div style="width: 300px; height: 600px;">
-        {!! $setting->sitemap !!}
-    </div>
+        <div class="sitemap-wrapper">
+    {!! $setting->sitemap !!}
 </div>
 
     </div>
@@ -423,6 +381,5 @@ h1 {
     <footer>
         &copy; {{ date('Y') }} Gem Museum.
     </footer>
-</html>
 
 </html>

@@ -84,7 +84,15 @@ use App\Models\User;
         }
         
         
-        
+        public function cancel($id)
+{
+    $booking = Booking::findOrFail($id);
+    $booking->status = 'canceled';  // Cập nhật trạng thái thành đã hủy
+    $booking->save();
+
+    return redirect()->route('bookings.index')->with('success', 'Đơn đặt đã được hủy');
+}
+
         public function pay($id) {
             $booking = Booking::findOrFail($id);
             $booking->status = 'confirmed'; 

@@ -2,8 +2,8 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
+    <title>Post</title>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="{{ asset('storage/' . $setting->favicon) }}">
@@ -11,178 +11,44 @@
     
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<button id="backToTopBtn" title="Lên đầu trang">
+    <i class="fas fa-arrow-up"></i>
+</button>
+
+<script>
+    const backToTopBtn = document.getElementById("backToTopBtn");
+
+    window.addEventListener("scroll", () => {
+        const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+        const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+
+        // Nếu cuộn đến 80% thì hiển thị nút
+        if (scrollTop / scrollHeight > 0.8) {
+            backToTopBtn.classList.add("show");
+        } else {
+            backToTopBtn.classList.remove("show");
+        }
+    });
+
+    backToTopBtn.addEventListener("click", () => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    });
+</script>
+
 </head>
+   
 <style>
-     .silver-text {
-        font-size: 50px;
+   .silver-text {
+        font-size: 20px;
   font-weight: bold;
   background: linear-gradient(90deg, #ccc, #fff, #999, #eee, #ccc);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
     }
-    .pagination {
-    background-color: transparent; 
-    border: none; 
-}
 
-.pagination li a,
-.pagination li span {
-    background-color: transparent !important; /* Loại bỏ background của các liên kết */
-    color: white !important; /* Đặt màu chữ thành trắng */
-    border: none !important; /* Đảm bảo không có viền */
-}
-
-.pagination li.active a,
-.pagination li.active span {
-    color: white !important; /* Đặt màu chữ trắng cho trang hiện tại */
-}
-
-      .post-content p,
-        .post-content li,
-        .post-content span,
-        .post-content h1,
-        .post-content h2,
-        .post-content h3 {
-            color: #D3D3D3 !important;
-        }
-
-        .post-content a {
-           
-            text-decoration: underline;
-        }
-     header {
-        position: sticky;
-        top: 0;
-        z-index: 1000;
-        background-color: #fff;
-        padding: 5px; 
-        }
- /* icon về đầu trang */
- nav a {
-        color: white;
-        margin: 0 10px;
-        text-decoration: none;
-        font-weight: bold;
-        position: relative;
-        padding-bottom: 5px;
-    }
-
-    nav a:hover {
-        color: white;
-    }
-
-    nav a:hover::after {
-        content: "";
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        height: 2px;
-        background-color: white;
-        animation: underline-animation 0.3s ease-in-out;
-    }
-
-    @keyframes underline-animation {
-        from {
-            width: 0;
-        }
-
-        to {
-            width: 100%;
-        }
-    }
-
-    #backToTopBtn {
-        opacity: 0;
-        visibility: hidden;
-        position: fixed;
-        bottom: 40px;
-        right: 30px;
-        z-index: 99;
-        width: 50px;
-        height: 50px;
-        background-color: #f1f1f1;
-        color: #333;
-        border: none;
-        outline: none;
-        border-radius: 50%;
-        font-size: 18px;
-        cursor: pointer;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-        transition: opacity 0.5s ease, visibility 0.5s ease, background-color 0.3s ease;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-    #backToTopBtn.show {
-        opacity: 1;
-        visibility: visible;
-    }
-
-    #backToTopBtn:hover {
-        background-color: #4CAF50;
-        color: white;
-    }
-
-    #backToTopBtn i {
-        font-size: 24px;
-    }
-    header, footer {
-        background-color: #000;
-        color: white;
-        padding: 20px;
-        text-align: center;
-    }
-    header h1{
-             font-size: 28px; 
-            color :white
-           
-        }
-    nav a {
-        color: white;
-        margin: 0 10px;
-        text-decoration: none;
-        font-weight: bold;
-    }
-  
-.user-dropdown {
-        position: relative;
-        margin-left: 20px;
-    }
-
-    .user-icon {
-        cursor: pointer;
-        color: white;
-        display: flex;
-        align-items: center;
-    }
-
-    .dropdown-content {
-        display: none;
-        position: absolute;
-        right: 0;
-        background-color: black;
-        min-width: 160px;
-        box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
-        border-radius: 6px;
-        z-index: 999;
-    }
-
-    .user-dropdown:hover .dropdown-content {
-        display: block;
-    }
-
-    .dropdown-content a {
-        padding: 12px 16px;
-        display: block;
-        color: white;
-        text-decoration: none;
-    }
-
-    .dropdown-content a:hover {
-        background-color: #333;
-    }
     body {
     background-color: #000;
     color: #e0e0e0;
@@ -290,19 +156,185 @@ p {
 .container .badge {
     font-size: 15px; /* Tăng từ 14px lên 15px */
 }
+.popup-overlay {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-color: rgba(0,0,0,0.8);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.popup-content {
+    background-color: #222;
+    padding: 30px;
+    border-radius: 8px;
+    color: white;
+    max-width: 500px;
+    width: 90%;
+    box-shadow: 0 0 10px rgba(255,255,255,0.1);
+    position: relative;
+}
+
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+     header {
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        background-color: #fff;
+        padding: 5px; 
+        }
+ /* icon về đầu trang */
+ nav a {
+        color: white;
+        margin: 0 10px;
+        text-decoration: none;
+        font-weight: bold;
+        position: relative;
+        padding-bottom: 5px;
+    }
+
+    nav a:hover {
+        color: white;
+    }
+
+    nav a:hover::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background-color: white;
+        animation: underline-animation 0.3s ease-in-out;
+    }
+
+    @keyframes underline-animation {
+        from {
+            width: 0;
+        }
+
+        to {
+            width: 100%;
+        }
+    }
+
+    #backToTopBtn {
+        opacity: 0;
+        visibility: hidden;
+        position: fixed;
+        bottom: 40px;
+        right: 30px;
+        z-index: 99;
+        width: 50px;
+        height: 50px;
+        background-color: #f1f1f1;
+        color: #333;
+        border: none;
+        outline: none;
+        border-radius: 50%;
+        font-size: 18px;
+        cursor: pointer;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        transition: opacity 0.5s ease, visibility 0.5s ease, background-color 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    #backToTopBtn.show {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    #backToTopBtn:hover {
+        background-color: #4CAF50;
+        color: white;
+    }
+
+    #backToTopBtn i {
+        font-size: 24px;
+    }
+    header, footer {
+        background-color: #000;
+        color: white;
+        padding: 20px;
+        text-align: center;
+    }
+    header h1{
+             font-size: 28px; 
+            color :white
+           
+        }
+    nav a {
+        color: white;
+        margin: 0 10px;
+        text-decoration: none;
+        font-weight: bold;
+    }
+   
+    .user-dropdown {
+        position: relative;
+        margin-left: 20px;
+    }
+
+    .user-icon {
+        cursor: pointer;
+        color: white;
+        display: flex;
+        align-items: center;
+    }
+
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        right: 0;
+        background-color: black;
+        min-width: 160px;
+        box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
+        border-radius: 6px;
+        z-index: 999;
+    }
+
+    .user-dropdown:hover .dropdown-content {
+        display: block;
+    }
+
+    .dropdown-content a {
+        padding: 12px 16px;
+        display: block;
+        color: white;
+        text-decoration: none;
+    }
+
+    .dropdown-content a:hover {
+        background-color: #333;
+    }
+    @media (max-width: 768px) {
+    .sitemap-wrapper iframe {
+        width: 50px !important;
+        height: 25px !important;
+    }
+}
 
 </style>
 
-<!-- HTML phần <header> -->
 <header style="display: flex; align-items: center; justify-content: space-between;">
 <div style="display: flex; align-items: center;">
-        <!-- Hiển thị logo -->
+    
 <img src="{{ asset('storage/' . $setting->logo) }}" alt="Logo Website" width="120">
 
 <h1> {{ $setting->site_name ?? 'Website của bạn' }}</h1>
-<button class="mobile-nav-toggle" onclick="toggleMobileNav()">
-            &#9776; <!-- biểu tượng hamburger -->
-        </button>
+
 </div>
     <nav style="display: flex; align-items: center;">
     <a href="{{ route('home') }}">Home</a>
@@ -342,7 +374,7 @@ p {
 @guest
 <div class="user-dropdown">
     <div class="user-icon">
-    <i class="fas fa-user"></i> <span style="margin-left: 5px;">Account</span>
+        <i class="fas fa-user"></i> <span style="margin-left: 5px;">Account</span>
     </div>
     <div class="dropdown-content">
         <a href="{{ route('login') }}">Login</a>
@@ -377,7 +409,17 @@ p {
                         @foreach($shoppingHistory as $item)
                             <tr>
                                 <td>{{ $item->id }}</td>
-                                <td class="silver-text">{{ $item->shop->name ?? 'N/A' }}</td>
+                              
+                                <td class="silver-text">
+
+                                <a href="#"
+                                class="text-info open-popup"
+                                data-name="{{ $item->shop->name ?? 'N/A' }}"
+                                data-description="{{ $item->shop->description ?? 'No description available' }}"
+                                data-image="{{ asset('storage/' . ($item->shop->image ?? 'default.jpg')) }}">
+                                    {{ $item->shop->name ?? 'N/A' }}
+                                </a>
+                                </td>
                                 <td>{{ $item->quantity }}</td>
                                 @php
                                     $statusColors = [
@@ -405,6 +447,57 @@ p {
             @endif
         </div>
     </div>
+<!-- Custom popup -->
+<div id="customPopup" class="popup-overlay d-flex justify-content-center align-items-center" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.7); z-index: 9999;">
+    <div class="popup-content bg-dark text-white p-4 rounded shadow" style="width: 600px; max-width: 90%;">
+
+        <span class="close-btn text-white" style="cursor: pointer; font-size: 20px;">&times;</span>
+        <h5 id="popupTitle" class="mb-3"></h5>
+        <div id="popupDescription" class="mb-3"></div>
+        <div style="display: flex; justify-content: center; align-items: center;" class="mt-3">
+    <img id="popupImage" src="" alt="Product Image" style="max-height: 300px; object-fit: contain; display: block;">
+</div>
+
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const links = document.querySelectorAll('.open-popup');
+        const popup = document.getElementById('customPopup');
+        const title = document.getElementById('popupTitle');
+        const description = document.getElementById('popupDescription');
+        const image = document.getElementById('popupImage');
+        const closeBtn = document.querySelector('.close-btn');
+
+        links.forEach(link => {
+            link.addEventListener('click', function (e) {
+                e.preventDefault();
+
+                // Lấy dữ liệu từ thuộc tính
+                const rawDesc = this.dataset.description || '';
+                const cleanedDesc = rawDesc.replace(/<\/?p>/g, ''); // Xoá thẻ <p> và </p>
+
+                // Gán vào popup
+                title.textContent = this.dataset.name;
+                description.innerHTML = cleanedDesc; // Sử dụng innerHTML để giữ xuống dòng, in đậm nếu có
+                image.src = this.dataset.image;
+
+                popup.style.display = 'flex';
+            });
+        });
+
+        closeBtn.addEventListener('click', function () {
+            popup.style.display = 'none';
+        });
+
+        popup.addEventListener('click', function (e) {
+            if (e.target === popup) {
+                popup.style.display = 'none';
+            }
+        });
+    });
+</script>
 </body>
 
 <footer style="background-color:#1a1a1a; color: white; padding: 40px 20px;">
@@ -425,10 +518,8 @@ p {
         </div>
 
         <!-- Bên phải: Bản đồ -->
-        <div style="flex: 1; min-width: 300px;">
-    <div style="width: 300px; height: 600px;">
-        {!! $setting->sitemap !!}
-    </div>
+        <div class="sitemap-wrapper">
+    {!! $setting->sitemap !!}
 </div>
 
     </div>
@@ -440,4 +531,5 @@ p {
     <footer>
         &copy; {{ date('Y') }} Gem Museum.
     </footer>
+
 </html>

@@ -2,47 +2,107 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lịch sử xem sản phẩm</title>
+    <title>Post</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<!-- Favicon -->
+<link rel="icon" type="image/png" href="{{ asset('storage/' . $setting->favicon) }}">
+<button id="backToTopBtn" title="Lên đầu trang">
+    <i class="fas fa-arrow-up"></i>
+</button>
+
+<script>
+    const backToTopBtn = document.getElementById("backToTopBtn");
+
+    window.addEventListener("scroll", () => {
+        const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+        const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+
+        // Nếu cuộn đến 80% thì hiển thị nút
+        if (scrollTop / scrollHeight > 0.8) {
+            backToTopBtn.classList.add("show");
+        } else {
+            backToTopBtn.classList.remove("show");
+        }
+    });
+
+    backToTopBtn.addEventListener("click", () => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    });
+</script>
+
 </head>
+   
 <style>
-     .silver-text {
-        font-size: 30px;
-  font-weight: bold;
-  background: linear-gradient(90deg, #ccc, #fff, #999, #eee, #ccc);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-    }
-    .pagination {
-    background-color: transparent; 
-    border: none; 
+   
+
+   body {
+    font-family: Arial, sans-serif;
+    background-color: #000; /* Nền đen */
+    margin: 0;
+    padding: 0;
+    color: white; /* Chữ trắng */
 }
 
-.pagination li a,
-.pagination li span {
-    background-color: transparent !important; /* Loại bỏ background của các liên kết */
-    color: white !important; /* Đặt màu chữ thành trắng */
-    border: none !important; /* Đảm bảo không có viền */
+.container {
+    max-width: 1000px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #1a1a1a; /* Nền container tối */
+    box-shadow: 0 2px 10px rgba(255, 255, 255, 0.05);
+    margin-bottom: 60px;
 }
 
-.pagination li.active a,
-.pagination li.active span {
-    color: white !important; /* Đặt màu chữ trắng cho trang hiện tại */
+.history-item {
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #444; /* Đường viền mờ tối */
+    padding: 15px 0;
 }
 
-      .post-content p,
-        .post-content li,
-        .post-content span,
-        .post-content h1,
-        .post-content h2,
-        .post-content h3 {
-            color: #D3D3D3 !important;
-        }
+.history-item:last-child {
+    border-bottom: none;
+}
 
-        .post-content a {
-           
-            text-decoration: underline;
-        }
+.history-item img {
+    width: 100px;        /* Kích thước chiều rộng cố định */
+    height: 150px;       /* Kích thước chiều cao cố định */
+    object-fit: cover;   /* Đảm bảo ảnh không bị méo và lấp đầy khung */
+    margin-right: 20px;
+}
+
+
+.history-item .details {
+    flex-grow: 1;
+}
+
+.history-item .details h3 {
+    margin: 0;
+    font-size: 18px;
+    color: #fff; /* Tiêu đề trắng */
+}
+
+.history-item .details p {
+    margin: 5px 0;
+    color: #ccc; /* Chữ xám sáng */
+}
+
+.history-item .details .price {
+    color: #e74c3c; /* Giữ màu đỏ nổi bật */
+    font-weight: bold;
+}
+
+.pagination {
+    text-align: center;
+    margin-top: 20px;
+}
+
+       
      header {
         position: sticky;
         top: 0;
@@ -138,8 +198,8 @@
         text-decoration: none;
         font-weight: bold;
     }
-  
-.user-dropdown {
+   
+    .user-dropdown {
         position: relative;
         margin-left: 20px;
     }
@@ -176,74 +236,18 @@
     .dropdown-content a:hover {
         background-color: #333;
     }
-    body {
-    font-family: Arial, sans-serif;
-    background-color: #000; /* Nền đen */
-    margin: 0;
-    padding: 0;
-    color: white; /* Chữ trắng */
+    @media (max-width: 768px) {
+    .sitemap-wrapper iframe {
+        width: 50px !important;
+        height: 25px !important;
+    }
 }
 
-.container {
-    max-width: 1000px;
-    margin: 20px auto;
-    padding: 20px;
-    background-color: #1a1a1a; /* Nền container tối */
-    box-shadow: 0 2px 10px rgba(255, 255, 255, 0.05);
-    margin-bottom: 60px;
-}
-
-.history-item {
-    display: flex;
-    align-items: center;
-    border-bottom: 1px solid #444; /* Đường viền mờ tối */
-    padding: 15px 0;
-}
-
-.history-item:last-child {
-    border-bottom: none;
-}
-
-.history-item img {
-    width: 100px;        /* Kích thước chiều rộng cố định */
-    height: 150px;       /* Kích thước chiều cao cố định */
-    object-fit: cover;   /* Đảm bảo ảnh không bị méo và lấp đầy khung */
-    margin-right: 20px;
-}
-
-
-.history-item .details {
-    flex-grow: 1;
-}
-
-.history-item .details h3 {
-    margin: 0;
-    font-size: 18px;
-    color: #fff; /* Tiêu đề trắng */
-}
-
-.history-item .details p {
-    margin: 5px 0;
-    color: #ccc; /* Chữ xám sáng */
-}
-
-.history-item .details .price {
-    color: #e74c3c; /* Giữ màu đỏ nổi bật */
-    font-weight: bold;
-}
-
-.pagination {
-    text-align: center;
-    margin-top: 20px;
-}
-
-       
 </style>
 
-<!-- HTML phần <header> -->
 <header style="display: flex; align-items: center; justify-content: space-between;">
 <div style="display: flex; align-items: center;">
-        <!-- Hiển thị logo -->
+    
 <img src="{{ asset('storage/' . $setting->logo) }}" alt="Logo Website" width="120">
 
 <h1> {{ $setting->site_name ?? 'Website của bạn' }}</h1>
@@ -287,7 +291,7 @@
 @guest
 <div class="user-dropdown">
     <div class="user-icon">
-    <i class="fas fa-user"></i> <span style="margin-left: 5px;">Account</span>
+        <i class="fas fa-user"></i> <span style="margin-left: 5px;">Account</span>
     </div>
     <div class="dropdown-content">
         <a href="{{ route('login') }}">Login</a>
@@ -339,10 +343,8 @@
         </div>
 
         <!-- Bên phải: Bản đồ -->
-        <div style="flex: 1; min-width: 300px;">
-    <div style="width: 300px; height: 600px;">
-        {!! $setting->sitemap !!}
-    </div>
+        <div class="sitemap-wrapper">
+    {!! $setting->sitemap !!}
 </div>
 
     </div>
@@ -354,4 +356,5 @@
     <footer>
         &copy; {{ date('Y') }} Gem Museum.
     </footer>
+
 </html>

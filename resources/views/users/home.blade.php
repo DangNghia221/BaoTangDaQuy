@@ -20,7 +20,6 @@
         const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
         const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
 
-        // Nếu cuộn đến 80% thì hiển thị nút
         if (scrollTop / scrollHeight > 0.8) {
             backToTopBtn.classList.add("show");
         } else {
