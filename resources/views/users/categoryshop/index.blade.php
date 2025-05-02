@@ -179,7 +179,6 @@
     background: #f9f9f9;
     margin: 0;
     padding: 0;
-    padding-bottom: 520px;
     text-align: center; /* Căn giữa nội dung trang */
 }
 
@@ -339,6 +338,7 @@ h1 {
     <div class="dropdown-content">
         <a href="{{ route('users.profile') }}">Personal information</a>
         <a href="{{ route('user.invoices.index') }}">Booking History</a>
+        <a href="{{ route('user.shoppinghistory.index') }}">Shopping History</a>
         <a href="{{ route('history.index') }}">History</a>
         <a href="{{ route('logout') }}"
            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">

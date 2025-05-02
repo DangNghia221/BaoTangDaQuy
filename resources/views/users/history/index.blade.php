@@ -271,6 +271,7 @@
     <div class="dropdown-content">
         <a href="{{ route('users.profile') }}">Personal information</a>
         <a href="{{ route('user.invoices.index') }}">Booking History</a>
+        <a href="{{ route('user.shoppinghistory.index') }}">Shopping History</a>
         <a href="{{ route('history.index') }}">History</a>
         <a href="{{ route('logout') }}"
            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">

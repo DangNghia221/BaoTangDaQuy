@@ -31,6 +31,11 @@ use App\Http\Controllers\User\CategoryShopController;
 
 use App\Http\Controllers\ShoppingHistoryController;
 
+
+Route::get('/my-shopping-history', [ShoppingHistoryController::class, 'userIndex'])
+    ->name('user.shoppinghistory.index');
+
+
 Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
     Route::get('shopping', [ShoppingHistoryController::class, 'index'])->name('shopping.index');
 });

@@ -48,7 +48,7 @@
                             </form>
                         @endif
                     </td>
-                    <td>{{ $booking->booking_date }}</td>
+                    <td>{{ \Carbon\Carbon::parse($booking->booking_date)->setTimezone('Asia/Ho_Chi_Minh')->format('d/m/Y H:i') }}</td>
                     <td>
                         <form action="{{ route('bookings.destroy', $booking->id) }}" method="POST" style="display:inline;">
                             @csrf @method('DELETE')

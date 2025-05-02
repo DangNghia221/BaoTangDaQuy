@@ -31,7 +31,7 @@
                     <td>{{ $history->shop->name ?? 'N/A' }}</td>
                     <td>{{ $history->quantity }}</td>
                     <td>{{ number_format($history->quantity * $history->shop->price, 0, ',', '.') }} đ</td> <!-- Tổng tiền -->
-                    <td>{{ \Carbon\Carbon::parse($history->purchased_at)->format('d/m/Y H:i') }}</td>
+                    <td>{{ \Carbon\Carbon::parse($history->purchased_at)->setTimezone('Asia/Ho_Chi_Minh')->format('d/m/Y H:i') }}</td>
                     
                     @php
                         $statusText = [

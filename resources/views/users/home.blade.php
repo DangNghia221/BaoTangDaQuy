@@ -221,43 +221,112 @@ nav a:hover::after {
     max-width: 300px;
     z-index: 2; /* đảm bảo nó nổi hơn ảnh nếu cần */
 }
+nav {
+    display: flex;
+    align-items: center; /* Căn chỉnh các phần tử theo chiều dọc */
+    justify-content: flex-end; /* Đặt các mục vào phía bên phải */
+}
+
+nav a {
+    color: white;
+    margin: 0 10px;
+    text-decoration: none;
+    font-weight: bold;
+}
+
 .user-dropdown {
-        position: relative;
-        margin-left: 20px;
+    position: relative;
+    margin-left: 20px; /* Khoảng cách giữa "Shop" và icon người dùng */
+}
+
+.user-dropdown .user-icon {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    color: white;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    right: 0;
+    background-color: black;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
+    border-radius: 6px;
+    z-index: 1000;
+}
+
+.user-dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown-content a {
+    padding: 12px 16px;
+    display: block;
+    color: white;
+    text-decoration: none;
+}
+
+.dropdown-content a:hover {
+    background-color: #333;
+}
+
+/* Mobile Navigation */
+.mobile-nav-toggle {
+    display: none; /* Ẩn mặc định */
+    background-color: transparent;
+    border: none;
+    color: white;
+    font-size: 28px;
+    cursor: pointer;
+}
+
+@media (max-width: 768px) {
+    .mobile-nav-toggle {
+        display: block;
+        margin-left: 80px; /* 👈 tăng thêm ở mobile */
+    }
+    .logo-img {
+        width: 80px; /* Nhỏ hơn trên thiết bị di động */
+    }
+    .site-title {
+        font-size: 24px; /* Nhỏ hơn trên mobile */
+    }
+    .mobile-nav-toggle {
+        display: block;
+       
     }
 
-    .user-icon {
-        cursor: pointer;
-        color: white;
-        display: flex;
-        align-items: center;
-    }
-
-    .dropdown-content {
-        display: none;
+    nav {
+        display: none; /* Ẩn menu theo mặc định */
+        flex-direction: column;
         position: absolute;
-        right: 0;
-        background-color: black;
-        min-width: 160px;
-        box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
-        border-radius: 6px;
-        z-index: 999;
+        top: 60px;
+        right: 20px; /* Điều chỉnh này để di chuyển menu sang phải */
+        background-color: #000;
+        border-radius: 10px;
+        padding: 10px;
+        z-index: 999; /* Đảm bảo menu không bị chồng lên */
+        transform: translateX(10%); /* Thêm chuyển vị trí thêm vào */
     }
 
-    .user-dropdown:hover .dropdown-content {
-        display: block;
+    nav.show {
+        display: flex; /* Hiển thị menu khi có class 'show' */
     }
 
-    .dropdown-content a {
-        padding: 12px 16px;
-        display: block;
-        color: white;
-        text-decoration: none;
+    nav a {
+        margin: 10px 0;
     }
+}
 
-    .dropdown-content a:hover {
-        background-color: #333;
+
+@media (max-width: 768px) {
+    iframe {
+        width: 100% !important;
+        height: auto;
     }
+}
 
     </style>
 </head>
@@ -266,64 +335,96 @@ nav a:hover::after {
 <header style="display: flex; align-items: center; justify-content: space-between;">
     <div style="display: flex; align-items: center;">
         <!-- Hiển thị logo -->
-<img src="{{ asset('storage/' . $setting->logo) }}" alt="Logo Website" width="120">
-
-<!-- Favicon -->
-<link rel="icon" type="image/png" href="{{ asset('storage/' . $setting->favicon) }}">
-<h1> {{ $setting->site_name ?? 'Website của bạn' }}</h1>
-
+        <img src="{{ asset('storage/' . $setting->logo) }}" alt="Logo Website" width="120" class="logo-img">
+        <!-- Favicon -->
+        <link rel="icon" type="image/png" href="{{ asset('storage/' . $setting->favicon) }}">
+        <h1 class="site-title"> {{ $setting->site_name ?? 'Website của bạn' }}</h1>
+        <button class="mobile-nav-toggle" onclick="toggleMobileNav()">
+            &#9776; <!-- biểu tượng hamburger -->
+        </button>
     </div>
-    <nav style="display: flex; align-items: center;">
-    <a href="{{ route('home') }}">Home</a>
-    <a href="{{ route('news.index') }}">Our Documentations</a>
-    <a href="{{ route('ticket.index') }}">Exhibition-Events</a>
-    <a href="{{ route('categoryshop.index') }}">Shop</a>
-    @auth
-<div class="user-dropdown">
-    <div class="user-icon">
-        @if (Auth::user()->avatar)
-            <img src="{{ asset('storage/' . Auth::user()->avatar) }}" 
-                 alt="Avatar" 
-                 style="width: 30px; height: 30px; border-radius: 50%; object-fit: cover;">
-        @else
-            <img src="https://via.placeholder.com/30" 
-                 alt="Avatar" 
-                 style="width: 30px; height: 30px; border-radius: 50%; object-fit: cover;">
-        @endif
-        <span style="margin-left: 5px;">{{ Auth::user()->name }}</span>
-    </div>
-    <div class="dropdown-content">
-        <a href="{{ route('users.profile') }}">Personal information</a>
-        <a href="{{ route('user.invoices.index') }}">Booking History</a>
-        <a href="{{ route('history.index') }}">History</a>
-        <a href="{{ route('logout') }}"
-           onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-           Log out
-        </a>
-        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-            @csrf
-        </form>
-    </div>
-</div>
-@endauth
+    <nav>
+        <a href="{{ route('home') }}">Home</a>
+        <a href="{{ route('news.index') }}">Our Documentations</a>
+        <a href="{{ route('ticket.index') }}">Exhibition-Events</a>
+        <a href="{{ route('categoryshop.index') }}">Shop</a>
+        @auth
+            <div class="user-dropdown">
+                <div class="user-icon">
+                    @if (Auth::user()->avatar)
+                        <img src="{{ asset('storage/' . Auth::user()->avatar) }}" 
+                             alt="Avatar" 
+                             style="width: 30px; height: 30px; border-radius: 50%; object-fit: cover;">
+                    @else
+                        <img src="https://via.placeholder.com/30" 
+                             alt="Avatar" 
+                             style="width: 30px; height: 30px; border-radius: 50%; object-fit: cover;">
+                    @endif
+                    <span style="margin-left: 5px;">{{ Auth::user()->name }}</span>
+                </div>
+                <div class="dropdown-content">
+                    <a href="{{ route('users.profile') }}">Personal information</a>
+                    <a href="{{ route('user.invoices.index') }}">Booking History</a>
+                    <a href="{{ route('user.shoppinghistory.index') }}">Shopping History</a>
+                    <a href="{{ route('history.index') }}">History</a>
+                    <a href="{{ route('logout') }}"
+                       onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                       Log out
+                    </a>
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                        @csrf
+                    </form>
+                </div>
+            </div>
+        @endauth
+        @guest
+            <div class="user-dropdown">
+                <div class="user-icon">
+                <i class="fas fa-user"></i> <span style="margin-left: 5px;">Account</span>
+                </div>
+                <div class="dropdown-content">
+                    <a href="{{ route('login') }}">Login</a>
+                    <a href="{{ route('register') }}">Register</a>
+                </div>
+            </div>
+        @endguest
+    </nav>
+    <script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Toggle dropdown khi người dùng nhấn vào avatar
+    const userIcon = document.querySelector('.user-icon');
+    const dropdownContent = document.querySelector('.dropdown-content');
 
-@guest
-<div class="user-dropdown">
-    <div class="user-icon">
-    <i class="fas fa-user"></i> <span style="margin-left: 5px;">Account</span>
-    </div>
-    <div class="dropdown-content">
-        <a href="{{ route('login') }}">Login</a>
-        <a href="{{ route('register') }}">Register</a>
-    </div>
-</div>
-@endguest
+    if (userIcon && dropdownContent) {
+        userIcon.addEventListener('click', function(e) {
+            e.stopPropagation(); // Ngừng sự kiện để không đóng dropdown ngay lập tức
+            dropdownContent.style.display = dropdownContent.style.display === 'block' ? 'none' : 'block';
+        });
 
+        // Đóng dropdown khi người dùng nhấn ra ngoài
+        document.addEventListener('click', function(event) {
+            if (!userIcon.contains(event.target)) {
+                dropdownContent.style.display = 'none';
+            }
+        });
+    }
 
+    // Toggle mobile menu
+    function toggleMobileNav() {
+        const nav = document.querySelector('nav');
+        nav.classList.toggle('show');
+    }
 
-</nav>
+    // Lắng nghe sự kiện bấm vào nút hamburger
+    const mobileNavToggle = document.querySelector('.mobile-nav-toggle');
+    if (mobileNavToggle) {
+        mobileNavToggle.addEventListener('click', toggleMobileNav);
+    }
+});
 
+        </script>
 </header>
+
 <body>
     <!-- Hero Section -->
     <div class="hero">
@@ -431,16 +532,12 @@ nav a:hover::after {
         </div>
 
         <!-- Bên phải: Bản đồ -->
-        <div style="flex: 1; min-width: 300px;">
-    <div style="width: 300px; height: 600px;">
-        {!! $setting->sitemap !!}
-    </div>
+        <div class="sitemap-wrapper">
+    {!! $setting->sitemap !!}
 </div>
 
     </div>
 </footer>
-
-
 </main>
 
     <footer>

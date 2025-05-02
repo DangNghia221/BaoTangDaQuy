@@ -61,6 +61,15 @@ public function confirm($id)
     // Quay lại trang danh sách với thông báo thành công
     return redirect()->route('admin.shopping.index')->with('success', 'Lịch sử mua đã được xác nhận.');
 }
+public function userIndex()
+{
+    $shoppingHistory = ShoppingHistory::with('shop')
+        ->where('user_id', auth()->id())
+        ->orderByDesc('purchased_at')
+        ->get();
+
+    return view('users.shoppinghistory.index', compact('shoppingHistory'));
+}
 
 
 }

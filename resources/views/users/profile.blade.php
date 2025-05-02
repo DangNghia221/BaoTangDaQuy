@@ -206,7 +206,8 @@ nav a {
     <nav style="display: flex; align-items: center;">
     <a href="{{ route('home') }}">Home</a>
     <a href="{{ route('news.index') }}">Our Documentations</a>
-    <a href="{{ route('ticket.index') }}">Exhibition-Ticket</a>
+    <a href="{{ route('ticket.index') }}">Exhibition-Events</a>
+    <a href="{{ route('categoryshop.index') }}">Shop</a>
     @auth
 <div class="user-dropdown">
     <div class="user-icon">
@@ -224,6 +225,7 @@ nav a {
     <div class="dropdown-content">
         <a href="{{ route('users.profile') }}">Personal information</a>
         <a href="{{ route('user.invoices.index') }}">Booking History</a>
+        <a href="{{ route('user.shoppinghistory.index') }}">Shopping History</a>
         <a href="{{ route('history.index') }}">History</a>
         <a href="{{ route('logout') }}"
            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">

@@ -2,44 +2,54 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <title>Post</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="{{ asset('storage/' . $setting->favicon) }}">
+    
+    
     <!-- Font Awesome -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-<!-- Favicon -->
-<link rel="icon" type="image/png" href="{{ asset('storage/' . $setting->favicon) }}">
-<button id="backToTopBtn" title="Lên đầu trang">
-    <i class="fas fa-arrow-up"></i>
-</button>
-
-<script>
-    const backToTopBtn = document.getElementById("backToTopBtn");
-
-    window.addEventListener("scroll", () => {
-        const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
-        const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-
-        // Nếu cuộn đến 80% thì hiển thị nút
-        if (scrollTop / scrollHeight > 0.8) {
-            backToTopBtn.classList.add("show");
-        } else {
-            backToTopBtn.classList.remove("show");
-        }
-    });
-
-    backToTopBtn.addEventListener("click", () => {
-        window.scrollTo({
-            top: 0,
-            behavior: 'smooth'
-        });
-    });
-</script>
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-   
 <style>
-   
+     .silver-text {
+        font-size: 50px;
+  font-weight: bold;
+  background: linear-gradient(90deg, #ccc, #fff, #999, #eee, #ccc);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+    }
+    .pagination {
+    background-color: transparent; 
+    border: none; 
+}
+
+.pagination li a,
+.pagination li span {
+    background-color: transparent !important; /* Loại bỏ background của các liên kết */
+    color: white !important; /* Đặt màu chữ thành trắng */
+    border: none !important; /* Đảm bảo không có viền */
+}
+
+.pagination li.active a,
+.pagination li.active span {
+    color: white !important; /* Đặt màu chữ trắng cho trang hiện tại */
+}
+
+      .post-content p,
+        .post-content li,
+        .post-content span,
+        .post-content h1,
+        .post-content h2,
+        .post-content h3 {
+            color: #D3D3D3 !important;
+        }
+
+        .post-content a {
+           
+            text-decoration: underline;
+        }
      header {
         position: sticky;
         top: 0;
@@ -135,8 +145,8 @@
         text-decoration: none;
         font-weight: bold;
     }
-   
-    .user-dropdown {
+  
+.user-dropdown {
         position: relative;
         margin-left: 20px;
     }
@@ -173,22 +183,126 @@
     .dropdown-content a:hover {
         background-color: #333;
     }
-    @media (max-width: 768px) {
-    .sitemap-wrapper iframe {
-        width: 50px !important;
-        height: 25px !important;
-    }
+    body {
+    background-color: #000;
+    color: #e0e0e0;
+    font-family: 'Arial', sans-serif;
+    
+}
+
+.container {
+    background-color: #111; /* Màu xám tối cho khung ngoài Booking History */
+    padding: 20px;
+    border-radius: 15px;
+    max-width: 80%;
+    margin: auto;
+    margin-bottom: 50px;
+}
+
+.inner-container {
+    background-color: #121212;
+    padding: 30px;
+    border-radius: 12px;
+}
+
+h4 {
+    font-size: 24px;
+    font-weight: bold;
+    color: #ffcc00;
+    margin-bottom: 20px;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #000; /* Nền bảng màu đen */
+    border-radius: 10px;
+    overflow: hidden;
+    color: #fff; /* Chữ trắng */
+}
+
+.table th, .table td {
+    text-align: center;
+    padding: 12px 18px;
+    font-size: 14px;
+    border: 1px solid #444;
+}
+
+.table th {
+    background-color: #222; /* Header màu tối */
+    color: #fff;
+}
+
+.table tbody tr {
+    background-color: #111;
+    transition: background-color 0.3s;
+}
+
+.table tbody tr:hover {
+    background-color: #222;
+}
+
+.badge {
+    padding: 6px 12px;
+    font-size: 14px;
+    border-radius: 12px;
+    color: #fff;
+}
+
+.badge.bg-warning {
+    background-color: #ff9800;
+}
+
+.badge.bg-success {
+    background-color: #4caf50;
+}
+
+.badge.bg-danger {
+    background-color: #f44336;
+}
+
+.badge.bg-secondary {
+    background-color: #9e9e9e;
+}
+
+p {
+    color: #fff;
+    font-size: 16px;
+    font-style: italic;
+}
+
+/* Tiêu đề "Booking History" */
+.container h4 {
+    font-size: 20px;
+  font-weight: bold;
+  background: linear-gradient(90deg, #ccc, #fff, #999, #eee, #ccc);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Nội dung bảng */
+.container .table th,
+.container .table td {
+    font-size: 16px; /* Tăng từ 14px lên 16px */
+}
+
+/* Chữ trong badge (ví dụ: Pending, Success,...) */
+.container .badge {
+    font-size: 15px; /* Tăng từ 14px lên 15px */
 }
 
 </style>
 
+<!-- HTML phần <header> -->
 <header style="display: flex; align-items: center; justify-content: space-between;">
 <div style="display: flex; align-items: center;">
-    
+        <!-- Hiển thị logo -->
 <img src="{{ asset('storage/' . $setting->logo) }}" alt="Logo Website" width="120">
 
 <h1> {{ $setting->site_name ?? 'Website của bạn' }}</h1>
-
+<button class="mobile-nav-toggle" onclick="toggleMobileNav()">
+            &#9776; <!-- biểu tượng hamburger -->
+        </button>
 </div>
     <nav style="display: flex; align-items: center;">
     <a href="{{ route('home') }}">Home</a>
@@ -228,7 +342,7 @@
 @guest
 <div class="user-dropdown">
     <div class="user-icon">
-        <i class="fas fa-user"></i> <span style="margin-left: 5px;">Account</span>
+    <i class="fas fa-user"></i> <span style="margin-left: 5px;">Account</span>
     </div>
     <div class="dropdown-content">
         <a href="{{ route('login') }}">Login</a>
@@ -238,45 +352,61 @@
 @endguest
     </nav>
 </header>
+<body class="bg-black text-white">
+    <div class="container py-5">
+        <div class="bg-dark p-4 rounded shadow">
+            <!-- Tiêu đề rõ ràng hơn với màu trắng và biểu tượng -->
+            <h4 class="mb-4 text-white" style="font-size: 24px;">
+            <i class="fa-solid fa-receipt"></i> Shopping History
+            </h4>
 
-
-<body style="font-family: 'Roboto', sans-serif; margin: 0; background-color: #000;">
-    {{-- NỘI DUNG --}}
-<div style="padding: 40px;">
-    <h2 style="text-align: center; color:#BEBEBE; margin-bottom: 40px;">Our Documentations</h2>
-
-    <div style="display: flex; flex-wrap: wrap; gap: 30px; justify-content: center;">
-    @foreach($posts as $post)
-        <div style="width: 300px; background: #1a1a1a; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.4); overflow: hidden;">
-            @if($post->image)
-                <img src="{{ asset('storage/' . $post->image) }}" 
-                     alt="{{ $post->title }}" 
-                     style="width: 100%; height: 200px; object-fit: cover; border-bottom: 1px solid #333;">
+            @if($shoppingHistory->isEmpty())
+                <p class="text-white">Bạn chưa mua sản phẩm nào.</p>
             @else
-                <div style="width: 100%; height: 200px; background: #333; display: flex; align-items: center; justify-content: center; color: #bbb; font-style: italic;">
-                    Không có ảnh
-                </div>
+                <table class="table table-dark table-bordered table-hover text-white">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Product</th>
+                            <th>Quantity</th>
+                            <th>Status</th>
+                            <th>Date booked</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($shoppingHistory as $item)
+                            <tr>
+                                <td>{{ $item->id }}</td>
+                                <td class="silver-text">{{ $item->shop->name ?? 'N/A' }}</td>
+                                <td>{{ $item->quantity }}</td>
+                                @php
+                                    $statusColors = [
+                                        'pending' => 'warning',
+                                        'confirmed' => 'success',
+                                        'canceled' => 'danger'
+                                    ];
+                                    $statusText = [
+                                        'pending' => 'Pending',
+                                        'confirmed' => 'Confirmed',
+                                        'canceled' => 'Canceled'
+                                    ];
+                                    $status = $item->status ?? 'pending';
+                                @endphp
+                                <td>
+                                    <span class="badge bg-{{ $statusColors[$status] ?? 'secondary' }}">
+                                        {{ $statusText[$status] ?? 'Unknown' }}
+                                    </span>
+                                </td>
+                                <td>{{ \Carbon\Carbon::parse($item->purchased_at)->setTimezone('Asia/Ho_Chi_Minh')->format('Y-m-d H:i:s') }}</td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
             @endif
-
-            <div style="padding: 15px;">
-                <h3 style="font-size: 18px; color: #BEBEBE; margin-bottom: 10px;">
-                    <a href="{{ route('posts.show', $post->id) }}" style="color: inherit; text-decoration: none;">
-                        {{ $post->title }}
-                    </a>
-                </h3>
-            </div>
         </div>
-    @endforeach
-</div>
-
-
-    {{-- Phân trang --}}
-    <div class="d-flex justify-content-center mt-5">
-        {{ $posts->links('pagination::bootstrap-4') }}
     </div>
-</div>
-
 </body>
+
 <footer style="background-color:#1a1a1a; color: white; padding: 40px 20px;">
     <div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 20px;">
         
@@ -295,8 +425,10 @@
         </div>
 
         <!-- Bên phải: Bản đồ -->
-        <div class="sitemap-wrapper">
-    {!! $setting->sitemap !!}
+        <div style="flex: 1; min-width: 300px;">
+    <div style="width: 300px; height: 600px;">
+        {!! $setting->sitemap !!}
+    </div>
 </div>
 
     </div>
@@ -308,5 +440,4 @@
     <footer>
         &copy; {{ date('Y') }} Gem Museum.
     </footer>
-
 </html>

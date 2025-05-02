@@ -192,26 +192,25 @@
         .hidden-price {
             display: none;
         }
-        /* Điều chỉnh chiều cao và chiều rộng của modal */
+     
 .modal-dialog {
-    max-width: 60%;  /* Điều chỉnh chiều rộng của modal */
-    height: 90%;     /* Chiều cao của modal */
-    margin: auto;    /* Căn giữa modal */
+    max-width: 60%;  
+    height: 90%;     
+    margin: auto;    
 }
 
-/* Nếu bạn muốn kéo dài nội dung, có thể thêm nội dung cuộn */
 .modal-body {
-    max-height: 75vh;  /* Giới hạn chiều cao của modal body */
-    overflow-y: auto;  /* Thêm cuộn dọc nếu nội dung quá dài */
+    max-height: 75vh; 
+    overflow-y: auto;  
 }
-/* Căn giữa ảnh trong modal */
+
 .modal-body img {
-    display: block;         /* Làm cho ảnh thành block để dễ căn giữa */
-    margin-left: auto;      /* Tự động căn trái */
-    margin-right: auto;     /* Tự động căn phải */
-    max-width: 100%;        /* Đảm bảo ảnh không vượt quá chiều rộng modal */
-    max-height: 60vh;       /* Đặt giới hạn chiều cao ảnh nếu cần */
-    border-radius: 10px;    /* Bo góc ảnh (tuỳ chọn) */
+    display: block;        
+    margin-left: auto;     
+    margin-right: auto;     
+    max-width: 100%;       
+    max-height: 60vh;       
+    border-radius: 10px;   
 }
 
     </style>
@@ -249,6 +248,7 @@
                 <div class="dropdown-content">
                     <a href="{{ route('users.profile') }}">Personal information</a>
                     <a href="{{ route('user.invoices.index') }}">Booking History</a>
+                    <a href="{{ route('user.shoppinghistory.index') }}">Shopping History</a>
                     <a href="{{ route('history.index') }}">History</a>
                     <a href="{{ route('logout') }}"
                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
@@ -284,7 +284,7 @@
                     <thead class="custom-dark-header bg-dark text-white">
                         <tr>
                             <th>ID</th>
-                            <th>Product</th>
+                            <th>Exhibition</th>
                             <th>Quantity</th>
                             <th class="hidden-price">Price</th> <!-- Ẩn cột giá -->
                             <th>Status</th>
@@ -317,8 +317,8 @@
                                 <span class="badge bg-secondary">Unknown</span>
                                 @endif
                             </td>
-                            <td>{{ $booking->created_at }}</td>
-                        </tr>
+                            <td>{{ $booking->created_at->setTimezone('Asia/Ho_Chi_Minh')->format('Y-m-d H:i:s') }}</td>
+                            </tr>
 
                         @if($booking->product)
                         <!-- Modal chi tiết sản phẩm -->
@@ -396,6 +396,7 @@
 
     </div>
 </footer>
+
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             const backToTopBtn = document.getElementById("backToTopBtn");

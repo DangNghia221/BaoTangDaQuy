@@ -197,6 +197,15 @@
     .dropdown-content a:hover {
         background-color: #333;
     }
+    @media (max-width: 768px) {
+    .sitemap-wrapper iframe {
+        width: 50px !important;
+        height: 25px !important;
+    }
+}
+
+
+
 </style>
 
 <!-- HTML phần <header> -->
@@ -230,6 +239,7 @@
     <div class="dropdown-content">
         <a href="{{ route('users.profile') }}">Personal information</a>
         <a href="{{ route('user.invoices.index') }}">Booking History</a>
+        <a href="{{ route('user.shoppinghistory.index') }}">Shopping History</a>
         <a href="{{ route('history.index') }}">History</a>
         <a href="{{ route('logout') }}"
            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
@@ -297,11 +307,11 @@
         </div>
 
         <!-- Bên phải: Bản đồ -->
-        <div style="flex: 1; min-width: 300px;">
-    <div style="width: 300px; height: 600px;">
-        {!! $setting->sitemap !!}
-    </div>
+        <div class="sitemap-wrapper">
+    {!! $setting->sitemap !!}
 </div>
+
+
 
     </div>
 </footer>

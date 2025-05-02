@@ -2,17 +2,13 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ $product->name }}</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+    <title>Events</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    
-<!-- Favicon -->
-<link rel="icon" type="image/png" href="{{ asset('storage/' . $setting->favicon) }}">
     <!-- Font Awesome -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
+<!-- Favicon -->
+<link rel="icon" type="image/png" href="{{ asset('storage/' . $setting->favicon) }}">
 <button id="backToTopBtn" title="Lên đầu trang">
     <i class="fas fa-arrow-up"></i>
 </button>
@@ -41,8 +37,8 @@
 </script>
 
 </head>
+
 <style>
-    
     .post-content * {
     color: #ccc !important;
 }
@@ -270,6 +266,7 @@
 
     nav a:hover {
         color: white;
+        
     }
 
     nav a:hover::after {
@@ -347,7 +344,7 @@
         font-weight: bold;
     }
    
-.user-dropdown {
+    .user-dropdown {
         position: relative;
         margin-left: 20px;
     }
@@ -384,6 +381,121 @@
     .dropdown-content a:hover {
         background-color: #333;
     }
+    
+    @media (max-width: 768px) {
+    .sitemap-wrapper iframe {
+        height: 200px !important; /* giảm chiều cao trên mobile */
+    }
+}
+/* Đảm bảo không bị tràn ra màn hình */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+/* Header */
+header {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background-color: #000;
+    color: white;
+    padding: 10px 20px; /* Giảm padding cho phù hợp */
+    width: 100%; /* Đảm bảo header không bị tràn ra */
+    max-width: 100%; /* Đảm bảo header không vượt quá 100% chiều rộng màn hình */
+    text-align: center; /* Căn giữa nội dung */
+}
+
+/* Tiêu đề trong header */
+header h1 {
+    font-size: 24px; /* Giảm kích thước chữ cho tiêu đề */
+    color: white;
+    margin: 0; /* Giảm margin để tiêu đề không bị dư khoảng trống */
+}
+
+/* Điều chỉnh menu trong header */
+nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+nav a {
+    color: white;
+    margin: 0 10px; /* Giảm khoảng cách giữa các liên kết */
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 14px; /* Giảm kích thước chữ cho liên kết */
+}
+
+
+/* Footer */
+footer {
+    background-color: #000;
+    color: white;
+    padding: 15px 20px; /* Giảm padding cho footer */
+    width: 100%; /* Đảm bảo footer không bị tràn ra */
+    max-width: 100%; /* Đảm bảo footer không vượt quá 100% chiều rộng màn hình */
+    text-align: center; /* Căn giữa nội dung */
+    font-size: 12px; /* Giảm kích thước chữ trong footer */
+}
+
+/* Đảm bảo các item trong carousel đều nhau */
+.carousel-item {
+    display: flex;
+    justify-content: space-between;
+}
+
+/* Media query cho màn hình nhỏ */
+@media (max-width: 768px) {
+    header, footer {
+        padding: 10px 15px; /* Giảm padding cho header và footer */
+        font-size: 14px; /* Giảm kích thước chữ trong header và footer */
+    }
+
+    header h1 {
+        font-size: 20px; /* Giảm kích thước tiêu đề trong header */
+    }
+
+    nav a {
+        font-size: 12px; /* Giảm kích thước chữ cho liên kết trong menu */
+        margin: 0 5px; /* Giảm khoảng cách giữa các liên kết */
+    }
+
+    footer {
+        font-size: 10px; /* Giảm kích thước chữ trong footer */
+    }
+
+    .user-dropdown {
+        margin-left: 10px;
+    }
+
+    .carousel-control-prev,
+    .carousel-control-next {
+        width: 7%; /* Giảm độ rộng của các nút điều hướng carousel */
+    }
+
+    .artifact-card {
+        flex: 0 0 calc(50% - 15px); 
+        height: 350px; 
+    }
+
+    .artifact-card img {
+        height: 180px; /* Điều chỉnh lại chiều cao ảnh trong artifact card */
+    }
+
+    .artifact-info h3 {
+        font-size: 16px; /* Giảm kích thước tiêu đề trong artifact card */
+    }
+
+    .artifact-info p {
+        font-size: 12px; /* Giảm kích thước mô tả trong artifact card */
+    }
+}
+
+
 </style>
 
 <!-- HTML phần <header> -->
@@ -400,7 +512,6 @@
     <a href="{{ route('news.index') }}">Our Documentations</a>
     <a href="{{ route('ticket.index') }}">Exhibition-Events</a>
     <a href="{{ route('categoryshop.index') }}">Shop</a>
-
     @auth
 <div class="user-dropdown">
     <div class="user-icon">
@@ -418,6 +529,7 @@
     <div class="dropdown-content">
         <a href="{{ route('users.profile') }}">Personal information</a>
         <a href="{{ route('user.invoices.index') }}">Booking History</a>
+        <a href="{{ route('user.shoppinghistory.index') }}">Shopping History</a>
         <a href="{{ route('history.index') }}">History</a>
         <a href="{{ route('logout') }}"
            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
@@ -433,7 +545,7 @@
 @guest
 <div class="user-dropdown">
     <div class="user-icon">
-    <i class="fas fa-user"></i> <span style="margin-left: 5px;">Account</span>
+        <i class="fas fa-user"></i> <span style="margin-left: 5px;">Account</span>
     </div>
     <div class="dropdown-content">
         <a href="{{ route('login') }}">Login</a>
@@ -565,11 +677,10 @@
     });
     </script>
 
-</body>
+</body> 
 
 
-
-<footer style="background-color:#1a1a1a; color: white; padding: 40px 20px;">
+<footer class="footer"style="background-color:#1a1a1a; color: white; padding: 40px 20px;">
     <div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 20px;">
         
         <!-- Bên trái: Thông tin bảo tàng -->
@@ -587,11 +698,11 @@
         </div>
 
         <!-- Bên phải: Bản đồ -->
-        <div style="flex: 1; min-width: 300px;">
-    <div style="width: 300px; height: 600px;">
-        {!! $setting->sitemap !!}
-    </div>
+        <div class="sitemap-wrapper">
+    {!! $setting->sitemap !!}
 </div>
+
+
 
     </div>
 </footer>
@@ -602,25 +713,5 @@
     <footer>
         &copy; {{ date('Y') }} Gem Museum.
     </footer>
-    
-<script>
-    // Ẩn alert sau 3 giây
-    setTimeout(function() {
-        const successAlert = document.getElementById('success-alert');
-        const errorAlert = document.getElementById('error-alert');
-
-        if (successAlert) {
-            successAlert.style.transition = 'opacity 0.5s ease';
-            successAlert.style.opacity = '0';
-            setTimeout(() => successAlert.remove(), 500);
-        }
-
-        if (errorAlert) {
-            errorAlert.style.transition = 'opacity 0.5s ease';
-            errorAlert.style.opacity = '0';
-            setTimeout(() => errorAlert.remove(), 500);
-        }
-    }, 3000);
-</script>
 
 </html>
