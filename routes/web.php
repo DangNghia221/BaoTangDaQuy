@@ -30,6 +30,18 @@ use App\Http\Controllers\ShopCategoryController;
 use App\Http\Controllers\User\CategoryShopController;
 
 use App\Http\Controllers\ShoppingHistoryController;
+use App\Http\Controllers\CollectionController;  
+
+Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
+    Route::get('collections', [CollectionController::class, 'index'])->name('collections.index');
+    Route::get('collections/create', [CollectionController::class, 'create'])->name('collections.create');
+    Route::post('collections', [CollectionController::class, 'store'])->name('collections.store');
+    Route::get('collections/{collection}/edit', [CollectionController::class, 'edit'])->name('collections.edit');
+    Route::put('collections/{collection}', [CollectionController::class, 'update'])->name('collections.update');
+    Route::delete('collections/{collection}', [CollectionController::class, 'destroy'])->name('collections.destroy');
+});
+
+
 
 Route::post('shopping/{id}/cancel', [ShoppingHistoryController::class, 'cancel'])->name('admin.shopping.cancel');
 Route::post('bookings/{id}/cancel', [BookingController::class, 'cancel'])->name('bookings.cancel');

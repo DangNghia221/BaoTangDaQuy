@@ -2,13 +2,13 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home</title>
-    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="icon" type="image/png" href="{{ asset('storage/' . $setting->favicon) }}">
-    <!-- Nút trở lên đầu trang -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<!-- Favicon -->
+<link rel="icon" type="image/png" href="{{ asset('storage/' . $setting->favicon) }}">
 <button id="backToTopBtn" title="Lên đầu trang">
     <i class="fas fa-arrow-up"></i>
 </button>
@@ -20,6 +20,7 @@
         const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
         const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
 
+        // Nếu cuộn đến 80% thì hiển thị nút
         if (scrollTop / scrollHeight > 0.8) {
             backToTopBtn.classList.add("show");
         } else {
@@ -34,84 +35,96 @@
         });
     });
 </script>
+
+</head>
+   
 <style>
-    .silver-text {
-        font-size: 40px;
-  font-weight: bold;
-  background: linear-gradient(90deg, #ccc, #fff, #999, #eee, #ccc);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+   
+     header {
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        background-color: #fff;
+        padding: 5px; 
+        }
+ /* icon về đầu trang */
+ nav a {
+        color: white;
+        margin: 0 10px;
+        text-decoration: none;
+        font-weight: bold;
+        position: relative;
+        padding-bottom: 5px;
     }
-    nav a {
-    color: white;
-    margin: 0 10px;
-    text-decoration: none;
-    font-weight: bold;
-    position: relative;
-    padding-bottom: 5px; 
-}
 
-nav a:hover {
-    color: white;
-}
-
-nav a:hover::after {
-    content: "";
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 2px;
-    background-color: white;
-    animation: underline-animation 0.3s ease-in-out;
-}
-
-@keyframes underline-animation {
-    from {
-        width: 0;
+    nav a:hover {
+        color: white;
     }
-    to {
+
+    nav a:hover::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
         width: 100%;
+        height: 2px;
+        background-color: white;
+        animation: underline-animation 0.3s ease-in-out;
     }
-}
-#backToTopBtn {
-    opacity: 0;
-    visibility: hidden;
-    position: fixed;
-    bottom: 40px;
-    right: 30px;
-    z-index: 99;
-    width: 50px;
-    height: 50px;
-    background-color: #f1f1f1; 
-    color: #333; 
-    border: none;
-    outline: none;
-    border-radius: 50%;
-    font-size: 18px;
-    cursor: pointer;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-    transition: opacity 0.5s ease, visibility 0.5s ease, background-color 0.3s ease;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
 
-#backToTopBtn.show {
-    opacity: 1;
-    visibility: visible;
-}
+    @keyframes underline-animation {
+        from {
+            width: 0;
+        }
 
-#backToTopBtn:hover {
-    background-color: #4CAF50; 
-    color: white; 
-}
+        to {
+            width: 100%;
+        }
+    }
 
-#backToTopBtn i {
-    font-size: 24px; 
-}
+    #backToTopBtn {
+        opacity: 0;
+        visibility: hidden;
+        position: fixed;
+        bottom: 40px;
+        right: 30px;
+        z-index: 99;
+        width: 50px;
+        height: 50px;
+        background-color: #f1f1f1;
+        color: #333;
+        border: none;
+        outline: none;
+        border-radius: 50%;
+        font-size: 18px;
+        cursor: pointer;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        transition: opacity 0.5s ease, visibility 0.5s ease, background-color 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
 
-        body {
+    #backToTopBtn.show {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    #backToTopBtn:hover {
+        background-color: #4CAF50;
+        color: white;
+    }
+
+    #backToTopBtn i {
+        font-size: 24px;
+    }
+    header, footer {
+        background-color: #000;
+        color: white;
+        padding: 20px;
+        text-align: center;
+    }
+    body {
             font-family: 'Arial', sans-serif;
             background-color: #000;
             margin: 0;
@@ -271,157 +284,71 @@ nav a {
     background-color: #333;
 }
 
-/* Mobile Navigation */
-.mobile-nav-toggle {
-    display: none; /* Ẩn mặc định */
-    background-color: transparent;
-    border: none;
-    color: white;
-    font-size: 28px;
-    cursor: pointer;
-}
 
-@media (max-width: 768px) {
-    .mobile-nav-toggle {
-        display: block;
-        margin-left: 80px; /* 👈 tăng thêm ở mobile */
-    }
-    .logo-img {
-        width: 80px; /* Nhỏ hơn trên thiết bị di động */
-    }
-    .site-title {
-        font-size: 24px; /* Nhỏ hơn trên mobile */
-    }
-    .mobile-nav-toggle {
-        display: block;
-       
-    }
-
-    nav {
-        display: none; /* Ẩn menu theo mặc định */
-        flex-direction: column;
-        position: absolute;
-        top: 60px;
-        right: 20px; /* Điều chỉnh này để di chuyển menu sang phải */
-        background-color: #000;
-        border-radius: 10px;
-        padding: 10px;
-        z-index: 999; /* Đảm bảo menu không bị chồng lên */
-        transform: translateX(10%); /* Thêm chuyển vị trí thêm vào */
-    }
-
-    nav.show {
-        display: flex; /* Hiển thị menu khi có class 'show' */
-    }
-
-    nav a {
-        margin: 10px 0;
+    @media (max-width: 768px) {
+    .sitemap-wrapper iframe {
+        width: 50px !important;
+        height: 25px !important;
     }
 }
 
-
-@media (max-width: 768px) {
-    iframe {
-        width: 100% !important;
-        height: auto;
-    }
-}
-
-    </style>
-</head>
-
+</style>
 
 <header style="display: flex; align-items: center; justify-content: space-between;">
-    <div style="display: flex; align-items: center;">
-        <!-- Hiển thị logo -->
-        <img src="{{ asset('storage/' . $setting->logo) }}" alt="Logo Website" width="120" class="logo-img">
-        <!-- Favicon -->
-        <link rel="icon" type="image/png" href="{{ asset('storage/' . $setting->favicon) }}">
-        <h1 class="site-title"> {{ $setting->site_name ?? 'Website của bạn' }}</h1>
-        <button class="mobile-nav-toggle" onclick="toggleMobileNav()">
-            &#9776; <!-- biểu tượng hamburger -->
-        </button>
+<div style="display: flex; align-items: center;">
+    
+<img src="{{ asset('storage/' . $setting->logo) }}" alt="Logo Website" width="120">
+
+<h1> {{ $setting->site_name ?? 'Website của bạn' }}</h1>
+
+</div>
+    <nav style="display: flex; align-items: center;">
+    <a href="{{ route('home') }}">Home</a>
+    <a href="{{ route('news.index') }}">Our Documentations</a>
+    <a href="{{ route('ticket.index') }}">Exhibition-Events</a>
+    <a href="{{ route('categoryshop.index') }}">Shop</a>
+    @auth
+<div class="user-dropdown">
+    <div class="user-icon">
+        @if (Auth::user()->avatar)
+            <img src="{{ asset('storage/' . Auth::user()->avatar) }}" 
+                 alt="Avatar" 
+                 style="width: 30px; height: 30px; border-radius: 50%; object-fit: cover;">
+        @else
+            <img src="https://via.placeholder.com/30" 
+                 alt="Avatar" 
+                 style="width: 30px; height: 30px; border-radius: 50%; object-fit: cover;">
+        @endif
+        <span style="margin-left: 5px;">{{ Auth::user()->name }}</span>
     </div>
-    <nav>
-        <a href="{{ route('home') }}">Home</a>
-        <a href="{{ route('news.index') }}">Our Documentations</a>
-        <a href="{{ route('ticket.index') }}">Exhibition-Events</a>
-        <a href="{{ route('categoryshop.index') }}">Shop</a>
-        @auth
-            <div class="user-dropdown">
-                <div class="user-icon">
-                    @if (Auth::user()->avatar)
-                        <img src="{{ asset('storage/' . Auth::user()->avatar) }}" 
-                             alt="Avatar" 
-                             style="width: 30px; height: 30px; border-radius: 50%; object-fit: cover;">
-                    @else
-                        <img src="https://via.placeholder.com/30" 
-                             alt="Avatar" 
-                             style="width: 30px; height: 30px; border-radius: 50%; object-fit: cover;">
-                    @endif
-                    <span style="margin-left: 5px;">{{ Auth::user()->name }}</span>
-                </div>
-                <div class="dropdown-content">
-                    <a href="{{ route('users.profile') }}">Personal information</a>
-                    <a href="{{ route('user.invoices.index') }}">Booking History</a>
-                    <a href="{{ route('user.shoppinghistory.index') }}">Shopping History</a>
-                    <a href="{{ route('history.index') }}">History</a>
-                    <a href="{{ route('logout') }}"
-                       onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                       Log out
-                    </a>
-                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                        @csrf
-                    </form>
-                </div>
-            </div>
-        @endauth
-        @guest
-            <div class="user-dropdown">
-                <div class="user-icon">
-                <i class="fas fa-user"></i> <span style="margin-left: 5px;">Account</span>
-                </div>
-                <div class="dropdown-content">
-                    <a href="{{ route('login') }}">Login</a>
-                    <a href="{{ route('register') }}">Register</a>
-                </div>
-            </div>
-        @endguest
+    <div class="dropdown-content">
+        <a href="{{ route('users.profile') }}">Personal information</a>
+        <a href="{{ route('user.invoices.index') }}">Booking History</a>
+        <a href="{{ route('user.shoppinghistory.index') }}">Shopping History</a>
+        <a href="{{ route('history.index') }}">History</a>
+        <a href="{{ route('logout') }}"
+           onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+           Log out
+        </a>
+        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+            @csrf
+        </form>
+    </div>
+</div>
+@endauth
+
+@guest
+<div class="user-dropdown">
+    <div class="user-icon">
+        <i class="fas fa-user"></i> <span style="margin-left: 5px;">Account</span>
+    </div>
+    <div class="dropdown-content">
+        <a href="{{ route('login') }}">Login</a>
+        <a href="{{ route('register') }}">Register</a>
+    </div>
+</div>
+@endguest
     </nav>
-    <script>
-document.addEventListener('DOMContentLoaded', function() {
-    // Toggle dropdown khi người dùng nhấn vào avatar
-    const userIcon = document.querySelector('.user-icon');
-    const dropdownContent = document.querySelector('.dropdown-content');
-
-    if (userIcon && dropdownContent) {
-        userIcon.addEventListener('click', function(e) {
-            e.stopPropagation(); // Ngừng sự kiện để không đóng dropdown ngay lập tức
-            dropdownContent.style.display = dropdownContent.style.display === 'block' ? 'none' : 'block';
-        });
-
-        // Đóng dropdown khi người dùng nhấn ra ngoài
-        document.addEventListener('click', function(event) {
-            if (!userIcon.contains(event.target)) {
-                dropdownContent.style.display = 'none';
-            }
-        });
-    }
-
-    // Toggle mobile menu
-    function toggleMobileNav() {
-        const nav = document.querySelector('nav');
-        nav.classList.toggle('show');
-    }
-
-    // Lắng nghe sự kiện bấm vào nút hamburger
-    const mobileNavToggle = document.querySelector('.mobile-nav-toggle');
-    if (mobileNavToggle) {
-        mobileNavToggle.addEventListener('click', toggleMobileNav);
-    }
-});
-
-        </script>
 </header>
 
 <body>
@@ -537,6 +464,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     </div>
 </footer>
+
+
 </main>
 
     <footer>

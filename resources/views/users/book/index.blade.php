@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-    <meta charset="UTF-8">
-    <title>Chọn ngày tham quan</title>
+    <meta charset="UTF-8">  
+    
+   
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -39,18 +40,31 @@
 </script>
 
 </head>
-   
-<style>
-   
-     header {
+   <style>
+    /* Ngăn tràn ngang toàn trang và chiếm trọn chiều rộng */
+    html, body {
+        width: 100%;
+        max-width: 100%;
+        overflow-x: hidden;
+        margin: 0;
+        padding: 0;
+        background-color: #000;
+    }
+
+    /* Bắt mọi phần tử tính kích thước chuẩn */
+    *, *::before, *::after {
+        box-sizing: border-box;
+    }
+
+    header {
         position: sticky;
         top: 0;
         z-index: 1000;
         background-color: #fff;
-        padding: 5px; 
-        }
- /* icon về đầu trang */
- nav a {
+        padding: 5px;
+    }
+
+    nav a {
         color: white;
         margin: 0 10px;
         text-decoration: none;
@@ -78,7 +92,6 @@
         from {
             width: 0;
         }
-
         to {
             width: 100%;
         }
@@ -120,24 +133,19 @@
     #backToTopBtn i {
         font-size: 24px;
     }
+
     header, footer {
         background-color: #000;
         color: white;
         padding: 20px;
         text-align: center;
     }
-    header h1{
-             font-size: 28px; 
-            color :white
-           
-        }
-    nav a {
+
+    header h1 {
+        font-size: 28px;
         color: white;
-        margin: 0 10px;
-        text-decoration: none;
-        font-weight: bold;
     }
-   
+
     .user-dropdown {
         position: relative;
         margin-left: 20px;
@@ -175,14 +183,21 @@
     .dropdown-content a:hover {
         background-color: #333;
     }
-    @media (max-width: 768px) {
-    .sitemap-wrapper iframe {
-        width: 100% !important;
-        height: 200px !important;
-    }
-}
 
+    img, video, iframe {
+        max-width: 100%;
+        height: auto;
+        display: block;
+    }
+
+    @media (max-width: 768px) {
+        .sitemap-wrapper iframe {
+            width: 100% !important;
+            height: 100% !important;
+        }
+    }
 </style>
+
 
 <header style="display: flex; align-items: center; justify-content: space-between;">
 <div style="display: flex; align-items: center;">

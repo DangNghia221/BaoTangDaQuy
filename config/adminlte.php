@@ -362,6 +362,11 @@ return [
                     'url' => 'admin/shopcategory',
                     'icon' => 'fas fa-folder-open',
                 ],
+                [
+                    'text' => 'Quản lý bộ sưu tập',
+                    'url' => 'admin/collections',
+                    'icon' => 'fas fa-folder-open',
+                ],
             ],
         ],
 
