@@ -279,6 +279,7 @@ h1 {
     <nav style="display: flex; align-items: center;">
     <a href="{{ route('home') }}">Home</a>
     <a href="{{ route('news.index') }}">Our Documentations</a>
+    <a href="{{ route('gallery.index') }}">Our Collections</a>
     <a href="{{ route('ticket.index') }}">Exhibition-Events</a>
     <a href="{{ route('categoryshop.index') }}">Shop</a>
     @auth

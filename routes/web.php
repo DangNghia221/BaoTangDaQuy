@@ -31,6 +31,9 @@ use App\Http\Controllers\User\CategoryShopController;
 
 use App\Http\Controllers\ShoppingHistoryController;
 use App\Http\Controllers\CollectionController;  
+use App\Http\Controllers\User\GalleryController;
+
+Route::get('/gallery', [GalleryController::class, 'index'])->name('gallery.index');
 
 Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
     Route::get('collections', [CollectionController::class, 'index'])->name('collections.index');

@@ -11,6 +11,7 @@ class CollectionController extends Controller
     {
         $collections = Collection::all();
         return view('admin.collections.index', compact('collections'));
+        
     }
 
     public function create()

@@ -2,13 +2,14 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <title>Personal information</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+ 
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
 <!-- Favicon -->
 <link rel="icon" type="image/png" href="{{ asset('storage/' . $setting->favicon) }}">
-    <button id="backToTopBtn" title="Lên đầu trang">
+<button id="backToTopBtn" title="Lên đầu trang">
     <i class="fas fa-arrow-up"></i>
 </button>
 
@@ -35,34 +36,98 @@
     });
 </script>
 
-
 </head>
-
+   
 <style>
-    footer {
-    padding: 10px 20px;
+   body {
+    background-color: #000;
+    color: white;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0; /* Xoá padding ở đây */
+    width: 100%;
 }
 
-      .silver-text {
-        font-size: 20px;
-  font-weight: bold;
-  background: linear-gradient(90deg, #ccc, #fff, #999, #eee, #ccc);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-    }
-      .post-content p,
-        .post-content li,
-        .post-content span,
-        .post-content h1,
-        .post-content h2,
-        .post-content h3 {
-            color: #D3D3D3 !important;
+/* Thêm class riêng cho phần nội dung chính */
+.main-content {
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+        h1 {
+            font-size: 36px;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+        .separator {
+    width: 100%;
+    height: 1px;
+    background-color: #333;
+    margin: 40px 0;
+}
+
+        .collection-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 50px;
+            max-width: 1200px;
         }
 
-        .post-content a {
-           
-            text-decoration: underline;
+        .collection-card {
+            background-color: #111;
+            width: 300px;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: transform 0.3s ease;
         }
+
+        .collection-card:hover {
+            transform: scale(1.03);
+        }
+
+        .collection-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .collection-content {
+            padding: 15px;
+        }
+
+        .collection-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin: 0 0 10px;
+            position: relative;
+            display: inline-block;
+            color: #fff;
+        }
+
+        .collection-title::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            bottom: -3px;
+            transform: translateX(-50%);
+            width: 0%;
+            height: 2px;
+            background-color: white;
+            transition: width 0.3s ease;
+        }
+
+        .collection-card:hover .collection-title::after {
+            width: 100%;
+        }
+
+        .collection-description {
+            font-size: 14px;
+            color: #ccc;
+        }
+   
      header {
         position: sticky;
         top: 0;
@@ -70,8 +135,8 @@
         background-color: #fff;
         padding: 5px; 
         }
-/* icon về đầu trang */
-nav a {
+ /* icon về đầu trang */
+ nav a {
         color: white;
         margin: 0 10px;
         text-decoration: none;
@@ -142,11 +207,12 @@ nav a {
         font-size: 24px;
     }
     header, footer {
-        background-color: #000;
-        color: white;
-        padding: 20px;
-        text-align: center;
-    }
+    background-color: #000;
+    color: white;
+    padding: 20px;
+    text-align: center;
+    width: 100%;
+}
     header h1{
              font-size: 28px; 
             color :white
@@ -159,7 +225,7 @@ nav a {
         font-weight: bold;
     }
    
-.user-dropdown {
+    .user-dropdown {
         position: relative;
         margin-left: 20px;
     }
@@ -202,12 +268,12 @@ nav a {
         height: 25px !important;
     }
 }
+
 </style>
 
-<!-- HTML phần <header> -->
 <header style="display: flex; align-items: center; justify-content: space-between;">
 <div style="display: flex; align-items: center;">
-        <!-- Hiển thị logo -->
+    
 <img src="{{ asset('storage/' . $setting->logo) }}" alt="Logo Website" width="120">
 
 <h1> {{ $setting->site_name ?? 'Website của bạn' }}</h1>
@@ -252,7 +318,7 @@ nav a {
 @guest
 <div class="user-dropdown">
     <div class="user-icon">
-    <i class="fas fa-user"></i> <span style="margin-left: 5px;">Account</span>
+        <i class="fas fa-user"></i> <span style="margin-left: 5px;">Account</span>
     </div>
     <div class="dropdown-content">
         <a href="{{ route('login') }}">Login</a>
@@ -262,53 +328,34 @@ nav a {
 @endguest
     </nav>
 </header>
-<body style="font-family: 'Roboto', sans-serif; background-color: #000; color: #ccc;">
+<body>
+    <div class="main-content">
+        <h1>Collection themes</h1>
+        <p style="text-align: center; max-width: 800px; margin-bottom: 40px; color: #ccc;">
+         Discover our meticulously curated gemstone collections, each telling a unique story of nature's beauty. 
+        From dazzling rubies to shimmering sapphires, a journey through Earth's natural treasures awaits you.
+        </p>
 
-    <div class="py-20">
-    <div style="background-color:#1a1a1a; color: white; padding: 40px 20px;" class="max-w-5xl mx-auto shadow-xl rounded-2xl grid grid-cols-1 md:grid-cols-3 gap-6">            
-            <!-- Sidebar -->
-            <div class="flex flex-col items-center justify-center space-y-3">
-                @if ($user->avatar)
-                    <img src="{{ asset('storage/' . $user->avatar) }}" alt="Avatar" class="w-24 h-24 rounded-full shadow-lg">
-                @else
-                    <img src="https://via.placeholder.com/100" alt="avatar" class="w-24 h-24 rounded-full shadow-lg">
-                @endif
-
-                <div class="text-lg font-semibold text-white">{{ $user->name }}</div>
-                <div class="text-gray-400">{{ $user->email }}</div>
-               
+        <div class="collection-grid">
+    @foreach($collections as $index => $collection)
+        <div class="collection-card">
+            <img src="{{ asset('storage/' . $collection->image) }}" alt="{{ $collection->name }}" class="collection-image">
+            <div class="collection-content">
+                <div class="collection-title">{{ $collection->name }}</div>
+                <div class="collection-description">{!! strip_tags($collection->description) !!}</div>
             </div>
-
-            <!-- Thông tin -->
-            <div class="md:col-span-2">
-                <div class="flex items-center justify-between mb-4">
-                    <h2 class="silver-text">Personal information</h2>
-                    <a href="{{ route('users.profile.edit') }}" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">
-                       Update
-                    </a>
-                </div>
-                <div class="space-y-4">
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div>
-                            <label class="block text-sm text-gray-300">Full name</label>
-                            <div class="w-full border rounded px-3 py-2 bg-gray-800 text-white">{{ $user->name }}</div>
-                        </div>
-                        <div>
-                            <label class="block text-sm text-gray-300">Phone Number</label>
-                            <div class="w-full border rounded px-3 py-2 bg-gray-800 text-white">{{ $user->phone ?? 'Chưa cập nhật' }}</div>
-                        </div>
-                        <div class="md:col-span-2">
-                            <label class="block text-sm text-gray-300">Email</label>
-                            <div class="w-full border rounded px-3 py-2 bg-gray-800 text-white">{{ $user->email }}</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
         </div>
-    </div>
 
+        @if(($index + 1) % 3 == 0 && !$loop->last)
+            <div class="separator"></div>
+        @endif
+    @endforeach
+</div>
+
+    </div>
 </body>
+
+
 
 <footer style="background-color:#1a1a1a; color: white; padding: 40px 20px;">
     <div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 20px;">
@@ -332,8 +379,6 @@ nav a {
     {!! $setting->sitemap !!}
 </div>
 
-</div>
-
     </div>
 </footer>
 
@@ -343,5 +388,5 @@ nav a {
     <footer>
         &copy; {{ date('Y') }} Gem Museum.
     </footer>
-    
+
 </html>
