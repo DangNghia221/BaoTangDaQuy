@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Setting extends Model
 {
-    protected $table = 'settings'; // Nếu tên bảng trong DB là `settings`
+    protected $table = 'settings'; // Tên bảng trong database
 
     protected $fillable = [
         'site_name',
@@ -21,6 +21,18 @@ class Setting extends Model
         'phone',
         'address',
         'business_info',
+        'meta_title',
+        'meta_description',
+        'meta_keywords',
+        'canonical_url',
+        'robots',
+        'og_title',
+        'og_description',
+        'og_image',
+        'twitter_card',
+        'twitter_title',
+        'twitter_description',
+        'twitter_image',
     ];
 
     public $timestamps = false; // Nếu bảng không có cột `created_at` và `updated_at`

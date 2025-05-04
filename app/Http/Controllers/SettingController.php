@@ -16,7 +16,7 @@ class SettingController extends Controller
     public function update(Request $request)
     {
         $data = $request->except(['_token', '_method']);
-        
+
         // Xử lý file logo
         if ($request->hasFile('logo')) {
             $logo = $request->file('logo')->store('uploads', 'public');
@@ -29,6 +29,19 @@ class SettingController extends Controller
             $data['favicon'] = $favicon;
         }
 
+        // Xử lý file og:image
+        if ($request->hasFile('og_image')) {
+            $ogImage = $request->file('og_image')->store('uploads', 'public');
+            $data['og_image'] = $ogImage;
+        }
+
+        // Xử lý file twitter:image
+        if ($request->hasFile('twitter_image')) {
+            $twitterImage = $request->file('twitter_image')->store('uploads', 'public');
+            $data['twitter_image'] = $twitterImage;
+        }
+
+        // Cập nhật hoặc tạo mới
         $setting = Setting::first();
         if ($setting) {
             $setting->update($data);

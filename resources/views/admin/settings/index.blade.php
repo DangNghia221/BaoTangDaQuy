@@ -17,6 +17,7 @@
             <h3 class="card-title"><i class="fas fa-info-circle"></i> Thông tin Website</h3>
         </div>
         <div class="card-body">
+            <!-- Các trường hiện tại -->
             <div class="form-group">
                 <label for="site_name">Tên website</label>
                 <input type="text" class="form-control" name="site_name" value="{{ $setting->site_name ?? '' }}">
@@ -111,6 +112,85 @@
             <div class="form-group">
                 <label for="business_info">Thông tin kinh doanh</label>
                 <textarea class="form-control" name="business_info">{{ $setting->business_info ?? '' }}</textarea>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cấu hình SEO -->
+    <div class="card card-primary">
+        <div class="card-header">
+            <h3 class="card-title"><i class="fas fa-search"></i> Cấu hình SEO</h3>
+        </div>
+        <div class="card-body">
+            <div class="form-group">
+                <label for="meta_title">Meta Title</label>
+                <input type="text" class="form-control" name="meta_title" value="{{ $setting->meta_title ?? '' }}">
+            </div>
+
+            <div class="form-group">
+                <label for="meta_description">Meta Description</label>
+                <textarea class="form-control" name="meta_description">{{ $setting->meta_description ?? '' }}</textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="meta_keywords">Meta Keywords</label>
+                <textarea class="form-control" name="meta_keywords">{{ $setting->meta_keywords ?? '' }}</textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="canonical_url">Canonical URL</label>
+                <input type="text" class="form-control" name="canonical_url" value="{{ $setting->canonical_url ?? '' }}">
+            </div>
+
+            <div class="form-group">
+                <label for="robots">Robots</label>
+                <select class="form-control" name="robots">
+                    <option value="index, follow" {{ ($setting->robots ?? '') == 'index, follow' ? 'selected' : '' }}>index, follow</option>
+                    <option value="noindex, follow" {{ ($setting->robots ?? '') == 'noindex, follow' ? 'selected' : '' }}>noindex, follow</option>
+                    <option value="index, nofollow" {{ ($setting->robots ?? '') == 'index, nofollow' ? 'selected' : '' }}>index, nofollow</option>
+                    <option value="noindex, nofollow" {{ ($setting->robots ?? '') == 'noindex, nofollow' ? 'selected' : '' }}>noindex, nofollow</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="og_title">OG Title</label>
+                <input type="text" class="form-control" name="og_title" value="{{ $setting->og_title ?? '' }}">
+            </div>
+
+            <div class="form-group">
+                <label for="og_description">OG Description</label>
+                <textarea class="form-control" name="og_description">{{ $setting->og_description ?? '' }}</textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="og_image">OG Image</label><br>
+                @if($setting && $setting->og_image)
+                    <img src="{{ asset('storage/' . $setting->og_image) }}" width="100" class="mb-2">
+                @endif
+                <input type="file" class="form-control-file" name="og_image">
+            </div>
+
+            <div class="form-group">
+                <label for="twitter_card">Twitter Card</label>
+                <input type="text" class="form-control" name="twitter_card" value="{{ $setting->twitter_card ?? '' }}">
+            </div>
+
+            <div class="form-group">
+                <label for="twitter_title">Twitter Title</label>
+                <input type="text" class="form-control" name="twitter_title" value="{{ $setting->twitter_title ?? '' }}">
+            </div>
+
+            <div class="form-group">
+                <label for="twitter_description">Twitter Description</label>
+                <textarea class="form-control" name="twitter_description">{{ $setting->twitter_description ?? '' }}</textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="twitter_image">Twitter Image</label><br>
+                @if($setting && $setting->twitter_image)
+                    <img src="{{ asset('storage/' . $setting->twitter_image) }}" width="100" class="mb-2">
+                @endif
+                <input type="file" class="form-control-file" name="twitter_image">
             </div>
         </div>
     </div>

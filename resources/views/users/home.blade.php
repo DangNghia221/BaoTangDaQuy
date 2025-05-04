@@ -2,7 +2,7 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <title>Home</title>
+ 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -40,91 +40,8 @@
    
 <style>
    
-     header {
-        position: sticky;
-        top: 0;
-        z-index: 1000;
-        background-color: #fff;
-        padding: 5px; 
-        }
- /* icon về đầu trang */
- nav a {
-        color: white;
-        margin: 0 10px;
-        text-decoration: none;
-        font-weight: bold;
-        position: relative;
-        padding-bottom: 5px;
-    }
 
-    nav a:hover {
-        color: white;
-    }
-
-    nav a:hover::after {
-        content: "";
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        height: 2px;
-        background-color: white;
-        animation: underline-animation 0.3s ease-in-out;
-    }
-
-    @keyframes underline-animation {
-        from {
-            width: 0;
-        }
-
-        to {
-            width: 100%;
-        }
-    }
-
-    #backToTopBtn {
-        opacity: 0;
-        visibility: hidden;
-        position: fixed;
-        bottom: 40px;
-        right: 30px;
-        z-index: 99;
-        width: 50px;
-        height: 50px;
-        background-color: #f1f1f1;
-        color: #333;
-        border: none;
-        outline: none;
-        border-radius: 50%;
-        font-size: 18px;
-        cursor: pointer;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-        transition: opacity 0.5s ease, visibility 0.5s ease, background-color 0.3s ease;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-    #backToTopBtn.show {
-        opacity: 1;
-        visibility: visible;
-    }
-
-    #backToTopBtn:hover {
-        background-color: #4CAF50;
-        color: white;
-    }
-
-    #backToTopBtn i {
-        font-size: 24px;
-    }
-    header, footer {
-        background-color: #000;
-        color: white;
-        padding: 20px;
-        text-align: center;
-    }
-    body {
+   body {
             font-family: 'Arial', sans-serif;
             background-color: #000;
             margin: 0;
@@ -216,7 +133,7 @@
 }
 
 .hero-phone img {
-    width: 1450px; 
+    width: 100px; 
     height: 00px;
     border-radius: 15px;
     box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
@@ -233,58 +150,124 @@
     max-width: 300px;
     z-index: 2; /* đảm bảo nó nổi hơn ảnh nếu cần */
 }
-nav {
-    display: flex;
-    align-items: center; /* Căn chỉnh các phần tử theo chiều dọc */
-    justify-content: flex-end; /* Đặt các mục vào phía bên phải */
-}
 
-nav a {
-    color: white;
-    margin: 0 10px;
-    text-decoration: none;
-    font-weight: bold;
-}
+   
 
-.user-dropdown {
-    position: relative;
-    margin-left: 20px; /* Khoảng cách giữa "Shop" và icon người dùng */
-}
+ /* icon về đầu trang */
+ nav a {
+        color: white;
+        margin: 0 10px;
+        text-decoration: none;
+        font-weight: bold;
+        position: relative;
+        padding-bottom: 5px;
+    }
 
-.user-dropdown .user-icon {
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-    color: white;
-}
+    nav a:hover {
+        color: white;
+    }
 
-.dropdown-content {
-    display: none;
-    position: absolute;
-    right: 0;
-    background-color: black;
-    min-width: 160px;
-    box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
-    border-radius: 6px;
-    z-index: 1000;
-}
+    nav a:hover::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background-color: white;
+        animation: underline-animation 0.3s ease-in-out;
+    }
 
-.user-dropdown:hover .dropdown-content {
-    display: block;
-}
+    @keyframes underline-animation {
+        from {
+            width: 0;
+        }
 
-.dropdown-content a {
-    padding: 12px 16px;
-    display: block;
-    color: white;
-    text-decoration: none;
-}
+        to {
+            width: 100%;
+        }
+    }
 
-.dropdown-content a:hover {
-    background-color: #333;
-}
+    #backToTopBtn {
+        opacity: 0;
+        visibility: hidden;
+        position: fixed;
+        bottom: 40px;
+        right: 30px;
+        z-index: 99;
+        width: 50px;
+        height: 50px;
+        background-color: #f1f1f1;
+        color: #333;
+        border: none;
+        outline: none;
+        border-radius: 50%;
+        font-size: 18px;
+        cursor: pointer;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        transition: opacity 0.5s ease, visibility 0.5s ease, background-color 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
 
+    #backToTopBtn.show {
+        opacity: 1;
+        visibility: visible;
+    }
 
+    #backToTopBtn:hover {
+        background-color: #4CAF50;
+        color: white;
+    }
+
+    #backToTopBtn i {
+        font-size: 24px;
+    }
+    nav a {
+        color: white;
+        margin: 0 10px;
+        text-decoration: none;
+        font-weight: bold;
+    }
+   
+    .user-dropdown {
+        position: relative;
+        margin-left: 20px;
+    }
+
+    .user-icon {
+        cursor: pointer;
+        color: white;
+        display: flex;
+        align-items: center;
+    }
+
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        right: 0;
+        background-color: black;
+        min-width: 160px;
+        box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
+        border-radius: 6px;
+        z-index: 999;
+    }
+
+    .user-dropdown:hover .dropdown-content {
+        display: block;
+    }
+
+    .dropdown-content a {
+        padding: 12px 16px;
+        display: block;
+        color: white;
+        text-decoration: none;
+    }
+
+    .dropdown-content a:hover {
+        background-color: #333;
+    }
     @media (max-width: 768px) {
     .sitemap-wrapper iframe {
         width: 50px !important;
@@ -292,15 +275,18 @@ nav a {
     }
 }
 
+
+
 </style>
 
 <header style="display: flex; align-items: center; justify-content: space-between;">
 <div style="display: flex; align-items: center;">
-    
-<img src="{{ asset('storage/' . $setting->logo) }}" alt="Logo Website" width="120">
-
-<h1> {{ $setting->site_name ?? 'Website của bạn' }}</h1>
-
+<a href="{{ route('home') }}">
+      <img src="{{ asset('storage/' . $setting->logo) }}" alt="Logo Website" width="120">
+    </a>
+    <a href="{{ route('home') }}" style="text-decoration: none; color: inherit;">
+      <h1> {{ $setting->site_name ?? 'Website của bạn' }}</h1>
+    </a>
 </div>
     <nav style="display: flex; align-items: center;">
     <a href="{{ route('home') }}">Home</a>
@@ -441,6 +427,7 @@ nav a {
 </section>
 
 </body>
+
 <footer style="background-color:#1a1a1a; color: white; padding: 40px 20px;">
     <div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 20px;">
         

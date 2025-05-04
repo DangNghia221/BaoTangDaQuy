@@ -248,10 +248,12 @@
 <header style="display: flex; align-items: center; justify-content: space-between;">
 <div style="display: flex; align-items: center;">
     
-<img src="{{ asset('storage/' . $setting->logo) }}" alt="Logo Website" width="120">
-
-<h1> {{ $setting->site_name ?? 'Website của bạn' }}</h1>
-
+<a href="{{ route('home') }}">
+      <img src="{{ asset('storage/' . $setting->logo) }}" alt="Logo Website" width="120">
+    </a>
+    <a href="{{ route('home') }}" style="text-decoration: none; color: inherit;">
+      <h1> {{ $setting->site_name ?? 'Website của bạn' }}</h1>
+    </a>
 </div>
     <nav style="display: flex; align-items: center;">
     <a href="{{ route('home') }}">Home</a>
